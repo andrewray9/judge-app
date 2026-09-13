@@ -1,0 +1,1075 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Round Manager</title>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@500;600;700&family=DM+Sans:wght@400;500;600&display=swap" rel="stylesheet">
+<script src="https://unpkg.com/@supabase/supabase-js@2"></script>
+<style>
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0;}
+:root{
+  --bg:#ffffff;--bg2:#f5f4f0;--bg3:#eeede9;
+  --t1:#1a1a18;--t2:#6b6a66;--t3:#a8a7a3;
+  --b1:rgba(0,0,0,0.4);--b2:rgba(0,0,0,0.3);--b3:rgba(0,0,0,0.15);
+  --radius-md:8px;--radius-lg:12px;
+  --green-bg:#EAF3DE;--green-border:#C0DD97;--green-text:#27500A;--green-dark:#3B6D11;
+  --red-bg:#FCEBEB;--red-border:#F7C1C1;--red-text:#A32D2D;
+  --blue-bg:#E6F1FB;--blue-border:#B5D4F4;--blue-text:#0C447C;
+  --amber-bg:#FAEEDA;--amber-border:#FAC775;--amber-text:#633806;
+  --purple-bg:#EEEDFE;--purple-border:#AFA9EC;--purple-text:#3C3489;
+  --pink-bg:#FBEAF0;--pink-border:#ED93B1;--pink-text:#72243E;
+}
+@media(prefers-color-scheme:dark){
+  :root{
+    --bg:#1c1c1a;--bg2:#252523;--bg3:#2e2e2b;
+    --t1:#f0efe9;--t2:#9e9d98;--t3:#5a5955;
+    --b1:rgba(255,255,255,0.4);--b2:rgba(255,255,255,0.3);--b3:rgba(255,255,255,0.12);
+    --green-bg:#1a2e10;--green-border:#3B6D11;--green-text:#9fd870;--green-dark:#7ec84a;
+    --red-bg:#2e1010;--red-border:#8b2020;--red-text:#f47272;
+    --blue-bg:#0e1e2e;--blue-border:#1a5a9e;--blue-text:#6ab4f5;
+    --amber-bg:#2a1d08;--amber-border:#7a4a0a;--amber-text:#f0a840;
+    --purple-bg:#1a1830;--purple-border:#4e46a0;--purple-text:#a09cf5;
+    --pink-bg:#2a1020;--pink-border:#8a2050;--pink-text:#f07ab0;
+  }
+}
+html,body{min-height:100vh;background:var(--bg3);color:var(--t1);font-family:'DM Sans',sans-serif;}
+@media(max-width:640px){
+  input,select{font-size:16px!important;}
+  .app{padding:1.25rem 1rem 4rem;}
+  h1{font-size:24px!important;}
+  .form-grid{grid-template-columns:1fr!important;}
+  .auth-card{padding:2rem 1.5rem!important;}
+}
+
+/* ---------- AUTH ---------- */
+.auth-wrap{min-height:100vh;display:flex;align-items:center;justify-content:center;padding:2rem 1rem;}
+.auth-card{background:var(--bg);border:0.5px solid var(--b3);border-radius:var(--radius-lg);padding:2.5rem 2rem;width:100%;max-width:380px;}
+.auth-card h1{font-family:'Playfair Display',serif;font-size:26px;font-weight:700;margin-bottom:4px;}
+.auth-card .sub{font-size:13px;color:var(--t2);margin-bottom:1.75rem;line-height:1.5;}
+.auth-invite-banner{font-size:12.5px;color:var(--blue-text);background:var(--blue-bg);border:0.5px solid var(--blue-border);border-radius:var(--radius-md);padding:10px 12px;margin-bottom:1.25rem;line-height:1.5;}
+.field{margin-bottom:14px;}
+.field label{display:block;font-size:12px;font-weight:500;color:var(--t2);margin-bottom:5px;}
+.field input,.field select{width:100%;padding:9px 13px;border:0.5px solid var(--b2);border-radius:var(--radius-md);background:var(--bg2);color:var(--t1);font-size:14px;font-family:'DM Sans',sans-serif;appearance:none;}
+.field select{background-image:url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='10' height='6'><path d='M0 0l5 6 5-6z' fill='%236b6a66'/></svg>");background-repeat:no-repeat;background-position:right 13px center;padding-right:32px;}
+.field input:focus,.field select:focus{outline:none;border-color:var(--b1);background:var(--bg);}
+.field input:disabled{opacity:0.6;}
+.field .hint{font-size:11px;color:var(--t3);margin-top:4px;}
+.auth-btn{width:100%;padding:10px;background:var(--t1);color:var(--bg);border:none;border-radius:var(--radius-md);font-size:14px;font-weight:500;font-family:'DM Sans',sans-serif;cursor:pointer;margin-top:6px;transition:opacity 0.12s;}
+.auth-btn:hover{opacity:0.82;}
+.auth-btn:disabled{opacity:0.45;cursor:not-allowed;}
+.auth-toggle{text-align:center;margin-top:1.25rem;font-size:13px;color:var(--t2);}
+.auth-toggle span{color:var(--t1);cursor:pointer;font-weight:500;text-decoration:underline;}
+.auth-error{font-size:13px;color:var(--red-text);background:var(--red-bg);border:0.5px solid var(--red-border);border-radius:var(--radius-md);padding:8px 12px;margin-bottom:14px;display:none;}
+.auth-success{font-size:13px;color:var(--green-text);background:var(--green-bg);border:0.5px solid var(--green-border);border-radius:var(--radius-md);padding:8px 12px;margin-bottom:14px;display:none;}
+
+/* ---------- APP SHELL ---------- */
+.app{max-width:880px;margin:0 auto;padding:2rem 1.25rem 4rem;display:none;}
+.app-header{display:flex;align-items:center;gap:12px;margin-bottom:4px;flex-wrap:wrap;}
+h1{font-family:'Playfair Display',serif;font-size:30px;font-weight:700;letter-spacing:-0.5px;flex:1;}
+.user-pill{font-size:12px;color:var(--t2);background:var(--bg2);border:0.5px solid var(--b3);border-radius:20px;padding:4px 12px;display:flex;align-items:center;gap:8px;}
+.user-pill .logout{cursor:pointer;color:var(--t3);font-size:15px;line-height:1;background:none;border:none;font-family:inherit;padding:0;}
+.user-pill .logout:hover{color:var(--red-text);}
+.admin-badge{font-size:11px;font-weight:500;background:var(--amber-bg);color:var(--amber-text);border:0.5px solid var(--amber-border);border-radius:20px;padding:3px 9px;}
+.judge-badge{font-size:11px;font-weight:500;background:var(--blue-bg);color:var(--blue-text);border:0.5px solid var(--blue-border);border-radius:20px;padding:3px 9px;}
+.subtitle{font-size:13px;color:var(--t2);margin-bottom:1.5rem;}
+
+.sync-bar{display:flex;align-items:center;gap:8px;font-size:12px;color:var(--t2);margin-bottom:1.5rem;cursor:pointer;}
+.sync-dot{width:7px;height:7px;border-radius:50%;background:var(--t3);flex-shrink:0;}
+.sync-dot.synced{background:var(--green-dark);}
+.sync-dot.syncing{background:#BA7517;animation:pulse 1s infinite;}
+.sync-dot.error{background:var(--red-text);animation:pulse 1.5s infinite;}
+@keyframes pulse{0%,100%{opacity:1}50%{opacity:0.4}}
+
+.tab-row{display:flex;gap:6px;margin-bottom:1.5rem;flex-wrap:wrap;}
+.tab{font-size:13px;font-weight:500;padding:7px 15px;cursor:pointer;border:1.5px solid transparent;border-radius:999px;background:var(--bg2);color:var(--t2);white-space:nowrap;transition:all 0.15s;}
+.tab:hover:not(.active){background:var(--bg3);color:var(--t1);}
+.tab[data-tab="events"].active{background:#EEEDFE;color:#3C3489;border-color:#AFA9EC;}
+.tab[data-tab="create"].active{background:#EAF3DE;color:#27500A;border-color:#C0DD97;}
+.tab[data-tab="rounds"].active{background:#E6F1FB;color:#0C447C;border-color:#B5D4F4;}
+.tab[data-tab="judges"].active{background:#FBEAF0;color:#72243E;border-color:#ED93B1;}
+.tab[data-tab="mine"].active{background:#E6F1FB;color:#0C447C;border-color:#B5D4F4;}
+
+.card{background:var(--bg);border:0.5px solid var(--b3);border-radius:var(--radius-lg);padding:1.5rem;margin-bottom:1rem;}
+.card h2{font-family:'Playfair Display',serif;font-size:19px;font-weight:600;margin-bottom:2px;}
+.card .card-sub{font-size:12px;color:var(--t2);margin-bottom:1.25rem;}
+
+.form-grid{display:grid;grid-template-columns:1fr 1fr;gap:14px;margin-bottom:16px;}
+.field.full{grid-column:1/-1;}
+
+.div-picker{display:grid;grid-template-columns:repeat(3,1fr);gap:8px;margin-bottom:16px;}
+.div-opt{border:1.5px solid var(--b3);border-radius:var(--radius-md);padding:12px 8px;text-align:center;cursor:pointer;font-size:13px;font-weight:600;background:var(--bg2);color:var(--t2);transition:all 0.12s;}
+.div-opt:hover{background:var(--bg3);}
+.div-opt.sel[data-div="Male"]{background:var(--blue-bg);border-color:var(--blue-border);color:var(--blue-text);}
+.div-opt.sel[data-div="Female"]{background:var(--pink-bg);border-color:var(--pink-border);color:var(--pink-text);}
+.div-opt.sel[data-div="Diamond"]{background:var(--amber-bg);border-color:var(--amber-border);color:var(--amber-text);}
+
+.btn{padding:10px 18px;background:var(--t1);color:var(--bg);border:none;border-radius:var(--radius-md);font-size:14px;font-weight:500;font-family:'DM Sans',sans-serif;cursor:pointer;transition:opacity 0.12s;}
+.btn:hover{opacity:0.85;}
+.btn:disabled{opacity:0.45;cursor:not-allowed;}
+.btn.secondary{background:var(--bg2);color:var(--t1);border:0.5px solid var(--b2);}
+.btn.danger{background:var(--red-bg);color:var(--red-text);border:0.5px solid var(--red-border);}
+.btn.small{padding:6px 12px;font-size:12px;}
+
+.form-msg{font-size:13px;padding:8px 12px;border-radius:var(--radius-md);margin-bottom:14px;display:none;}
+.form-msg.show{display:block;}
+.form-msg.ok{background:var(--green-bg);color:var(--green-text);border:0.5px solid var(--green-border);}
+.form-msg.err{background:var(--red-bg);color:var(--red-text);border:0.5px solid var(--red-border);}
+
+/* event selector */
+.event-select-bar{display:flex;align-items:center;gap:10px;margin-bottom:1rem;flex-wrap:wrap;}
+.event-select-bar select{flex:1;min-width:180px;padding:9px 13px;border:0.5px solid var(--b2);border-radius:var(--radius-md);background:var(--bg2);color:var(--t1);font-size:14px;font-family:'DM Sans',sans-serif;appearance:none;background-image:url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='10' height='6'><path d='M0 0l5 6 5-6z' fill='%236b6a66'/></svg>");background-repeat:no-repeat;background-position:right 13px center;padding-right:32px;}
+
+/* event card */
+.event-card{background:var(--bg);border:0.5px solid var(--b3);border-radius:var(--radius-lg);padding:16px 18px;margin-bottom:10px;}
+.event-card .ename{font-family:'Playfair Display',serif;font-weight:600;font-size:17px;}
+.event-card .emeta{font-size:12px;color:var(--t2);margin-top:2px;}
+.event-card .edesc{font-size:13px;color:var(--t2);margin-top:8px;line-height:1.5;}
+.event-card .eactions{display:flex;gap:6px;margin-top:12px;}
+
+/* round list */
+.round-card{background:var(--bg);border:0.5px solid var(--b3);border-radius:var(--radius-lg);padding:16px 18px;margin-bottom:10px;}
+.round-card-top{display:flex;align-items:center;gap:14px;flex-wrap:wrap;}
+.round-div-tag{font-size:11px;font-weight:700;text-transform:uppercase;letter-spacing:0.4px;border-radius:20px;padding:4px 11px;flex-shrink:0;}
+.round-div-tag.Male{background:var(--blue-bg);color:var(--blue-text);border:0.5px solid var(--blue-border);}
+.round-div-tag.Female{background:var(--pink-bg);color:var(--pink-text);border:0.5px solid var(--pink-border);}
+.round-div-tag.Diamond{background:var(--amber-bg);color:var(--amber-text);border:0.5px solid var(--amber-border);}
+.round-info{flex:1;min-width:180px;}
+.round-info .rname{font-family:'Playfair Display',serif;font-weight:600;font-size:16px;}
+.round-info .rmeta{font-size:12px;color:var(--t2);margin-top:2px;}
+.round-status{font-size:11px;font-weight:500;border-radius:20px;padding:3px 10px;}
+.round-status.draft{background:var(--bg2);color:var(--t2);border:0.5px solid var(--b3);}
+.round-status.active{background:var(--green-bg);color:var(--green-text);border:0.5px solid var(--green-border);}
+.round-status.completed{background:var(--purple-bg);color:var(--purple-text);border:0.5px solid var(--purple-border);}
+.round-actions{display:flex;gap:6px;}
+.round-judges-section{margin-top:12px;padding-top:12px;border-top:0.5px solid var(--b3);display:none;}
+.round-judges-section.open{display:block;}
+.judge-check-row{display:flex;align-items:center;gap:8px;padding:6px 0;font-size:13px;}
+.judge-check-row input{width:15px;height:15px;accent-color:var(--t1);cursor:pointer;flex-shrink:0;}
+.judge-chip-row{display:flex;flex-wrap:wrap;gap:6px;margin-top:8px;}
+.judge-chip{font-size:11px;background:var(--blue-bg);color:var(--blue-text);border:0.5px solid var(--blue-border);border-radius:20px;padding:3px 10px;}
+.round-edit-grid{display:grid;grid-template-columns:1fr 1fr 1fr;gap:10px;margin-top:12px;padding-top:12px;border-top:0.5px solid var(--b3);}
+.round-edit-grid .field{margin-bottom:0;}
+
+.status-select{font-size:12px;padding:4px 8px;border-radius:20px;border:0.5px solid var(--b2);background:var(--bg2);color:var(--t1);font-family:'DM Sans',sans-serif;}
+
+.empty{font-size:13px;color:var(--t3);text-align:center;padding:2.5rem 1rem;}
+.divider{height:0.5px;background:var(--b3);margin:1.25rem 0;}
+
+/* invites */
+.invite-row{background:var(--bg);border:0.5px solid var(--b3);border-radius:var(--radius-md);padding:12px 16px;margin-bottom:8px;display:flex;align-items:center;gap:12px;flex-wrap:wrap;}
+.invite-info{flex:1;min-width:160px;}
+.invite-info .iemail{font-size:14px;font-weight:500;}
+.invite-info .imeta{font-size:12px;color:var(--t2);margin-top:2px;}
+.invite-status{font-size:11px;font-weight:500;border-radius:20px;padding:3px 10px;}
+.invite-status.pending{background:var(--amber-bg);color:var(--amber-text);border:0.5px solid var(--amber-border);}
+.invite-status.accepted{background:var(--green-bg);color:var(--green-text);border:0.5px solid var(--green-border);}
+.invite-status.revoked{background:var(--bg2);color:var(--t3);border:0.5px solid var(--b3);}
+.invite-link-box{display:flex;gap:8px;align-items:center;background:var(--bg2);border:0.5px solid var(--b3);border-radius:var(--radius-md);padding:8px 10px;margin-top:10px;font-size:12px;word-break:break-all;}
+.invite-link-box code{flex:1;font-family:monospace;}
+
+</style>
+</head>
+<body>
+
+<!-- AUTH SCREEN -->
+<div class="auth-wrap" id="auth-wrap">
+  <div class="auth-card">
+    <h1 id="auth-title">Round Manager</h1>
+    <p class="sub" id="auth-sub">Sign in to manage your competitions</p>
+
+    <div class="auth-invite-banner" id="invite-banner" style="display:none;"></div>
+    <div class="auth-error" id="auth-error"></div>
+    <div class="auth-success" id="auth-success"></div>
+
+    <div class="field" id="field-fullname" style="display:none;">
+      <label>Full name</label>
+      <input type="text" id="auth-fullname" placeholder="Your name" autocomplete="name">
+    </div>
+    <div class="field">
+      <label>Email</label>
+      <input type="email" id="auth-email" placeholder="you@example.com" autocomplete="email">
+    </div>
+    <div class="field">
+      <label>Password</label>
+      <input type="password" id="auth-password" placeholder="Your password" autocomplete="current-password" onkeydown="if(event.key==='Enter')authSubmit()">
+    </div>
+
+    <button class="auth-btn" id="auth-btn" onclick="authSubmit()">Sign in</button>
+    <div class="auth-toggle" id="auth-toggle">No account? <span onclick="toggleAuthMode()">Create an admin account</span></div>
+  </div>
+</div>
+
+<!-- APP -->
+<div class="app" id="app">
+
+  <div class="app-header">
+    <h1>Round Manager</h1>
+    <span class="admin-badge" id="role-badge-admin" style="display:none;">Admin</span>
+    <span class="judge-badge" id="role-badge-judge" style="display:none;">Judge</span>
+    <div class="user-pill">
+      <span id="user-pill-label"></span>
+      <button class="logout" onclick="logout()" title="Sign out">&times;</button>
+    </div>
+  </div>
+  <div class="subtitle" id="app-subtitle">Set up divisions, judges, and cut lines for every round of the competition.</div>
+
+  <div class="sync-bar" id="sync-bar">
+    <span class="sync-dot" id="sync-dot"></span>
+    <span id="sync-label">Connecting…</span>
+  </div>
+
+  <!-- ADMIN TABS -->
+  <div class="tab-row" id="admin-tabs" style="display:none;">
+    <div class="tab active" data-tab="events">Events</div>
+    <div class="tab" data-tab="create">Create round</div>
+    <div class="tab" data-tab="rounds">All rounds</div>
+    <div class="tab" data-tab="judges">Judges</div>
+  </div>
+
+  <!-- JUDGE TABS -->
+  <div class="tab-row" id="judge-tabs" style="display:none;">
+    <div class="tab active" data-tab="mine">My rounds</div>
+  </div>
+
+  <!-- EVENTS -->
+  <div class="tab-panel" id="panel-events">
+    <div class="card">
+      <h2>New event</h2>
+      <div class="card-sub">Create a competition. Rounds and judges live inside an event.</div>
+      <div id="event-msg" class="form-msg"></div>
+      <div class="form-grid">
+        <div class="field">
+          <label>Event name</label>
+          <input type="text" id="event-name" placeholder="e.g. Spring Showcase 2026">
+        </div>
+        <div class="field">
+          <label>Date</label>
+          <input type="date" id="event-date">
+        </div>
+        <div class="field full">
+          <label>Description (optional)</label>
+          <input type="text" id="event-desc" placeholder="Venue, notes, etc.">
+        </div>
+      </div>
+      <button class="btn" id="btn-create-event">Create event</button>
+    </div>
+    <div id="events-list"></div>
+  </div>
+
+  <!-- CREATE ROUND -->
+  <div class="tab-panel" id="panel-create" style="display:none;">
+    <div class="event-select-bar">
+      <select id="event-select-create"></select>
+    </div>
+    <div id="create-noevent" class="empty" style="display:none;">Create an event first, then come back here to add rounds.</div>
+    <div id="create-round-wrap">
+      <div class="card">
+        <h2>New round</h2>
+        <div class="card-sub">Fill in the details for this round of judging.</div>
+
+        <div id="create-msg" class="form-msg"></div>
+
+        <div class="field full" style="margin-bottom:16px;">
+          <label>Division</label>
+          <div class="div-picker" id="div-picker">
+            <div class="div-opt" data-div="Male">Male</div>
+            <div class="div-opt" data-div="Female">Female</div>
+            <div class="div-opt" data-div="Diamond">Diamond</div>
+          </div>
+        </div>
+
+        <div class="form-grid">
+          <div class="field">
+            <label>Round</label>
+            <select id="round-name">
+              <option value="Prelims">Prelims</option>
+              <option value="Round 1">Round 1</option>
+              <option value="Round 2">Round 2</option>
+              <option value="Round 3">Round 3</option>
+              <option value="Quarterfinals">Quarterfinals</option>
+              <option value="Semifinals">Semifinals</option>
+              <option value="Finals">Finals</option>
+            </select>
+          </div>
+          <div class="field">
+            <label>Number of judges</label>
+            <input type="number" id="num-judges" min="1" max="15" value="5">
+          </div>
+          <div class="field full">
+            <label>Competitors advancing</label>
+            <input type="number" id="advance-count" min="1" placeholder="e.g. 12">
+            <div class="hint">Roughly how many competitors move on to the next round.</div>
+          </div>
+        </div>
+
+        <div class="field full" id="create-judges-picker" style="margin-bottom:16px;">
+          <label>Assign judges (optional — you can also do this later)</label>
+          <div id="create-judges-list" style="font-size:12px;color:var(--t3);">No judges yet.</div>
+        </div>
+
+        <button class="btn" id="btn-create">Create round</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- ALL ROUNDS -->
+  <div class="tab-panel" id="panel-rounds" style="display:none;">
+    <div class="event-select-bar">
+      <select id="event-select-rounds"></select>
+    </div>
+    <div id="rounds-list"></div>
+  </div>
+
+  <!-- JUDGES (admin) -->
+  <div class="tab-panel" id="panel-judges" style="display:none;">
+    <div class="card">
+      <h2>Invite a judge</h2>
+      <div class="card-sub">Judges are invited by email. They set their own password when they accept.</div>
+      <div id="invite-msg" class="form-msg"></div>
+      <div class="form-grid">
+        <div class="field">
+          <label>Judge's email</label>
+          <input type="email" id="invite-email" placeholder="judge@example.com">
+        </div>
+        <div class="field">
+          <label>Event</label>
+          <select id="invite-event"></select>
+        </div>
+        <div class="field full">
+          <label>Round (optional)</label>
+          <select id="invite-round"><option value="">Any round in this event</option></select>
+        </div>
+      </div>
+      <button class="btn" id="btn-invite">Send invite</button>
+      <div id="invite-link-result"></div>
+    </div>
+    <div id="invites-list"></div>
+  </div>
+
+  <!-- JUDGE: MY ROUNDS -->
+  <div class="tab-panel" id="panel-mine" style="display:none;">
+    <div id="mine-list"></div>
+  </div>
+
+</div>
+
+<script>
+const SUPABASE_URL = 'https://bzsvadesyjwsbspsohwj.supabase.co';
+const SUPABASE_ANON_KEY = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImJ6c3ZhZGVzeWp3c2JzcHNvaHdqIiwicm9sZSI6ImFub24iLCJpYXQiOjE3ODkxMjg2ODAsImV4cCI6MjEwNDcwNDY4MH0.julgysNsuRgtSV2Nz4yXHWVnfw993fBEGFFlaKdAgfo';
+
+let supabaseClient = null;
+let currentDivision = null;
+let currentUser = null;      // supabase auth user
+let currentProfile = null;   // { id, email, full_name, role }
+let isSignUp = false;
+let inviteToken = null;      // present when arriving via ?invite=TOKEN
+let myEvents = [];           // admin's own events
+let myJudges = [];           // profiles of judges this admin has invited & who accepted
+let currentEventId_create = null;
+let currentEventId_rounds = null;
+
+const $ = (id) => document.getElementById(id);
+function esc(s){ return String(s==null?'':s).replace(/[&<>"']/g, c => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c])); }
+function fmtDate(d){ if(!d) return ''; try { return new Date(d + 'T00:00:00').toLocaleDateString(undefined,{month:'short',day:'numeric',year:'numeric'}); } catch(e){ return d; } }
+
+/* =========================================================
+   INIT
+   ========================================================= */
+function setSync(state, label) {
+  const dot = $('sync-dot');
+  dot.className = 'sync-dot' + (state ? ' ' + state : '');
+  $('sync-label').textContent = label;
+}
+
+function initSupabase() {
+  try {
+    supabaseClient = window.supabase.createClient(SUPABASE_URL, SUPABASE_ANON_KEY);
+    setSync('synced', 'Connected to Supabase');
+  } catch (e) {
+    supabaseClient = null;
+    setSync('error', 'Connection failed');
+  }
+}
+
+async function boot() {
+  initSupabase();
+
+  const params = new URLSearchParams(window.location.search);
+  inviteToken = params.get('invite');
+
+  if (inviteToken) {
+    await enterInviteMode(inviteToken);
+  }
+
+  const { data } = await supabaseClient.auth.getSession();
+  if (data && data.session) {
+    await handleSignedIn(data.session.user);
+  }
+
+  supabaseClient.auth.onAuthStateChange((event) => {
+    if (event === 'SIGNED_OUT') {
+      currentUser = null;
+      currentProfile = null;
+      showAuthScreen();
+    }
+  });
+}
+boot();
+
+/* =========================================================
+   AUTH
+   ========================================================= */
+function showAuthScreen(){
+  $('app').style.display = 'none';
+  $('auth-wrap').style.display = 'flex';
+}
+
+function showAuthError(msg){
+  const el = $('auth-error');
+  el.textContent = msg;
+  el.style.display = 'block';
+  $('auth-success').style.display = 'none';
+}
+function showAuthSuccess(msg){
+  const el = $('auth-success');
+  el.textContent = msg;
+  el.style.display = 'block';
+  $('auth-error').style.display = 'none';
+}
+function clearAuthMsgs(){
+  $('auth-error').style.display = 'none';
+  $('auth-success').style.display = 'none';
+}
+
+async function enterInviteMode(token){
+  $('field-fullname').style.display = 'block';
+  $('auth-toggle').style.display = 'none';
+  $('auth-title').textContent = "You're invited";
+  $('auth-btn').textContent = 'Accept invite & sign up';
+
+  const { data, error } = await supabaseClient.rpc('get_invite_by_token', { p_token: token });
+  const row = data && data[0];
+
+  if (error || !row) {
+    $('invite-banner').style.display = 'block';
+    $('invite-banner').textContent = "This invite link isn't valid. Ask the admin to send you a new one.";
+    $('auth-sub').textContent = 'Sign in instead if you already have an account.';
+    $('field-fullname').style.display = 'none';
+    $('auth-btn').textContent = 'Sign in';
+    $('auth-toggle').style.display = 'block';
+    inviteToken = null;
+    return;
+  }
+
+  if (row.status === 'accepted') {
+    $('invite-banner').style.display = 'block';
+    $('invite-banner').textContent = 'This invite has already been used. Sign in below.';
+    $('auth-sub').textContent = 'Sign in to your judge account.';
+    $('field-fullname').style.display = 'none';
+    $('auth-btn').textContent = 'Sign in';
+    $('auth-toggle').style.display = 'block';
+    $('auth-email').value = row.email;
+    inviteToken = null;
+    return;
+  }
+
+  $('invite-banner').style.display = 'block';
+  $('invite-banner').textContent = "You've been invited by " + esc(row.admin_name || 'an admin') + ' to judge for "' + esc(row.event_name) + '"' + (row.round_name ? (' (' + esc(row.round_name) + ')') : '') + '. Set a password to accept.';
+  $('auth-sub').textContent = 'Create your judge account to accept the invite.';
+  $('auth-email').value = row.email;
+  $('auth-email').disabled = true;
+}
+
+function toggleAuthMode() {
+  if (inviteToken) return; // no toggle while accepting an invite
+  isSignUp = !isSignUp;
+  $('auth-sub').textContent = isSignUp ? 'Create an admin account to get started' : 'Sign in to manage your competitions';
+  $('auth-btn').textContent = isSignUp ? 'Create admin account' : 'Sign in';
+  $('auth-toggle').innerHTML = isSignUp ? 'Already have an account? <span onclick="toggleAuthMode()">Sign in</span>' : 'No account? <span onclick="toggleAuthMode()">Create an admin account</span>';
+  $('field-fullname').style.display = isSignUp ? 'block' : 'none';
+  clearAuthMsgs();
+}
+
+async function authSubmit(){
+  const email = $('auth-email').value.trim();
+  const password = $('auth-password').value;
+  const fullName = $('auth-fullname').value.trim();
+  clearAuthMsgs();
+
+  if (!email || !password) { showAuthError('Enter your email and password.'); return; }
+  if ((isSignUp || inviteToken) && password.length < 6) { showAuthError('Password must be at least 6 characters.'); return; }
+
+  const btn = $('auth-btn');
+  btn.disabled = true;
+  const originalLabel = btn.textContent;
+  btn.textContent = 'Working…';
+
+  try {
+    if (inviteToken) {
+      const { data, error } = await supabaseClient.auth.signUp({
+        email, password,
+        options: { data: { invite_token: inviteToken, full_name: fullName } }
+      });
+      if (error) throw error;
+      if (!data.session) {
+        showAuthSuccess('Account created! Check your email to confirm, then sign in.');
+        btn.disabled = false; btn.textContent = originalLabel;
+        return;
+      }
+      await handleSignedIn(data.user);
+    } else if (isSignUp) {
+      const { data, error } = await supabaseClient.auth.signUp({
+        email, password,
+        options: { data: { full_name: fullName } }
+      });
+      if (error) throw error;
+      if (!data.session) {
+        showAuthSuccess('Account created! Check your email to confirm, then sign in.');
+        btn.disabled = false; btn.textContent = originalLabel;
+        return;
+      }
+      await handleSignedIn(data.user);
+    } else {
+      const { data, error } = await supabaseClient.auth.signInWithPassword({ email, password });
+      if (error) throw error;
+      await handleSignedIn(data.user);
+    }
+  } catch (err) {
+    showAuthError(err.message || 'Something went wrong.');
+    btn.disabled = false;
+    btn.textContent = originalLabel;
+  }
+}
+
+async function logout(){
+  await supabaseClient.auth.signOut();
+  currentUser = null;
+  currentProfile = null;
+  window.history.replaceState({}, '', window.location.pathname);
+  showAuthScreen();
+}
+
+async function handleSignedIn(user){
+  currentUser = user;
+
+  let profile = await fetchProfile(user.id);
+  if (!profile) {
+    // trigger may still be committing — brief retry
+    await new Promise(r => setTimeout(r, 700));
+    profile = await fetchProfile(user.id);
+  }
+  if (!profile) {
+    showAuthError('Signed in, but no profile was found. Try refreshing in a moment.');
+    return;
+  }
+  currentProfile = profile;
+  window.history.replaceState({}, '', window.location.pathname);
+  enterApp();
+}
+
+async function fetchProfile(userId){
+  const { data, error } = await supabaseClient.from('profiles').select('*').eq('id', userId).maybeSingle();
+  if (error) { console.warn(error); return null; }
+  return data;
+}
+
+/* =========================================================
+   APP ENTRY
+   ========================================================= */
+function enterApp(){
+  $('auth-wrap').style.display = 'none';
+  $('app').style.display = 'block';
+
+  $('user-pill-label').textContent = currentProfile.full_name || currentProfile.email;
+
+  if (currentProfile.role === 'admin') {
+    $('role-badge-admin').style.display = 'inline-block';
+    $('role-badge-judge').style.display = 'none';
+    $('admin-tabs').style.display = 'flex';
+    $('judge-tabs').style.display = 'none';
+    $('app-subtitle').textContent = 'Set up divisions, judges, and cut lines for every round of the competition.';
+    document.querySelector('.tab[data-tab="events"]').click();
+    loadEvents();
+  } else {
+    $('role-badge-admin').style.display = 'none';
+    $('role-badge-judge').style.display = 'inline-block';
+    $('admin-tabs').style.display = 'none';
+    $('judge-tabs').style.display = 'flex';
+    $('app-subtitle').textContent = 'Rounds you have been assigned to judge.';
+    document.querySelectorAll('.tab-panel').forEach(p => p.style.display = 'none');
+    $('panel-mine').style.display = 'block';
+    loadMyRounds();
+  }
+}
+
+/* ---- tabs ---- */
+document.querySelectorAll('.tab').forEach(tab => {
+  tab.addEventListener('click', () => {
+    const row = tab.closest('.tab-row');
+    row.querySelectorAll('.tab').forEach(t => t.classList.remove('active'));
+    tab.classList.add('active');
+    document.querySelectorAll('.tab-panel').forEach(p => p.style.display = 'none');
+    $('panel-' + tab.dataset.tab).style.display = 'block';
+
+    if (tab.dataset.tab === 'events') loadEvents();
+    if (tab.dataset.tab === 'create') loadCreatePanel();
+    if (tab.dataset.tab === 'rounds') loadRoundsPanel();
+    if (tab.dataset.tab === 'judges') loadJudgesPanel();
+    if (tab.dataset.tab === 'mine') loadMyRounds();
+  });
+});
+/* ---- division picker ---- */
+document.querySelectorAll('.div-opt').forEach(opt => {
+  opt.addEventListener('click', () => {
+    document.querySelectorAll('.div-opt').forEach(o => o.classList.remove('sel'));
+    opt.classList.add('sel');
+    currentDivision = opt.dataset.div;
+  });
+});
+
+function showMsg(elId, text, ok) {
+  const el = $(elId);
+  el.textContent = text;
+  el.className = 'form-msg show ' + (ok ? 'ok' : 'err');
+  setTimeout(() => el.classList.remove('show'), 4000);
+}
+
+/* =========================================================
+   EVENTS
+   ========================================================= */
+async function loadEvents(){
+  const { data, error } = await supabaseClient.from('events').select('*').eq('admin_id', currentUser.id).order('created_at', { ascending: false });
+  myEvents = data || [];
+  renderEvents();
+  populateEventSelects();
+}
+
+function renderEvents(){
+  const list = $('events-list');
+  if (!myEvents.length) { list.innerHTML = '<div class="empty">No events yet — create one above to get started.</div>'; return; }
+  list.innerHTML = myEvents.map(e => `
+    <div class="event-card" data-id="${e.id}">
+      <div class="ename">${esc(e.name)}</div>
+      <div class="emeta">${e.event_date ? fmtDate(e.event_date) : 'No date set'}</div>
+      ${e.description ? '<div class="edesc">' + esc(e.description) + '</div>' : ''}
+      <div class="eactions">
+        <button class="btn secondary small" data-manage="${e.id}">Manage rounds</button>
+        <button class="btn secondary small" data-invite="${e.id}">Invite judges</button>
+        <button class="btn danger small" data-del-event="${e.id}">Delete</button>
+      </div>
+    </div>
+  `).join('');
+
+  list.querySelectorAll('[data-manage]').forEach(btn => btn.addEventListener('click', () => {
+    currentEventId_rounds = btn.dataset.manage;
+    document.querySelector('.tab[data-tab="rounds"]').click();
+  }));
+  list.querySelectorAll('[data-invite]').forEach(btn => btn.addEventListener('click', () => {
+    document.querySelector('.tab[data-tab="judges"]').click();
+    setTimeout(() => { $('invite-event').value = btn.dataset.invite; $('invite-event').dispatchEvent(new Event('change')); }, 0);
+  }));
+  list.querySelectorAll('[data-del-event]').forEach(btn => btn.addEventListener('click', async () => {
+    if (!confirm('Delete this event and all of its rounds? This cannot be undone.')) return;
+    const { error } = await supabaseClient.from('events').delete().eq('id', btn.dataset.delEvent);
+    if (error) { alert('Could not delete: ' + error.message); return; }
+    loadEvents();
+  }));
+}
+
+$('btn-create-event').addEventListener('click', async () => {
+  const name = $('event-name').value.trim();
+  const event_date = $('event-date').value || null;
+  const description = $('event-desc').value.trim() || null;
+  if (!name) { showMsg('event-msg', 'Enter an event name.', false); return; }
+
+  const btn = $('btn-create-event');
+  btn.disabled = true; btn.textContent = 'Creating…';
+  const { error } = await supabaseClient.from('events').insert({ admin_id: currentUser.id, name, event_date, description });
+  btn.disabled = false; btn.textContent = 'Create event';
+
+  if (error) { showMsg('event-msg', 'Could not create event: ' + error.message, false); return; }
+  showMsg('event-msg', 'Event created.', true);
+  $('event-name').value = ''; $('event-date').value = ''; $('event-desc').value = '';
+  loadEvents();
+});
+
+function populateEventSelects(){
+  const opts = myEvents.length
+    ? myEvents.map(e => `<option value="${e.id}">${esc(e.name)}</option>`).join('')
+    : '<option value="">No events yet</option>';
+
+  ['event-select-create','event-select-rounds','invite-event'].forEach(id => {
+    const sel = $(id);
+    const prev = sel.value;
+    sel.innerHTML = opts;
+    if (myEvents.some(e => e.id === prev)) sel.value = prev;
+  });
+}
+
+/* =========================================================
+   CREATE ROUND
+   ========================================================= */
+function loadCreatePanel(){
+  if (!myEvents.length) {
+    $('create-noevent').style.display = 'block';
+    $('create-round-wrap').style.display = 'none';
+    return;
+  }
+  $('create-noevent').style.display = 'none';
+  $('create-round-wrap').style.display = 'block';
+  if (!currentEventId_create || !myEvents.some(e => e.id === currentEventId_create)) currentEventId_create = myEvents[0].id;
+  $('event-select-create').value = currentEventId_create;
+  renderCreateJudgesPicker();
+}
+$('event-select-create').addEventListener('change', () => { currentEventId_create = $('event-select-create').value; });
+
+function renderCreateJudgesPicker(){
+  const box = $('create-judges-list');
+  if (!myJudges.length) { box.innerHTML = '<div style="font-size:12px;color:var(--t3);">No judges yet — invite some from the Judges tab.</div>'; return; }
+  box.innerHTML = myJudges.map(j => `
+    <div class="judge-check-row">
+      <input type="checkbox" class="create-judge-cb" value="${j.id}">
+      <span>${esc(j.full_name || j.email)}</span>
+    </div>
+  `).join('');
+}
+
+$('btn-create').addEventListener('click', async () => {
+  if (!currentEventId_create) { showMsg('create-msg', 'Select an event first.', false); return; }
+  if (!currentDivision) { showMsg('create-msg', 'Select a division.', false); return; }
+
+  const round_name = $('round-name').value;
+  const num_judges = parseInt($('num-judges').value, 10);
+  const advanceRaw = $('advance-count').value;
+  const advance_count = advanceRaw ? parseInt(advanceRaw, 10) : null;
+
+  if (!num_judges || num_judges < 1) { showMsg('create-msg', 'Enter a valid number of judges.', false); return; }
+
+  const btn = $('btn-create');
+  btn.disabled = true; btn.textContent = 'Creating…';
+
+  const { data, error } = await supabaseClient.from('competition_rounds').insert({
+    event_id: currentEventId_create,
+    division: currentDivision,
+    round_name,
+    num_judges,
+    advance_count,
+    status: 'draft',
+    created_by: currentUser.id
+  }).select().single();
+
+  if (error) {
+    btn.disabled = false; btn.textContent = 'Create round';
+    showMsg('create-msg', 'Could not create round: ' + error.message, false);
+    return;
+  }
+
+  const checked = Array.from(document.querySelectorAll('.create-judge-cb:checked')).map(cb => cb.value);
+  if (checked.length) {
+    await supabaseClient.from('round_judges').insert(checked.map(judge_id => ({ round_id: data.id, judge_id })));
+  }
+
+  btn.disabled = false; btn.textContent = 'Create round';
+  showMsg('create-msg', 'Round created.', true);
+  $('advance-count').value = '';
+  document.querySelectorAll('.create-judge-cb').forEach(cb => cb.checked = false);
+});
+
+/* =========================================================
+   ALL ROUNDS
+   ========================================================= */
+function loadRoundsPanel(){
+  if (!myEvents.length) { $('rounds-list').innerHTML = '<div class="empty">Create an event first.</div>'; return; }
+  if (!currentEventId_rounds || !myEvents.some(e => e.id === currentEventId_rounds)) currentEventId_rounds = myEvents[0].id;
+  $('event-select-rounds').value = currentEventId_rounds;
+  loadRounds();
+}
+$('event-select-rounds').addEventListener('change', () => { currentEventId_rounds = $('event-select-rounds').value; loadRounds(); });
+
+async function loadRounds() {
+  const list = $('rounds-list');
+  if (!currentEventId_rounds) { list.innerHTML = '<div class="empty">Create an event first.</div>'; return; }
+  list.innerHTML = '<div class="empty">Loading…</div>';
+
+  const { data, error } = await supabaseClient
+    .from('competition_rounds')
+    .select('*, round_judges(judge_id)')
+    .eq('event_id', currentEventId_rounds)
+    .order('created_at', { ascending: false });
+
+  if (error) { list.innerHTML = '<div class="empty">Could not load rounds: ' + esc(error.message) + '</div>'; return; }
+  if (!data || !data.length) { list.innerHTML = '<div class="empty">No rounds yet — create one to get started.</div>'; return; }
+
+  const judgeMap = {}; myJudges.forEach(j => judgeMap[j.id] = j);
+
+  list.innerHTML = data.map(r => {
+    const assignedIds = (r.round_judges || []).map(x => x.judge_id);
+    const chips = assignedIds.map(id => judgeMap[id] ? `<span class="judge-chip">${esc(judgeMap[id].full_name || judgeMap[id].email)}</span>` : '').join('');
+    return `
+    <div class="round-card" data-id="${r.id}">
+      <div class="round-card-top">
+        <span class="round-div-tag ${esc(r.division)}">${esc(r.division)}</span>
+        <div class="round-info">
+          <div class="rname">${esc(r.round_name)}</div>
+          <div class="rmeta">${assignedIds.length}/${r.num_judges} judge${r.num_judges !== 1 ? 's' : ''} assigned${r.advance_count ? ' · ' + r.advance_count + ' advance' : ''}</div>
+        </div>
+        <select class="status-select" data-id="${r.id}">
+          <option value="draft" ${r.status === 'draft' ? 'selected' : ''}>Draft</option>
+          <option value="active" ${r.status === 'active' ? 'selected' : ''}>Active</option>
+          <option value="completed" ${r.status === 'completed' ? 'selected' : ''}>Completed</option>
+        </select>
+        <div class="round-actions">
+          <button class="btn secondary small" data-toggle-judges="${r.id}">Judges</button>
+          <button class="btn secondary small" data-toggle-edit="${r.id}">Edit</button>
+          <button class="btn danger small" data-del="${r.id}">Delete</button>
+        </div>
+      </div>
+      <div class="judge-chip-row">${chips}</div>
+
+      <div class="round-judges-section" id="judges-sec-${r.id}">
+        ${myJudges.length ? myJudges.map(j => `
+          <div class="judge-check-row">
+            <input type="checkbox" class="round-judge-cb" data-round="${r.id}" data-judge="${j.id}" ${assignedIds.includes(j.id) ? 'checked' : ''}>
+            <span>${esc(j.full_name || j.email)}</span>
+          </div>
+        `).join('') : '<div style="font-size:12px;color:var(--t3);">No judges invited yet.</div>'}
+      </div>
+
+      <div class="round-edit-grid" id="edit-sec-${r.id}" style="display:none;">
+        <div class="field">
+          <label>Round</label>
+          <select data-edit-name="${r.id}">
+            ${['Prelims','Round 1','Round 2','Round 3','Quarterfinals','Semifinals','Finals'].map(n => `<option value="${n}" ${n===r.round_name?'selected':''}>${n}</option>`).join('')}
+          </select>
+        </div>
+        <div class="field">
+          <label>Judges needed</label>
+          <input type="number" min="1" max="15" data-edit-numjudges="${r.id}" value="${r.num_judges}">
+        </div>
+        <div class="field">
+          <label>Advancing</label>
+          <input type="number" min="1" data-edit-advance="${r.id}" value="${r.advance_count || ''}">
+        </div>
+        <div class="field full" style="grid-column:1/-1;">
+          <button class="btn small" data-save-edit="${r.id}">Save changes</button>
+        </div>
+      </div>
+    </div>
+  `; }).join('');
+
+  list.querySelectorAll('.status-select').forEach(sel => {
+    sel.addEventListener('change', async () => {
+      const { error } = await supabaseClient.from('competition_rounds').update({ status: sel.value }).eq('id', sel.dataset.id);
+      if (error) alert('Could not update status: ' + error.message);
+    });
+  });
+
+  list.querySelectorAll('[data-del]').forEach(btn => {
+    btn.addEventListener('click', async () => {
+      if (!confirm('Delete this round? This cannot be undone.')) return;
+      const { error } = await supabaseClient.from('competition_rounds').delete().eq('id', btn.dataset.del);
+      if (error) { alert('Could not delete: ' + error.message); return; }
+      loadRounds();
+    });
+  });
+
+  list.querySelectorAll('[data-toggle-judges]').forEach(btn => {
+    btn.addEventListener('click', () => {
+      $('judges-sec-' + btn.dataset.toggleJudges).classList.toggle('open');
+    });
+  });
+
+  list.querySelectorAll('[data-toggle-edit]').forEach(btn => {
+    btn.addEventListener('click', () => {
+      const sec = $('edit-sec-' + btn.dataset.toggleEdit);
+      sec.style.display = sec.style.display === 'none' ? 'grid' : 'none';
+    });
+  });
+
+  list.querySelectorAll('.round-judge-cb').forEach(cb => {
+    cb.addEventListener('change', async () => {
+      const round_id = cb.dataset.round, judge_id = cb.dataset.judge;
+      if (cb.checked) {
+        const { error } = await supabaseClient.from('round_judges').insert({ round_id, judge_id });
+        if (error) { alert('Could not assign judge: ' + error.message); cb.checked = false; return; }
+      } else {
+        const { error } = await supabaseClient.from('round_judges').delete().eq('round_id', round_id).eq('judge_id', judge_id);
+        if (error) { alert('Could not remove judge: ' + error.message); cb.checked = true; return; }
+      }
+      loadRounds();
+    });
+  });
+
+  list.querySelectorAll('[data-save-edit]').forEach(btn => {
+    btn.addEventListener('click', async () => {
+      const id = btn.dataset.saveEdit;
+      const round_name = document.querySelector('[data-edit-name="' + id + '"]').value;
+      const num_judges = parseInt(document.querySelector('[data-edit-numjudges="' + id + '"]').value, 10);
+      const advanceRaw = document.querySelector('[data-edit-advance="' + id + '"]').value;
+      const advance_count = advanceRaw ? parseInt(advanceRaw, 10) : null;
+      if (!num_judges || num_judges < 1) { alert('Enter a valid number of judges.'); return; }
+
+      const { error } = await supabaseClient.from('competition_rounds').update({ round_name, num_judges, advance_count }).eq('id', id);
+      if (error) { alert('Could not save: ' + error.message); return; }
+      loadRounds();
+    });
+  });
+}
+
+/* =========================================================
+   JUDGES (admin)
+   ========================================================= */
+async function loadJudgesPanel(){
+  populateEventSelects();
+  if (myEvents.length && !$('invite-event').value) $('invite-event').value = myEvents[0].id;
+
+  await loadMyJudgeProfiles();
+  await loadRoundOptionsForInvite();
+  await loadInvites();
+}
+
+$('invite-event').addEventListener('change', loadRoundOptionsForInvite);
+
+async function loadRoundOptionsForInvite(){
+  const eventId = $('invite-event').value;
+  const sel = $('invite-round');
+  sel.innerHTML = '<option value="">Any round in this event</option>';
+  if (!eventId) return;
+  const { data } = await supabaseClient.from('competition_rounds').select('id, round_name, division').eq('event_id', eventId).order('created_at', { ascending: false });
+  (data || []).forEach(r => {
+    const opt = document.createElement('option');
+    opt.value = r.id;
+    opt.textContent = r.division + ' — ' + r.round_name;
+    sel.appendChild(opt);
+  });
+}
+
+async function loadMyJudgeProfiles(){
+  const { data, error } = await supabaseClient
+    .from('judge_invites')
+    .select('judge_id, profiles!judge_invites_judge_id_fkey(id, full_name, email)')
+    .eq('admin_id', currentUser.id)
+    .eq('status', 'accepted');
+  if (error) { console.warn(error); myJudges = []; return; }
+  const seen = {};
+  myJudges = [];
+  (data || []).forEach(row => {
+    const p = row.profiles;
+    if (p && !seen[p.id]) { seen[p.id] = true; myJudges.push(p); }
+  });
+}
+
+$('btn-invite').addEventListener('click', async () => {
+  const email = $('invite-email').value.trim().toLowerCase();
+  const event_id = $('invite-event').value;
+  const round_id = $('invite-round').value || null;
+
+  if (!email || !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)) { showMsg('invite-msg', 'Enter a valid email.', false); return; }
+  if (!event_id) { showMsg('invite-msg', 'Create an event first.', false); return; }
+
+  const btn = $('btn-invite');
+  btn.disabled = true; btn.textContent = 'Sending…';
+
+  const { data, error } = await supabaseClient.from('judge_invites').insert({
+    admin_id: currentUser.id, event_id, round_id, email
+  }).select().single();
+
+  btn.disabled = false; btn.textContent = 'Send invite';
+
+  if (error) { showMsg('invite-msg', 'Could not create invite: ' + error.message, false); return; }
+
+  const link = window.location.origin + window.location.pathname + '?invite=' + data.token;
+  $('invite-link-result').innerHTML = `
+    <div class="invite-link-box">
+      <code id="fresh-invite-link">${esc(link)}</code>
+      <button class="btn secondary small" onclick="copyText('fresh-invite-link')">Copy</button>
+    </div>`;
+  showMsg('invite-msg', 'Invite created — copy the link below and send it to the judge.', true);
+  $('invite-email').value = '';
+  loadInvites();
+});
+
+function copyText(id){
+  const text = $(id).textContent;
+  if (navigator.clipboard) navigator.clipboard.writeText(text).catch(() => {});
+}
+
+async function loadInvites(){
+  const list = $('invites-list');
+  list.innerHTML = '<div class="empty">Loading…</div>';
+
+  const { data, error } = await supabaseClient
+    .from('judge_invites')
+    .select('*, events(name), competition_rounds(round_name, division)')
+    .eq('admin_id', currentUser.id)
+    .order('created_at', { ascending: false });
+
+  if (error) { list.innerHTML = '<div class="empty">Could not load invites: ' + esc(error.message) + '</div>'; return; }
+  if (!data || !data.length) { list.innerHTML = '<div class="empty">No invites sent yet.</div>'; return; }
+
+  list.innerHTML = data.map(inv => {
+    const link = window.location.origin + window.location.pathname + '?invite=' + inv.token;
+    return `
+    <div class="invite-row">
+      <div class="invite-info">
+        <div class="iemail">${esc(inv.email)}</div>
+        <div class="imeta">${esc(inv.events ? inv.events.name : '')}${inv.competition_rounds ? ' · ' + esc(inv.competition_rounds.division) + ' ' + esc(inv.competition_rounds.round_name) : ''}</div>
+      </div>
+      <span class="invite-status ${inv.status}">${inv.status}</span>
+      ${inv.status === 'pending' ? `
+        <button class="btn secondary small" onclick="copyInviteLink('${inv.token}')">Copy link</button>
+        <button class="btn danger small" data-revoke="${inv.id}">Revoke</button>
+      ` : ''}
+    </div>`;
+  }).join('');
+
+  list.querySelectorAll('[data-revoke]').forEach(btn => {
+    btn.addEventListener('click', async () => {
+      const { error } = await supabaseClient.from('judge_invites').update({ status: 'revoked' }).eq('id', btn.dataset.revoke);
+      if (error) { alert('Could not revoke: ' + error.message); return; }
+      loadInvites();
+    });
+  });
+}
+
+function copyInviteLink(token){
+  const link = window.location.origin + window.location.pathname + '?invite=' + token;
+  if (navigator.clipboard) navigator.clipboard.writeText(link).catch(() => {});
+}
+
+/* =========================================================
+   JUDGE: MY ROUNDS
+   ========================================================= */
+async function loadMyRounds(){
+  const list = $('mine-list');
+  list.innerHTML = '<div class="empty">Loading…</div>';
+
+  const { data, error } = await supabaseClient
+    .from('round_judges')
+    .select('competition_rounds(id, round_name, division, status, num_judges, advance_count, events(name))')
+    .eq('judge_id', currentUser.id);
+
+  if (error) { list.innerHTML = '<div class="empty">Could not load your rounds: ' + esc(error.message) + '</div>'; return; }
+  if (!data || !data.length) { list.innerHTML = '<div class="empty">You have not been assigned to any rounds yet.</div>'; return; }
+
+  list.innerHTML = data.map(row => {
+    const r = row.competition_rounds;
+    if (!r) return '';
+    return `
+    <div class="round-card">
+      <div class="round-card-top">
+        <span class="round-div-tag ${esc(r.division)}">${esc(r.division)}</span>
+        <div class="round-info">
+          <div class="rname">${esc(r.round_name)}</div>
+          <div class="rmeta">${esc(r.events ? r.events.name : '')}${r.advance_count ? ' · ' + r.advance_count + ' advance' : ''}</div>
+        </div>
+        <span class="round-status ${r.status}">${r.status}</span>
+      </div>
+    </div>`;
+  }).join('');
+}
+
+</script>
+</body>
+</html>
