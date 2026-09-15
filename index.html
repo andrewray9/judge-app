@@ -84,11 +84,7 @@ h1{font-family:'Playfair Display',serif;font-size:30px;font-weight:700;letter-sp
 .tab-row{display:flex;gap:6px;margin-bottom:1.5rem;flex-wrap:wrap;}
 .tab{font-size:13px;font-weight:500;padding:7px 15px;cursor:pointer;border:1.5px solid transparent;border-radius:999px;background:var(--bg2);color:var(--t2);white-space:nowrap;transition:all 0.15s;}
 .tab:hover:not(.active){background:var(--bg3);color:var(--t1);}
-.tab[data-tab="events"].active{background:#EEEDFE;color:#3C3489;border-color:#AFA9EC;}
-.tab[data-tab="create"].active{background:#EAF3DE;color:#27500A;border-color:#C0DD97;}
-.tab[data-tab="rounds"].active{background:#E6F1FB;color:#0C447C;border-color:#B5D4F4;}
-.tab[data-tab="judges"].active{background:#FBEAF0;color:#72243E;border-color:#ED93B1;}
-.tab[data-tab="mine"].active{background:#E6F1FB;color:#0C447C;border-color:#B5D4F4;}
+
 
 .card{background:var(--bg);border:0.5px solid var(--b3);border-radius:var(--radius-lg);padding:1.5rem;margin-bottom:1rem;}
 .card h2{font-family:'Playfair Display',serif;font-size:19px;font-weight:600;margin-bottom:2px;}
@@ -103,6 +99,11 @@ h1{font-family:'Playfair Display',serif;font-size:30px;font-weight:700;letter-sp
 .div-opt.sel[data-div="Male"]{background:var(--blue-bg);border-color:var(--blue-border);color:var(--blue-text);}
 .div-opt.sel[data-div="Female"]{background:var(--pink-bg);border-color:var(--pink-border);color:var(--pink-text);}
 .div-opt.sel[data-div="Diamond"]{background:var(--amber-bg);border-color:var(--amber-border);color:var(--amber-text);}
+.role-picker{display:grid;grid-template-columns:repeat(2,1fr);gap:8px;margin-bottom:16px;}
+.role-opt{border:1.5px solid var(--b3);border-radius:var(--radius-md);padding:12px 8px;text-align:center;cursor:pointer;font-size:13px;font-weight:600;background:var(--bg2);color:var(--t2);transition:all 0.12s;}
+.role-opt:hover{background:var(--bg3);}
+.role-opt.sel[data-role="admin"]{background:var(--amber-bg);border-color:var(--amber-border);color:var(--amber-text);}
+.role-opt.sel[data-role="judge"]{background:var(--blue-bg);border-color:var(--blue-border);color:var(--blue-text);}
 
 .btn{padding:10px 18px;background:var(--t1);color:var(--bg);border:none;border-radius:var(--radius-md);font-size:14px;font-weight:500;font-family:'DM Sans',sans-serif;cursor:pointer;transition:opacity 0.12s;}
 .btn:hover{opacity:0.85;}
@@ -110,15 +111,17 @@ h1{font-family:'Playfair Display',serif;font-size:30px;font-weight:700;letter-sp
 .btn.secondary{background:var(--bg2);color:var(--t1);border:0.5px solid var(--b2);}
 .btn.danger{background:var(--red-bg);color:var(--red-text);border:0.5px solid var(--red-border);}
 .btn.small{padding:6px 12px;font-size:12px;}
+.tab-bar{display:flex;gap:6px;margin:1.1rem 0 1.25rem;flex-wrap:wrap;}
+.tab-btn{padding:9px 16px;background:var(--bg2);color:var(--t2);border:0.5px solid var(--b2);border-radius:999px;font-size:13px;font-weight:500;font-family:'DM Sans',sans-serif;cursor:pointer;transition:all 0.12s;}
+.tab-btn:hover{color:var(--t1);}
+.tab-btn.active{background:var(--t1);color:var(--bg);border-color:var(--t1);}
+.tab-panel{display:none;}
+.tab-panel.active{display:block;}
 
 .form-msg{font-size:13px;padding:8px 12px;border-radius:var(--radius-md);margin-bottom:14px;display:none;}
 .form-msg.show{display:block;}
 .form-msg.ok{background:var(--green-bg);color:var(--green-text);border:0.5px solid var(--green-border);}
 .form-msg.err{background:var(--red-bg);color:var(--red-text);border:0.5px solid var(--red-border);}
-
-/* event selector */
-.event-select-bar{display:flex;align-items:center;gap:10px;margin-bottom:1rem;flex-wrap:wrap;}
-.event-select-bar select{flex:1;min-width:180px;padding:9px 13px;border:0.5px solid var(--b2);border-radius:var(--radius-md);background:var(--bg2);color:var(--t1);font-size:14px;font-family:'DM Sans',sans-serif;appearance:none;background-image:url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='10' height='6'><path d='M0 0l5 6 5-6z' fill='%236b6a66'/></svg>");background-repeat:no-repeat;background-position:right 13px center;padding-right:32px;}
 
 /* event card */
 .event-card{background:var(--bg);border:0.5px solid var(--b3);border-radius:var(--radius-lg);padding:16px 18px;margin-bottom:10px;}
@@ -126,6 +129,20 @@ h1{font-family:'Playfair Display',serif;font-size:30px;font-weight:700;letter-sp
 .event-card .emeta{font-size:12px;color:var(--t2);margin-top:2px;}
 .event-card .edesc{font-size:13px;color:var(--t2);margin-top:8px;line-height:1.5;}
 .event-card .eactions{display:flex;gap:6px;margin-top:12px;}
+.event-card.expanded{border-color:var(--b2);}
+.event-card .eactions .btn.active{background:var(--t1);color:var(--bg);border-color:var(--t1);}
+
+/* the whole management panel, living inside an event card */
+.event-panel{margin-top:14px;padding-top:14px;border-top:0.5px solid var(--b3);}
+.event-panel .tab-bar{margin:0 0 1rem;}
+.event-panel .card{background:var(--bg2);border:0.5px solid var(--b3);padding:1.15rem 1.2rem;margin-bottom:0;}
+.event-panel .card h2,.event-panel h2{font-family:'Playfair Display',serif;font-size:17px;font-weight:600;margin-bottom:2px;}
+.event-panel .card-sub{margin-bottom:1rem;}
+.event-panel .round-card,.event-panel .invite-row{background:var(--bg2);}
+.event-panel .form-grid{margin-bottom:12px;}
+.event-panel .field input,.event-panel .field select{background:var(--bg);}
+.detail-actions{grid-column:1/-1;display:flex;gap:8px;flex-wrap:wrap;}
+@media(max-width:640px){.event-panel .card{padding:1rem;}}
 
 /* round list */
 .round-card{background:var(--bg);border:0.5px solid var(--b3);border-radius:var(--radius-lg);padding:16px 18px;margin-bottom:10px;}
@@ -151,7 +168,57 @@ h1{font-family:'Playfair Display',serif;font-size:30px;font-weight:700;letter-sp
 .round-edit-grid{display:grid;grid-template-columns:1fr 1fr 1fr;gap:10px;margin-top:12px;padding-top:12px;border-top:0.5px solid var(--b3);}
 .round-edit-grid .field{margin-bottom:0;}
 
+/* dancers + judge assignment */
+.dancer-row{display:flex;align-items:center;gap:12px;background:var(--bg);border:0.5px solid var(--b3);border-radius:var(--radius-md);padding:10px 14px;margin-bottom:8px;flex-wrap:wrap;}
+.dancer-num{font-size:11px;font-weight:700;letter-spacing:0.4px;background:var(--bg3);color:var(--t2);border:0.5px solid var(--b3);border-radius:20px;padding:3px 10px;flex-shrink:0;}
+.dancer-name{flex:1;min-width:140px;font-size:14px;font-weight:500;}
+.division-head{font-size:11px;font-weight:700;text-transform:uppercase;letter-spacing:0.5px;color:var(--t3);margin:14px 0 8px;}
+.division-head:first-child{margin-top:0;}
+
+.round-assign-section{margin-top:12px;padding-top:12px;border-top:0.5px solid var(--b3);display:none;}
+.round-assign-section.open{display:block;}
+.assign-toolbar{display:flex;align-items:center;gap:8px;flex-wrap:wrap;margin-bottom:12px;}
+.assign-toolbar label{font-size:12px;color:var(--t2);}
+.assign-toolbar input[type=number]{width:62px;padding:6px 9px;border:0.5px solid var(--b2);border-radius:var(--radius-md);background:var(--bg2);color:var(--t1);font-size:13px;font-family:'DM Sans',sans-serif;}
+.assign-row{display:flex;gap:12px;align-items:flex-start;padding:9px 0;border-top:0.5px solid var(--b3);flex-wrap:wrap;}
+.assign-row:first-of-type{border-top:none;}
+.assign-row .assign-name{min-width:150px;flex:0 0 auto;font-size:13px;font-weight:500;padding-top:3px;}
+.assign-judges{display:flex;flex-wrap:wrap;gap:6px;flex:1;}
+.judge-toggle{display:inline-flex;align-items:center;gap:5px;font-size:11.5px;border-radius:20px;padding:4px 11px;cursor:pointer;background:var(--bg2);border:0.5px solid var(--b3);color:var(--t2);user-select:none;transition:all 0.12s;}
+.judge-toggle:hover{border-color:var(--b2);}
+.judge-toggle.on{background:var(--blue-bg);border-color:var(--blue-border);color:var(--blue-text);font-weight:500;}
+.judge-toggle input{display:none;}
+.assign-count{font-size:11px;color:var(--t3);align-self:center;}
+.assign-note{font-size:12px;color:var(--t3);}
+
 .status-select{font-size:12px;padding:4px 8px;border-radius:20px;border:0.5px solid var(--b2);background:var(--bg2);color:var(--t1);font-family:'DM Sans',sans-serif;}
+
+/* ---------- QUICK SETUP ---------- */
+.qs-wrap{margin-bottom:0;}
+.qs-wrap h3{font-family:'Playfair Display',serif;font-size:16px;font-weight:600;margin-bottom:2px;}
+.qs-sub{font-size:12px;color:var(--t2);margin-bottom:1rem;}
+.qs-div-block{margin-bottom:1rem;}
+.qs-div-label{font-size:11px;font-weight:700;text-transform:uppercase;letter-spacing:0.5px;color:var(--t3);margin-bottom:8px;}
+.qs-round-grid{display:flex;flex-wrap:wrap;gap:7px;margin-bottom:8px;}
+.qs-round-chip{border:1.5px solid var(--b3);border-radius:20px;padding:5px 13px;font-size:12px;font-weight:500;cursor:pointer;background:var(--bg);color:var(--t2);transition:all 0.12s;user-select:none;}
+.qs-round-chip:hover{border-color:var(--b2);color:var(--t1);}
+.qs-round-chip.sel{background:var(--t1);color:var(--bg);border-color:var(--t1);}
+.qs-round-chip.sel[data-qs-div="Male"]{background:var(--blue-bg);border-color:var(--blue-border);color:var(--blue-text);}
+.qs-round-chip.sel[data-qs-div="Female"]{background:var(--pink-bg);border-color:var(--pink-border);color:var(--pink-text);}
+.qs-round-chip.sel[data-qs-div="Diamond"]{background:var(--amber-bg);border-color:var(--amber-border);color:var(--amber-text);}
+.qs-order-preview{font-size:11.5px;color:var(--t2);min-height:18px;}
+.qs-order-preview span{font-weight:500;color:var(--t1);}
+
+.qs-actions{display:flex;gap:8px;margin-top:1rem;flex-wrap:wrap;align-items:center;}
+.qs-msg{font-size:12px;display:none;}
+.qs-msg.show{display:inline-block;}
+.qs-msg.ok{color:var(--green-text);}
+.qs-msg.err{color:var(--red-text);}
+
+/* progress banner */
+.prog-banner{background:var(--green-bg);border:0.5px solid var(--green-border);border-radius:var(--radius-md);padding:10px 14px;margin-bottom:12px;font-size:13px;color:var(--green-text);display:none;}
+.prog-banner.show{display:block;}
+.prog-banner strong{font-weight:600;}
 
 .empty{font-size:13px;color:var(--t3);text-align:center;padding:2.5rem 1rem;}
 .divider{height:0.5px;background:var(--b3);margin:1.25rem 0;}
@@ -168,6 +235,35 @@ h1{font-family:'Playfair Display',serif;font-size:30px;font-weight:700;letter-sp
 .invite-link-box{display:flex;gap:8px;align-items:center;background:var(--bg2);border:0.5px solid var(--b3);border-radius:var(--radius-md);padding:8px 10px;margin-top:10px;font-size:12px;word-break:break-all;}
 .invite-link-box code{flex:1;font-family:monospace;}
 
+/* ---------- BRACKET ---------- */
+.bracket-div-block{margin-bottom:2rem;}
+.bracket-div-heading{display:flex;align-items:center;gap:10px;margin-bottom:1rem;}
+.bracket-div-heading h3{font-family:'Playfair Display',serif;font-size:17px;font-weight:600;margin:0;}
+.bracket-rounds-row{display:flex;gap:12px;overflow-x:auto;padding-bottom:8px;}
+.bracket-round-col{min-width:200px;flex:0 0 200px;}
+.bracket-round-col-head{font-size:11px;font-weight:700;text-transform:uppercase;letter-spacing:0.5px;color:var(--t3);margin-bottom:8px;display:flex;align-items:center;justify-content:space-between;}
+.bracket-round-col-head .brc-status{font-weight:500;border-radius:20px;padding:2px 8px;font-size:10px;text-transform:none;letter-spacing:0;}
+.bracket-round-col-head .brc-status.draft{background:var(--bg2);color:var(--t3);border:0.5px solid var(--b3);}
+.bracket-round-col-head .brc-status.active{background:var(--green-bg);color:var(--green-text);border:0.5px solid var(--green-border);}
+.bracket-round-col-head .brc-status.completed{background:var(--purple-bg);color:var(--purple-text);border:0.5px solid var(--purple-border);}
+.bracket-entry{background:var(--bg);border:0.5px solid var(--b3);border-radius:var(--radius-md);padding:9px 12px;margin-bottom:6px;display:flex;align-items:center;gap:8px;transition:border-color 0.12s;}
+.bracket-entry.winner{border-color:var(--green-border);background:var(--green-bg);}
+.bracket-entry.winner .be-name{color:var(--green-text);font-weight:600;}
+.bracket-entry.winner .be-num{background:var(--green-border);color:var(--green-text);}
+.be-num{font-size:10px;font-weight:700;background:var(--bg3);color:var(--t3);border-radius:20px;padding:2px 7px;flex-shrink:0;}
+.be-name{flex:1;font-size:13px;font-weight:500;}
+.be-win-btn{font-size:10px;padding:3px 8px;border-radius:20px;border:0.5px solid var(--b3);background:var(--bg2);color:var(--t2);cursor:pointer;font-family:'DM Sans',sans-serif;white-space:nowrap;transition:all 0.12s;flex-shrink:0;}
+.be-win-btn:hover{border-color:var(--green-border);color:var(--green-text);}
+.bracket-entry.winner .be-win-btn{border-color:var(--green-border);background:var(--green-bg);color:var(--green-text);}
+.bracket-empty{font-size:12px;color:var(--t3);padding:8px 0;}
+.bracket-connector{display:flex;align-items:center;justify-content:center;color:var(--t3);font-size:18px;flex-shrink:0;padding-top:28px;}
+
+/* ---------- CONNECTION ERROR MODAL ---------- */
+.conn-modal-overlay{position:fixed;inset:0;background:rgba(0,0,0,0.45);z-index:1000;display:flex;align-items:center;justify-content:center;padding:1rem;}
+.conn-modal{background:var(--bg);border:0.5px solid var(--b2);border-radius:var(--radius-lg);padding:2rem 1.75rem;max-width:360px;width:100%;text-align:center;}
+.conn-modal h3{font-family:'Playfair Display',serif;font-size:20px;font-weight:600;margin-bottom:8px;}
+.conn-modal p{font-size:13px;color:var(--t2);line-height:1.6;margin-bottom:1.5rem;}
+.conn-modal-actions{display:flex;gap:8px;justify-content:center;}
 </style>
 </head>
 <body>
@@ -175,7 +271,7 @@ h1{font-family:'Playfair Display',serif;font-size:30px;font-weight:700;letter-sp
 <!-- AUTH SCREEN -->
 <div class="auth-wrap" id="auth-wrap">
   <div class="auth-card">
-    <h1 id="auth-title">Round Manager</h1>
+    <h1 id="auth-title">Login</h1>
     <p class="sub" id="auth-sub">Sign in to manage your competitions</p>
 
     <div class="auth-invite-banner" id="invite-banner" style="display:none;"></div>
@@ -185,6 +281,13 @@ h1{font-family:'Playfair Display',serif;font-size:30px;font-weight:700;letter-sp
     <div class="field" id="field-fullname" style="display:none;">
       <label>Full name</label>
       <input type="text" id="auth-fullname" placeholder="Your name" autocomplete="name">
+    </div>
+    <div class="field" id="field-role" style="display:none;">
+      <label>Sign up as</label>
+      <div class="role-picker" id="role-picker">
+        <div class="role-opt sel" data-role="admin">Admin</div>
+        <div class="role-opt" data-role="judge">Judge</div>
+      </div>
     </div>
     <div class="field">
       <label>Email</label>
@@ -196,7 +299,7 @@ h1{font-family:'Playfair Display',serif;font-size:30px;font-weight:700;letter-sp
     </div>
 
     <button class="auth-btn" id="auth-btn" onclick="authSubmit()">Sign in</button>
-    <div class="auth-toggle" id="auth-toggle">No account? <span onclick="toggleAuthMode()">Create an admin account</span></div>
+    <div class="auth-toggle" id="auth-toggle">No account? <span onclick="toggleAuthMode()">Create an account</span></div>
   </div>
 </div>
 
@@ -204,7 +307,7 @@ h1{font-family:'Playfair Display',serif;font-size:30px;font-weight:700;letter-sp
 <div class="app" id="app">
 
   <div class="app-header">
-    <h1>Round Manager</h1>
+    <h1>Dashboard</h1>
     <span class="admin-badge" id="role-badge-admin" style="display:none;">Admin</span>
     <span class="judge-badge" id="role-badge-judge" style="display:none;">Judge</span>
     <div class="user-pill">
@@ -212,36 +315,28 @@ h1{font-family:'Playfair Display',serif;font-size:30px;font-weight:700;letter-sp
       <button class="logout" onclick="logout()" title="Sign out">&times;</button>
     </div>
   </div>
-  <div class="subtitle" id="app-subtitle">Set up divisions, judges, and cut lines for every round of the competition.</div>
+  <div class="subtitle" id="app-subtitle">Manage your competitions</div>
 
   <div class="sync-bar" id="sync-bar">
     <span class="sync-dot" id="sync-dot"></span>
     <span id="sync-label">Connecting…</span>
   </div>
 
-  <!-- ADMIN TABS -->
-  <div class="tab-row" id="admin-tabs" style="display:none;">
-    <div class="tab active" data-tab="events">Events</div>
-    <div class="tab" data-tab="create">Create round</div>
-    <div class="tab" data-tab="rounds">All rounds</div>
-    <div class="tab" data-tab="judges">Judges</div>
-  </div>
+  <!-- ADMIN: EVERYTHING ON ONE PAGE -->
+  <div id="admin-view" style="display:none;">
 
-  <!-- JUDGE TABS -->
-  <div class="tab-row" id="judge-tabs" style="display:none;">
-    <div class="tab active" data-tab="mine">My rounds</div>
-  </div>
-
-  <!-- EVENTS -->
-  <div class="tab-panel" id="panel-events">
-    <div class="card">
-      <h2>New event</h2>
-      <div class="card-sub">Create a competition. Rounds and judges live inside an event.</div>
+    <!-- STEP 1: EVENTS -->
+    <div style="margin-bottom:1rem;">
+      <button class="btn" id="btn-show-create-event" onclick="toggleCreateEventForm()">+ Create an event</button>
+    </div>
+    <div class="card" id="sec-new-event" style="display:none;">
+      <h2>Create an event</h2>
+      <div class="card-sub">Create a competition.</div>
       <div id="event-msg" class="form-msg"></div>
       <div class="form-grid">
         <div class="field">
           <label>Event name</label>
-          <input type="text" id="event-name" placeholder="e.g. Spring Showcase 2026">
+          <input type="text" id="event-name" placeholder="e.g. Standard Western - Tennessee">
         </div>
         <div class="field">
           <label>Date</label>
@@ -252,21 +347,58 @@ h1{font-family:'Playfair Display',serif;font-size:30px;font-weight:700;letter-sp
           <input type="text" id="event-desc" placeholder="Venue, notes, etc.">
         </div>
       </div>
-      <button class="btn" id="btn-create-event">Create event</button>
+      <div style="display:flex;gap:8px;">
+        <button class="btn" id="btn-create-event">Create event</button>
+        <button class="btn secondary" onclick="toggleCreateEventForm()">Cancel</button>
+      </div>
     </div>
     <div id="events-list"></div>
-  </div>
 
-  <!-- CREATE ROUND -->
-  <div class="tab-panel" id="panel-create" style="display:none;">
-    <div class="event-select-bar">
-      <select id="event-select-create"></select>
-    </div>
-    <div id="create-noevent" class="empty" style="display:none;">Create an event first, then come back here to add rounds.</div>
-    <div id="create-round-wrap">
-      <div class="card">
-        <h2>New round</h2>
-        <div class="card-sub">Fill in the details for this round of judging.</div>
+    <!-- The whole management panel below is moved into whichever event card is open. -->
+    <div id="manage-holder" style="display:none;">
+
+      <div class="tab-bar" id="manage-tab-bar">
+        <button class="tab-btn active" data-tab="details" id="tab-btn-details">Details</button>
+        <button class="tab-btn" data-tab="add-round" id="tab-btn-add-round">Add a round</button>
+        <button class="tab-btn" data-tab="rounds" id="tab-btn-rounds">Rounds</button>
+        <button class="tab-btn" data-tab="dancers" id="tab-btn-dancers">Dancers</button>
+        <button class="tab-btn" data-tab="bracket" id="tab-btn-bracket">Bracket</button>
+
+      </div>
+
+    <div id="event-managed-sections">
+
+      <!-- EVENT DETAILS -->
+      <div class="card tab-panel active" id="sec-event-details">
+        <h2>Event details</h2>
+        <div class="card-sub">Rename this event, change the date, or update its description.</div>
+        <div id="detail-msg" class="form-msg"></div>
+        <div class="form-grid">
+          <div class="field">
+            <label>Event name</label>
+            <input type="text" id="edit-event-name">
+          </div>
+          <div class="field">
+            <label>Date</label>
+            <input type="date" id="edit-event-date">
+          </div>
+          <div class="field full">
+            <label>Description (optional)</label>
+            <input type="text" id="edit-event-desc" placeholder="Venue, notes, etc.">
+          </div>
+          <div class="detail-actions">
+            <button class="btn small" id="btn-save-event">Save changes</button>
+            <button class="btn secondary small" id="btn-regen-code">New join code</button>
+            <button class="btn danger small" id="btn-delete-event">Delete event</button>
+          </div>
+        </div>
+      </div>
+
+
+      <!-- ADD A ROUND -->
+      <div class="card tab-panel active" id="sec-add-round">
+        <h2>Add a round</h2>
+        <div class="card-sub">Fill in the details for this round.</div>
 
         <div id="create-msg" class="form-msg"></div>
 
@@ -299,56 +431,117 @@ h1{font-family:'Playfair Display',serif;font-size:30px;font-weight:700;letter-sp
           <div class="field full">
             <label>Competitors advancing</label>
             <input type="number" id="advance-count" min="1" placeholder="e.g. 12">
-            <div class="hint">Roughly how many competitors move on to the next round.</div>
           </div>
         </div>
 
-        <div class="field full" id="create-judges-picker" style="margin-bottom:16px;">
-          <label>Assign judges (optional — you can also do this later)</label>
-          <div id="create-judges-list" style="font-size:12px;color:var(--t3);">No judges yet.</div>
-        </div>
 
         <button class="btn" id="btn-create">Create round</button>
-      </div>
-    </div>
-  </div>
 
-  <!-- ALL ROUNDS -->
-  <div class="tab-panel" id="panel-rounds" style="display:none;">
-    <div class="event-select-bar">
-      <select id="event-select-rounds"></select>
-    </div>
-    <div id="rounds-list"></div>
-  </div>
+        <div class="divider"></div>
 
-  <!-- JUDGES (admin) -->
-  <div class="tab-panel" id="panel-judges" style="display:none;">
-    <div class="card">
-      <h2>Invite a judge</h2>
-      <div class="card-sub">Judges are invited by email. They set their own password when they accept.</div>
-      <div id="invite-msg" class="form-msg"></div>
-      <div class="form-grid">
-        <div class="field">
-          <label>Judge's email</label>
-          <input type="email" id="invite-email" placeholder="judge@example.com">
-        </div>
-        <div class="field">
-          <label>Event</label>
-          <select id="invite-event"></select>
-        </div>
-        <div class="field full">
-          <label>Round (optional)</label>
-          <select id="invite-round"><option value="">Any round in this event</option></select>
+        <!-- QUICK SETUP -->
+        <div class="qs-wrap" id="qs-wrap">
+          <h3>Quick setup</h3>
+          <p class="qs-sub">Pick which rounds to create for each division..</p>
+
+          <div id="qs-divisions">
+            <!-- Male -->
+            <div class="qs-div-block">
+              <div class="qs-div-label" style="color:var(--blue-text);">Male</div>
+              <div class="qs-round-grid" id="qs-chips-Male"></div>
+              <div class="qs-order-preview" id="qs-order-Male"></div>
+            </div>
+            <!-- Female -->
+            <div class="qs-div-block">
+              <div class="qs-div-label" style="color:var(--pink-text);">Female</div>
+              <div class="qs-round-grid" id="qs-chips-Female"></div>
+              <div class="qs-order-preview" id="qs-order-Female"></div>
+            </div>
+            <!-- Diamond -->
+            <div class="qs-div-block">
+              <div class="qs-div-label" style="color:var(--amber-text);">Diamond</div>
+              <div class="qs-round-grid" id="qs-chips-Diamond"></div>
+              <div class="qs-order-preview" id="qs-order-Diamond"></div>
+            </div>
+          </div>
+
+          <div class="qs-actions">
+            <button class="btn small" id="btn-qs-create">Create selected rounds</button>
+            <button class="btn secondary small" id="btn-qs-clear">Clear all</button>
+            <span class="qs-msg" id="qs-msg"></span>
+          </div>
         </div>
       </div>
-      <button class="btn" id="btn-invite">Send invite</button>
-      <div id="invite-link-result"></div>
+
+      <!-- DANCERS -->
+      <div class="card tab-panel" id="sec-dancers">
+        <h2>Dancers</h2>
+        <div class="card-sub">Add dancers to your event. Dancers appear in the rounds that match their division.</div>
+        <div id="dancer-msg" class="form-msg"></div>
+        <div class="form-grid">
+          <div class="field">
+            <label>Dancer name</label>
+            <input type="text" id="dancer-name" placeholder="e.g. Jane Doe" onkeydown="if(event.key==='Enter')$('btn-add-dancer').click()">
+          </div>
+          <div class="field">
+            <label>Number (optional)</label>
+            <input type="text" id="dancer-number" placeholder="e.g. 114">
+          </div>
+          <div class="field">
+            <label>Division</label>
+            <select id="dancer-division">
+              <option value="Male">Male</option>
+              <option value="Female">Female</option>
+              <option value="Diamond">Diamond</option>
+            </select>
+          </div>
+          <div class="field">
+            <label>&nbsp;</label>
+            <button class="btn" id="btn-add-dancer" style="width:100%;">Add dancer</button>
+          </div>
+        </div>
+        <div id="dancers-list"></div>
+      </div>
+
+      <!-- ALL ROUNDS FOR THIS EVENT -->
+      <div class="tab-panel" id="sec-rounds">
+        <h2 style="font-family:'Playfair Display',serif;font-size:19px;font-weight:600;margin-bottom:0.9rem;">Rounds</h2>
+
+        <!-- PROGRESSION BANNER -->
+        <div class="prog-banner" id="prog-banner"></div>
+
+        <div id="rounds-list"></div>
+      </div>
+
+      <!-- BRACKET -->
+      <div class="tab-panel" id="sec-bracket">
+        <h2 style="font-family:'Playfair Display',serif;font-size:19px;font-weight:600;margin-bottom:0.25rem;">Bracket</h2>
+        <p style="font-size:12px;color:var(--t2);margin-bottom:1.25rem;">Competitors per round, by division. You can select individual round winners if you would like to by selecting "Mark won".</p>
+        <div id="bracket-content"></div>
+      </div>
+
+      <!-- JUDGES -->
+
+
     </div>
-    <div id="invites-list"></div>
+    </div>
+
   </div>
 
   <!-- JUDGE: MY ROUNDS -->
-  <div class="tab-panel" id="panel-mine" style="display:none;">
+  <div id="judge-view" style="display:none;">
+    <div class="card">
+      <h2>Join an event</h2>
+      <div class="card-sub">Enter the join code an admin shared with you.</div>
+      <div id="join-msg" class="form-msg"></div>
+      <div class="form-grid">
+        <div class="field">
+          <label>Join code</label>
+          <input type="text" id="join-code-input" placeholder="e.g. 7K2P9Q" style="text-transform:uppercase;" onkeydown="if(event.key==='Enter')$('btn-join-event').click()">
+        </div>
+      </div>
+      <button class="btn" id="btn-join-event">Join event</button>
+    </div>
     <div id="mine-list"></div>
   </div>
 
@@ -363,14 +556,25 @@ let currentDivision = null;
 let currentUser = null;      // supabase auth user
 let currentProfile = null;   // { id, email, full_name, role }
 let isSignUp = false;
+let signupRole = 'admin';   // chosen on the signup form when no invite is present
 let inviteToken = null;      // present when arriving via ?invite=TOKEN
 let myEvents = [];           // admin's own events
 let myJudges = [];           // profiles of judges this admin has invited & who accepted
-let currentEventId_create = null;
-let currentEventId_rounds = null;
+let currentEventId = null;   // the single event currently being set up on the admin page
+let expandedEventId = null;  // which event card is open (its panel holds the manage UI)
+let myCompetitors = [];      // dancers in the currently-open event
+let roundAssignments = {};   // { roundId: { competitorId: [judgeId,…] } }
 
 const $ = (id) => document.getElementById(id);
+function toggleCreateEventForm(){
+  const form = $('sec-new-event');
+  const btn = $('btn-show-create-event');
+  const visible = form.style.display !== 'none';
+  form.style.display = visible ? 'none' : 'block';
+  btn.textContent = visible ? '+ Create an event' : '− Cancel';
+}
 function esc(s){ return String(s==null?'':s).replace(/[&<>"']/g, c => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c])); }
+function shuffle(arr){ for (let i = arr.length - 1; i > 0; i--) { const j = Math.floor(Math.random() * (i + 1)); [arr[i], arr[j]] = [arr[j], arr[i]]; } return arr; }
 function fmtDate(d){ if(!d) return ''; try { return new Date(d + 'T00:00:00').toLocaleDateString(undefined,{month:'short',day:'numeric',year:'numeric'}); } catch(e){ return d; } }
 
 /* =========================================================
@@ -385,7 +589,7 @@ function setSync(state, label) {
 function initSupabase() {
   try {
     supabaseClient = window.supabase.createClient(SUPABASE_URL, SUPABASE_ANON_KEY);
-    setSync('synced', 'Connected to Supabase');
+    setSync('synced', 'Connected');
   } catch (e) {
     supabaseClient = null;
     setSync('error', 'Connection failed');
@@ -484,12 +688,22 @@ async function enterInviteMode(token){
 function toggleAuthMode() {
   if (inviteToken) return; // no toggle while accepting an invite
   isSignUp = !isSignUp;
-  $('auth-sub').textContent = isSignUp ? 'Create an admin account to get started' : 'Sign in to manage your competitions';
-  $('auth-btn').textContent = isSignUp ? 'Create admin account' : 'Sign in';
-  $('auth-toggle').innerHTML = isSignUp ? 'Already have an account? <span onclick="toggleAuthMode()">Sign in</span>' : 'No account? <span onclick="toggleAuthMode()">Create an admin account</span>';
+  $('auth-sub').textContent = isSignUp ? 'Create an account to get started' : 'Sign in to manage your competitions';
+  $('auth-btn').textContent = isSignUp ? (signupRole === 'judge' ? 'Create judge account' : 'Create admin account') : 'Sign in';
+  $('auth-toggle').innerHTML = isSignUp ? 'Already have an account? <span onclick="toggleAuthMode()">Sign in</span>' : 'No account? <span onclick="toggleAuthMode()">Create one</span>';
   $('field-fullname').style.display = isSignUp ? 'block' : 'none';
+  $('field-role').style.display = isSignUp ? 'block' : 'none';
   clearAuthMsgs();
 }
+
+document.querySelectorAll('.role-opt').forEach(opt => {
+  opt.addEventListener('click', () => {
+    document.querySelectorAll('.role-opt').forEach(o => o.classList.remove('sel'));
+    opt.classList.add('sel');
+    signupRole = opt.dataset.role;
+    $('auth-btn').textContent = signupRole === 'judge' ? 'Create judge account' : 'Create admin account';
+  });
+});
 
 async function authSubmit(){
   const email = $('auth-email').value.trim();
@@ -521,7 +735,7 @@ async function authSubmit(){
     } else if (isSignUp) {
       const { data, error } = await supabaseClient.auth.signUp({
         email, password,
-        options: { data: { full_name: fullName } }
+        options: { data: { full_name: fullName, requested_role: signupRole } }
       });
       if (error) throw error;
       if (!data.session) {
@@ -586,39 +800,91 @@ function enterApp(){
   if (currentProfile.role === 'admin') {
     $('role-badge-admin').style.display = 'inline-block';
     $('role-badge-judge').style.display = 'none';
-    $('admin-tabs').style.display = 'flex';
-    $('judge-tabs').style.display = 'none';
-    $('app-subtitle').textContent = 'Set up divisions, judges, and cut lines for every round of the competition.';
-    document.querySelector('.tab[data-tab="events"]').click();
+    $('admin-view').style.display = 'block';
+    $('judge-view').style.display = 'none';
+    $('app-subtitle').textContent = 'Manage your competitions';
     loadEvents();
   } else {
     $('role-badge-admin').style.display = 'none';
     $('role-badge-judge').style.display = 'inline-block';
-    $('admin-tabs').style.display = 'none';
-    $('judge-tabs').style.display = 'flex';
+    $('admin-view').style.display = 'none';
+    $('judge-view').style.display = 'block';
     $('app-subtitle').textContent = 'Rounds you have been assigned to judge.';
-    document.querySelectorAll('.tab-panel').forEach(p => p.style.display = 'none');
-    $('panel-mine').style.display = 'block';
     loadMyRounds();
   }
 }
 
-/* ---- tabs ---- */
-document.querySelectorAll('.tab').forEach(tab => {
-  tab.addEventListener('click', () => {
-    const row = tab.closest('.tab-row');
-    row.querySelectorAll('.tab').forEach(t => t.classList.remove('active'));
-    tab.classList.add('active');
-    document.querySelectorAll('.tab-panel').forEach(p => p.style.display = 'none');
-    $('panel-' + tab.dataset.tab).style.display = 'block';
+function scrollToSection(id){
+  const el = $(id);
+  if (el) el.scrollIntoView({ behavior: 'smooth', block: 'start' });
+}
 
-    if (tab.dataset.tab === 'events') loadEvents();
-    if (tab.dataset.tab === 'create') loadCreatePanel();
-    if (tab.dataset.tab === 'rounds') loadRoundsPanel();
-    if (tab.dataset.tab === 'judges') loadJudgesPanel();
-    if (tab.dataset.tab === 'mine') loadMyRounds();
-  });
+/* ---- tabs inside an event card (Details / Add a round / Rounds / Invite judges) ---- */
+const MANAGE_PANELS = {
+  'details': 'sec-event-details',
+  'add-round': 'sec-add-round',
+  'rounds': 'sec-rounds',
+  'dancers': 'sec-dancers',
+  'invite-judge': 'sec-invite-judge',
+  'bracket': 'sec-bracket'
+};
+let currentManageTab = 'details';
+function switchManageTab(tab){
+  if (!MANAGE_PANELS[tab]) tab = 'details';
+  currentManageTab = tab;
+  document.querySelectorAll('#manage-tab-bar .tab-btn').forEach(b => b.classList.toggle('active', b.dataset.tab === tab));
+  document.querySelectorAll('#event-managed-sections .tab-panel').forEach(p => p.classList.remove('active'));
+  $(MANAGE_PANELS[tab]).classList.add('active');
+  if (tab === 'bracket') loadBracket();
+}
+document.querySelectorAll('#manage-tab-bar .tab-btn').forEach(btn => {
+  btn.addEventListener('click', () => { switchManageTab(btn.dataset.tab); syncCardActionStates(); });
 });
+
+function syncCardActionStates(){
+  document.querySelectorAll('#events-list [data-open-event]').forEach(b => {
+    const open = b.dataset.openEvent === expandedEventId;
+    const t = b.dataset.tab;
+    const match = t === 'rounds'
+      ? (currentManageTab === 'rounds' || currentManageTab === 'add-round')
+      : currentManageTab === t;
+    b.classList.toggle('active', open && match);
+    if (t === 'details') b.textContent = (open && match) ? 'Close' : 'Edit';
+  });
+}
+
+/* The manage UI is a single set of sections that gets physically moved into
+   whichever event card is open, and parked in a hidden holder when none is. */
+function parkManagePanel(){
+  const holder = $('manage-holder');
+  holder.appendChild($('manage-tab-bar'));
+  holder.appendChild($('event-managed-sections'));
+  holder.style.display = 'none';
+}
+function mountManagePanel(eventId){
+  const slot = $('event-panel-' + eventId);
+  if (!slot) { parkManagePanel(); return; }
+  slot.appendChild($('manage-tab-bar'));
+  slot.appendChild($('event-managed-sections'));
+}
+
+async function openEventPanel(id, tab){
+  tab = tab || 'details';
+  // clicking the same button again closes the card
+  if (expandedEventId === id && currentManageTab === tab) { closeEventPanel(); return; }
+  const firstOpen = expandedEventId !== id;
+  expandedEventId = id;
+  currentEventId = id;
+  switchManageTab(tab);
+  renderEvents();
+  if (firstOpen) await refreshManagedSections();
+}
+
+function closeEventPanel(){
+  expandedEventId = null;
+  renderEvents();
+}
+
 /* ---- division picker ---- */
 document.querySelectorAll('.div-opt').forEach(opt => {
   opt.addEventListener('click', () => {
@@ -641,41 +907,106 @@ function showMsg(elId, text, ok) {
 async function loadEvents(){
   const { data, error } = await supabaseClient.from('events').select('*').eq('admin_id', currentUser.id).order('created_at', { ascending: false });
   myEvents = data || [];
+  if (expandedEventId && !myEvents.some(e => e.id === expandedEventId)) expandedEventId = null;
   renderEvents();
-  populateEventSelects();
+  await refreshManagedSections();
+}
+
+/* (Re)load everything that depends on the event whose card is currently open. */
+async function refreshManagedSections(){
+  if (!expandedEventId) return;
+  currentEventId = expandedEventId;
+
+  await loadMyJudgeProfiles();
+  await loadCompetitors();
+  await loadRounds();
+  initQuickSetup();
+  if (currentManageTab === 'bracket') loadBracket();
 }
 
 function renderEvents(){
   const list = $('events-list');
-  if (!myEvents.length) { list.innerHTML = '<div class="empty">No events yet — create one above to get started.</div>'; return; }
-  list.innerHTML = myEvents.map(e => `
-    <div class="event-card" data-id="${e.id}">
-      <div class="ename">${esc(e.name)}</div>
-      <div class="emeta">${e.event_date ? fmtDate(e.event_date) : 'No date set'}</div>
-      ${e.description ? '<div class="edesc">' + esc(e.description) + '</div>' : ''}
-      <div class="eactions">
-        <button class="btn secondary small" data-manage="${e.id}">Manage rounds</button>
-        <button class="btn secondary small" data-invite="${e.id}">Invite judges</button>
-        <button class="btn danger small" data-del-event="${e.id}">Delete</button>
-      </div>
-    </div>
-  `).join('');
 
-  list.querySelectorAll('[data-manage]').forEach(btn => btn.addEventListener('click', () => {
-    currentEventId_rounds = btn.dataset.manage;
-    document.querySelector('.tab[data-tab="rounds"]').click();
-  }));
-  list.querySelectorAll('[data-invite]').forEach(btn => btn.addEventListener('click', () => {
-    document.querySelector('.tab[data-tab="judges"]').click();
-    setTimeout(() => { $('invite-event').value = btn.dataset.invite; $('invite-event').dispatchEvent(new Event('change')); }, 0);
-  }));
-  list.querySelectorAll('[data-del-event]').forEach(btn => btn.addEventListener('click', async () => {
-    if (!confirm('Delete this event and all of its rounds? This cannot be undone.')) return;
-    const { error } = await supabaseClient.from('events').delete().eq('id', btn.dataset.delEvent);
-    if (error) { alert('Could not delete: ' + error.message); return; }
-    loadEvents();
-  }));
+  // detach the manage panel before we wipe the list, so it survives the re-render
+  parkManagePanel();
+
+  if (!myEvents.length) {
+    list.innerHTML = '<div class="empty">No events yet — create one above to get started.</div>';
+    return;
+  }
+
+  list.innerHTML = myEvents.map(e => {
+    const open = e.id === expandedEventId;
+    return `
+    <div class="event-card${open ? ' expanded' : ''}" data-id="${e.id}">
+      <div style="display:flex;align-items:flex-start;justify-content:space-between;gap:12px;">
+        <div>
+          <div class="ename">${esc(e.name)}</div>
+          <div class="emeta">${e.event_date ? fmtDate(e.event_date) : 'No date set'}</div>
+          ${e.description ? '<div class="edesc">' + esc(e.description) + '</div>' : ''}
+        </div>
+        <button class="btn secondary small${open && currentManageTab === 'details' ? ' active' : ''}" style="flex-shrink:0;" data-open-event="${e.id}" data-tab="details">${open && currentManageTab === 'details' ? 'Close' : 'Edit'}</button>
+      </div>
+      <div class="invite-link-box" style="margin-top:12px;">
+        <span>Join code: <code id="join-code-${e.id}">${esc(e.join_code || '—')}</code></span>
+        <button class="btn secondary small" onclick="copyText('join-code-${e.id}')">Copy</button>
+      </div>
+      ${open ? `<div class="event-panel" id="event-panel-${e.id}"></div>` : ''}
+    </div>`;
+  }).join('');
+
+  if (expandedEventId) {
+    mountManagePanel(expandedEventId);
+    const ev = myEvents.find(x => x.id === expandedEventId);
+    if (ev) fillEventDetails(ev);
+  }
+
+  list.querySelectorAll('[data-open-event]').forEach(btn => {
+    btn.addEventListener('click', () => openEventPanel(btn.dataset.openEvent, btn.dataset.tab));
+  });
 }
+
+/* ---- the Details tab reads/writes whichever event card is open ---- */
+function fillEventDetails(e){
+  $('edit-event-name').value = e.name || '';
+  $('edit-event-date').value = e.event_date || '';
+  $('edit-event-desc').value = e.description || '';
+}
+
+$('btn-save-event').addEventListener('click', async () => {
+  if (!expandedEventId) return;
+  const name = $('edit-event-name').value.trim();
+  const event_date = $('edit-event-date').value || null;
+  const description = $('edit-event-desc').value.trim() || null;
+  if (!name) { showMsg('detail-msg', 'Event name cannot be empty.', false); return; }
+
+  const btn = $('btn-save-event');
+  btn.disabled = true; btn.textContent = 'Saving…';
+  const { error } = await supabaseClient.from('events').update({ name, event_date, description }).eq('id', expandedEventId);
+  btn.disabled = false; btn.textContent = 'Save changes';
+
+  if (error) { showMsg('detail-msg', 'Could not save changes: ' + error.message, false); return; }
+  showMsg('detail-msg', 'Changes saved.', true);
+  loadEvents();
+});
+
+$('btn-regen-code').addEventListener('click', async () => {
+  if (!expandedEventId) return;
+  if (!confirm('Generate a new join code? The old code will stop working.')) return;
+  const { error } = await supabaseClient.rpc('regenerate_join_code', { p_event_id: expandedEventId });
+  if (error) { showMsg('detail-msg', 'Could not generate a new code: ' + error.message, false); return; }
+  showMsg('detail-msg', 'New join code generated.', true);
+  loadEvents();
+});
+
+$('btn-delete-event').addEventListener('click', async () => {
+  if (!expandedEventId) return;
+  if (!confirm('Delete this event and all of its rounds? This cannot be undone.')) return;
+  const { error } = await supabaseClient.from('events').delete().eq('id', expandedEventId);
+  if (error) { showMsg('detail-msg', 'Could not delete: ' + error.message, false); return; }
+  expandedEventId = null;
+  loadEvents();
+});
 
 $('btn-create-event').addEventListener('click', async () => {
   const name = $('event-name').value.trim();
@@ -691,42 +1022,17 @@ $('btn-create-event').addEventListener('click', async () => {
   if (error) { showMsg('event-msg', 'Could not create event: ' + error.message, false); return; }
   showMsg('event-msg', 'Event created.', true);
   $('event-name').value = ''; $('event-date').value = ''; $('event-desc').value = '';
-  loadEvents();
+  toggleCreateEventForm();
+  await loadEvents();
+  if (myEvents.length) await openEventPanel(myEvents[0].id, 'add-round');
 });
-
-function populateEventSelects(){
-  const opts = myEvents.length
-    ? myEvents.map(e => `<option value="${e.id}">${esc(e.name)}</option>`).join('')
-    : '<option value="">No events yet</option>';
-
-  ['event-select-create','event-select-rounds','invite-event'].forEach(id => {
-    const sel = $(id);
-    const prev = sel.value;
-    sel.innerHTML = opts;
-    if (myEvents.some(e => e.id === prev)) sel.value = prev;
-  });
-}
 
 /* =========================================================
    CREATE ROUND
    ========================================================= */
-function loadCreatePanel(){
-  if (!myEvents.length) {
-    $('create-noevent').style.display = 'block';
-    $('create-round-wrap').style.display = 'none';
-    return;
-  }
-  $('create-noevent').style.display = 'none';
-  $('create-round-wrap').style.display = 'block';
-  if (!currentEventId_create || !myEvents.some(e => e.id === currentEventId_create)) currentEventId_create = myEvents[0].id;
-  $('event-select-create').value = currentEventId_create;
-  renderCreateJudgesPicker();
-}
-$('event-select-create').addEventListener('change', () => { currentEventId_create = $('event-select-create').value; });
-
 function renderCreateJudgesPicker(){
   const box = $('create-judges-list');
-  if (!myJudges.length) { box.innerHTML = '<div style="font-size:12px;color:var(--t3);">No judges yet — invite some from the Judges tab.</div>'; return; }
+  if (!myJudges.length) { box.innerHTML = '<div style="font-size:12px;color:var(--t3);">No judges yet — invite some from the Invite judges tab.</div>'; return; }
   box.innerHTML = myJudges.map(j => `
     <div class="judge-check-row">
       <input type="checkbox" class="create-judge-cb" value="${j.id}">
@@ -736,7 +1042,7 @@ function renderCreateJudgesPicker(){
 }
 
 $('btn-create').addEventListener('click', async () => {
-  if (!currentEventId_create) { showMsg('create-msg', 'Select an event first.', false); return; }
+  if (!currentEventId) { showMsg('create-msg', 'Select an event first.', false); return; }
   if (!currentDivision) { showMsg('create-msg', 'Select a division.', false); return; }
 
   const round_name = $('round-name').value;
@@ -750,7 +1056,7 @@ $('btn-create').addEventListener('click', async () => {
   btn.disabled = true; btn.textContent = 'Creating…';
 
   const { data, error } = await supabaseClient.from('competition_rounds').insert({
-    event_id: currentEventId_create,
+    event_id: currentEventId,
     division: currentDivision,
     round_name,
     num_judges,
@@ -774,28 +1080,114 @@ $('btn-create').addEventListener('click', async () => {
   showMsg('create-msg', 'Round created.', true);
   $('advance-count').value = '';
   document.querySelectorAll('.create-judge-cb').forEach(cb => cb.checked = false);
+  loadRounds();
+});
+
+/* =========================================================
+   DANCERS (competitors)
+   ========================================================= */
+const DIVISIONS = ['Male','Female','Diamond'];
+
+async function loadCompetitors(){
+  if (!currentEventId) { myCompetitors = []; return; }
+  const { data, error } = await supabaseClient
+    .from('competitors')
+    .select('*')
+    .eq('event_id', currentEventId)
+    .order('created_at', { ascending: true });
+  if (error) { console.warn(error); myCompetitors = []; }
+  else myCompetitors = data || [];
+  renderCompetitors();
+}
+
+function competitorsForDivision(div){
+  return myCompetitors.filter(c => c.division === div);
+}
+function competitorLabel(c){
+  return (c.number ? '#' + c.number + ' ' : '') + (c.name || '');
+}
+
+function renderCompetitors(){
+  const list = $('dancers-list');
+  if (!list) return;
+  if (!myCompetitors.length) { list.innerHTML = '<div class="empty">No dancers yet — add the first one above.</div>'; return; }
+
+  list.innerHTML = DIVISIONS.map(div => {
+    const rows = competitorsForDivision(div);
+    if (!rows.length) return '';
+    return `
+      <div class="division-head">${div} · ${rows.length} dancer${rows.length !== 1 ? 's' : ''}</div>
+      ${rows.map(c => `
+        <div class="dancer-row" data-id="${c.id}">
+          <span class="dancer-num">${c.number ? esc(c.number) : '—'}</span>
+          <span class="dancer-name">${esc(c.name)}</span>
+          <span class="round-div-tag ${esc(c.division)}">${esc(c.division)}</span>
+          <button class="btn secondary small" data-edit-dancer="${c.id}">Rename</button>
+          <button class="btn danger small" data-del-dancer="${c.id}">Remove</button>
+        </div>`).join('')}`;
+  }).join('');
+
+  list.querySelectorAll('[data-del-dancer]').forEach(btn => {
+    btn.addEventListener('click', async () => {
+      if (!confirm('Remove this dancer? Any judge assignments for them will be removed too.')) return;
+      const { error } = await supabaseClient.from('competitors').delete().eq('id', btn.dataset.delDancer);
+      if (error) { showMsg('dancer-msg', 'Could not remove dancer: ' + error.message, false); return; }
+      await loadCompetitors();
+      await loadRounds();
+    });
+  });
+
+  list.querySelectorAll('[data-edit-dancer]').forEach(btn => {
+    btn.addEventListener('click', async () => {
+      const c = myCompetitors.find(x => x.id === btn.dataset.editDancer);
+      if (!c) return;
+      const name = prompt('Dancer name', c.name);
+      if (name === null) return;
+      const number = prompt('Number (leave blank for none)', c.number || '');
+      if (number === null) return;
+      if (!name.trim()) { showMsg('dancer-msg', 'Name cannot be empty.', false); return; }
+      const { error } = await supabaseClient.from('competitors')
+        .update({ name: name.trim(), number: number.trim() || null }).eq('id', c.id);
+      if (error) { showMsg('dancer-msg', 'Could not save: ' + error.message, false); return; }
+      await loadCompetitors();
+      await loadRounds();
+    });
+  });
+}
+
+$('btn-add-dancer').addEventListener('click', async () => {
+  if (!currentEventId) { showMsg('dancer-msg', 'Open an event first.', false); return; }
+  const name = $('dancer-name').value.trim();
+  const number = $('dancer-number').value.trim() || null;
+  const division = $('dancer-division').value;
+  if (!name) { showMsg('dancer-msg', 'Enter a dancer name.', false); return; }
+
+  const btn = $('btn-add-dancer');
+  btn.disabled = true; btn.textContent = 'Adding…';
+  const { error } = await supabaseClient.from('competitors')
+    .insert({ event_id: currentEventId, name, number, division });
+  btn.disabled = false; btn.textContent = 'Add dancer';
+
+  if (error) { showMsg('dancer-msg', 'Could not add dancer: ' + error.message, false); return; }
+  showMsg('dancer-msg', name + ' added.', true);
+  $('dancer-name').value = ''; $('dancer-number').value = '';
+  $('dancer-name').focus();
+  await loadCompetitors();
+  await loadRounds();
 });
 
 /* =========================================================
    ALL ROUNDS
    ========================================================= */
-function loadRoundsPanel(){
-  if (!myEvents.length) { $('rounds-list').innerHTML = '<div class="empty">Create an event first.</div>'; return; }
-  if (!currentEventId_rounds || !myEvents.some(e => e.id === currentEventId_rounds)) currentEventId_rounds = myEvents[0].id;
-  $('event-select-rounds').value = currentEventId_rounds;
-  loadRounds();
-}
-$('event-select-rounds').addEventListener('change', () => { currentEventId_rounds = $('event-select-rounds').value; loadRounds(); });
-
 async function loadRounds() {
   const list = $('rounds-list');
-  if (!currentEventId_rounds) { list.innerHTML = '<div class="empty">Create an event first.</div>'; return; }
+  if (!currentEventId) { list.innerHTML = '<div class="empty">Create an event first.</div>'; return; }
   list.innerHTML = '<div class="empty">Loading…</div>';
 
   const { data, error } = await supabaseClient
     .from('competition_rounds')
     .select('*, round_judges(judge_id)')
-    .eq('event_id', currentEventId_rounds)
+    .eq('event_id', currentEventId)
     .order('created_at', { ascending: false });
 
   if (error) { list.innerHTML = '<div class="empty">Could not load rounds: ' + esc(error.message) + '</div>'; return; }
@@ -803,16 +1195,33 @@ async function loadRounds() {
 
   const judgeMap = {}; myJudges.forEach(j => judgeMap[j.id] = j);
 
+  // judge-to-dancer assignments for these rounds: { roundId: { competitorId: [judgeId,…] } }
+  const assignMap = {};
+  data.forEach(r => assignMap[r.id] = {});
+  const { data: caRows, error: caErr } = await supabaseClient
+    .from('competitor_judges')
+    .select('round_id, competitor_id, judge_id')
+    .in('round_id', data.map(r => r.id));
+  if (caErr) console.warn(caErr);
+  (caRows || []).forEach(row => {
+    if (!assignMap[row.round_id]) assignMap[row.round_id] = {};
+    (assignMap[row.round_id][row.competitor_id] = assignMap[row.round_id][row.competitor_id] || []).push(row.judge_id);
+  });
+  roundAssignments = assignMap;
+
   list.innerHTML = data.map(r => {
     const assignedIds = (r.round_judges || []).map(x => x.judge_id);
     const chips = assignedIds.map(id => judgeMap[id] ? `<span class="judge-chip">${esc(judgeMap[id].full_name || judgeMap[id].email)}</span>` : '').join('');
+    const dancers = competitorsForDivision(r.division);
+    const rAssign = assignMap[r.id] || {};
+    const defaultPer = 1;
     return `
     <div class="round-card" data-id="${r.id}">
       <div class="round-card-top">
         <span class="round-div-tag ${esc(r.division)}">${esc(r.division)}</span>
         <div class="round-info">
           <div class="rname">${esc(r.round_name)}</div>
-          <div class="rmeta">${assignedIds.length}/${r.num_judges} judge${r.num_judges !== 1 ? 's' : ''} assigned${r.advance_count ? ' · ' + r.advance_count + ' advance' : ''}</div>
+          <div class="rmeta">${assignedIds.length}/${r.num_judges} judge${r.num_judges !== 1 ? 's' : ''} assigned · ${dancers.length} dancer${dancers.length !== 1 ? 's' : ''}${r.advance_count ? ' · ' + r.advance_count + ' advance' : ''}</div>
         </div>
         <select class="status-select" data-id="${r.id}">
           <option value="draft" ${r.status === 'draft' ? 'selected' : ''}>Draft</option>
@@ -820,12 +1229,11 @@ async function loadRounds() {
           <option value="completed" ${r.status === 'completed' ? 'selected' : ''}>Completed</option>
         </select>
         <div class="round-actions">
-          <button class="btn secondary small" data-toggle-judges="${r.id}">Judges</button>
-          <button class="btn secondary small" data-toggle-edit="${r.id}">Edit</button>
+          <button class="btn secondary small" data-toggle-all="${r.id}">Edit</button>
           <button class="btn danger small" data-del="${r.id}">Delete</button>
         </div>
       </div>
-      <div class="judge-chip-row">${chips}</div>
+
 
       <div class="round-judges-section" id="judges-sec-${r.id}">
         ${myJudges.length ? myJudges.map(j => `
@@ -834,6 +1242,32 @@ async function loadRounds() {
             <span>${esc(j.full_name || j.email)}</span>
           </div>
         `).join('') : '<div style="font-size:12px;color:var(--t3);">No judges invited yet.</div>'}
+      </div>
+
+      <div class="round-assign-section" id="assign-sec-${r.id}">
+        ${!dancers.length ? `<div class="assign-note">No ${esc(r.division)} dancers yet — add them on the Dancers tab.</div>`
+        : !assignedIds.length ? '<div class="assign-note">Assign judges to this round first (Judges button above), then you can give each dancer their own panel.</div>'
+        : `
+        <div class="assign-toolbar">
+          <label for="per-dancer-${r.id}">Judges per dancer</label>
+          <input type="number" id="per-dancer-${r.id}" min="1" max="${assignedIds.length}" value="${defaultPer}" data-per-dancer="${r.id}">
+          <button class="btn small" data-random-assign="${r.id}">Assign randomly</button>
+          <button class="btn secondary small" data-clear-assign="${r.id}">Clear all</button>
+        </div>
+        ${dancers.map(c => {
+          const mine = rAssign[c.id] || [];
+          const currentJudge = mine.length ? mine[0] : '';
+          return `
+          <div class="assign-row" style="align-items:center;">
+            <div class="assign-name">${esc(competitorLabel(c))}</div>
+            <div class="assign-judges" style="flex:1;">
+              <select class="dancer-judges-select" data-round="${r.id}" data-comp="${c.id}" style="width:200px;padding:6px 10px;border:0.5px solid var(--b2);border-radius:var(--radius-md);background:var(--bg2);color:var(--t1);font-size:13px;font-family:'DM Sans',sans-serif;">
+                <option value="">— Unassigned —</option>
+                ${assignedIds.map(jid => `<option value="${jid}" ${currentJudge === jid ? 'selected' : ''}>${esc(judgeMap[jid] ? (judgeMap[jid].full_name || judgeMap[jid].email) : 'Judge')}</option>`).join('')}
+              </select>
+            </div>
+          </div>`;
+        }).join('')}`}
       </div>
 
       <div class="round-edit-grid" id="edit-sec-${r.id}" style="display:none;">
@@ -860,8 +1294,12 @@ async function loadRounds() {
 
   list.querySelectorAll('.status-select').forEach(sel => {
     sel.addEventListener('change', async () => {
-      const { error } = await supabaseClient.from('competition_rounds').update({ status: sel.value }).eq('id', sel.dataset.id);
-      if (error) alert('Could not update status: ' + error.message);
+      const newStatus = sel.value;
+      const { error } = await supabaseClient.from('competition_rounds').update({ status: newStatus }).eq('id', sel.dataset.id);
+      if (error) { alert('Could not update status: ' + error.message); return; }
+      if (newStatus === 'completed') {
+        await tryAutoProgress(sel.dataset.id, data);
+      }
     });
   });
 
@@ -874,30 +1312,117 @@ async function loadRounds() {
     });
   });
 
-  list.querySelectorAll('[data-toggle-judges]').forEach(btn => {
+  list.querySelectorAll('[data-toggle-all]').forEach(btn => {
     btn.addEventListener('click', () => {
-      $('judges-sec-' + btn.dataset.toggleJudges).classList.toggle('open');
+      const id = btn.dataset.toggleAll;
+      const judgesSec = $('judges-sec-' + id);
+      const assignSec = $('assign-sec-' + id);
+      const editSec = $('edit-sec-' + id);
+      const isOpen = judgesSec.classList.contains('open');
+      judgesSec.classList.toggle('open', !isOpen);
+      assignSec.classList.toggle('open', !isOpen);
+      editSec.style.display = isOpen ? 'none' : 'grid';
+      btn.textContent = isOpen ? 'Edit' : 'Close';
+      btn.classList.toggle('active', !isOpen);
     });
   });
 
-  list.querySelectorAll('[data-toggle-edit]').forEach(btn => {
-    btn.addEventListener('click', () => {
-      const sec = $('edit-sec-' + btn.dataset.toggleEdit);
-      sec.style.display = sec.style.display === 'none' ? 'grid' : 'none';
+  // auto-save judge assignment when dropdown changes
+  list.querySelectorAll('.dancer-judges-select').forEach(sel => {
+    sel.addEventListener('change', async () => {
+      const round_id = sel.dataset.round, competitor_id = sel.dataset.comp;
+      const judge_id = sel.value;
+      sel.disabled = true;
+      const { error: delErr } = await supabaseClient.from('competitor_judges').delete()
+        .eq('round_id', round_id).eq('competitor_id', competitor_id);
+      if (delErr) { sel.disabled = false; showConnError(); return; }
+      if (judge_id) {
+        const { error: insErr } = await supabaseClient.from('competitor_judges').insert({ round_id, competitor_id, judge_id });
+        if (insErr) { sel.disabled = false; showConnError(); return; }
+      }
+      sel.disabled = false;
     });
   });
+
+  // random: spread the round's judges across its dancers, evenly
+  list.querySelectorAll('[data-random-assign]').forEach(btn => {
+    btn.addEventListener('click', async () => {
+      const roundId = btn.dataset.randomAssign;
+      const round = data.find(r => r.id === roundId);
+      const pool = (round.round_judges || []).map(x => x.judge_id);
+      const dancers = competitorsForDivision(round.division);
+      const per = Math.max(1, Math.min(parseInt($('per-dancer-' + roundId).value, 10) || 1, pool.length));
+      if (!pool.length || !dancers.length) return;
+      if (!confirm('Randomly assign ' + per + ' judge' + (per !== 1 ? 's' : '') + ' to each of the ' + dancers.length + ' dancer' + (dancers.length !== 1 ? 's' : '') + '? This replaces the current assignments for this round.')) return;
+
+      btn.disabled = true; btn.textContent = 'Assigning…';
+      const { error: delErr } = await supabaseClient.from('competitor_judges').delete().eq('round_id', roundId);
+      if (delErr) { btn.disabled = false; btn.textContent = 'Assign randomly'; alert('Could not clear old assignments: ' + delErr.message); return; }
+
+      // balance the workload: always draw from the least-used judges, ties broken at random
+      const load = {}; pool.forEach(j => load[j] = 0);
+      const rows = [];
+      shuffle(dancers.slice()).forEach(c => {
+        const ranked = shuffle(pool.slice()).sort((a, b) => load[a] - load[b]);
+        ranked.slice(0, per).forEach(j => {
+          load[j]++;
+          rows.push({ round_id: roundId, competitor_id: c.id, judge_id: j });
+        });
+      });
+
+      const { error } = await supabaseClient.from('competitor_judges').insert(rows);
+      btn.disabled = false; btn.textContent = 'Assign randomly';
+      if (error) { alert('Could not assign judges: ' + error.message); return; }
+
+      // Update dropdowns in-place without re-rendering
+      const judgeMap = {}; myJudges.forEach(j => judgeMap[j.id] = j);
+      rows.forEach(row => {
+        const sel = list.querySelector(`.dancer-judges-select[data-round="${row.round_id}"][data-comp="${row.competitor_id}"]`);
+        if (sel) sel.value = row.judge_id;
+      });
+      // Clear any dancers not in the assignment
+      dancers.forEach(c => {
+        if (!rows.find(r => r.competitor_id === c.id)) {
+          const sel = list.querySelector(`.dancer-judges-select[data-round="${roundId}"][data-comp="${c.id}"]`);
+          if (sel) sel.value = '';
+        }
+      });
+    });
+  });
+
+  list.querySelectorAll('[data-clear-assign]').forEach(btn => {
+    btn.addEventListener('click', async () => {
+      const roundId = btn.dataset.clearAssign;
+      if (!confirm('Clear every judge assignment for this round?')) return;
+      const { error } = await supabaseClient.from('competitor_judges').delete().eq('round_id', roundId);
+      if (error) { alert('Could not clear: ' + error.message); return; }
+      await loadRounds();
+      const sec = $('assign-sec-' + roundId);
+      if (sec) sec.classList.add('open');
+    });
+  });
+
+
 
   list.querySelectorAll('.round-judge-cb').forEach(cb => {
     cb.addEventListener('change', async () => {
       const round_id = cb.dataset.round, judge_id = cb.dataset.judge;
+      cb.disabled = true;
       if (cb.checked) {
         const { error } = await supabaseClient.from('round_judges').insert({ round_id, judge_id });
-        if (error) { alert('Could not assign judge: ' + error.message); cb.checked = false; return; }
+        if (error) { alert('Could not assign judge: ' + error.message); cb.checked = false; cb.disabled = false; return; }
       } else {
         const { error } = await supabaseClient.from('round_judges').delete().eq('round_id', round_id).eq('judge_id', judge_id);
-        if (error) { alert('Could not remove judge: ' + error.message); cb.checked = true; return; }
+        if (error) { alert('Could not remove judge: ' + error.message); cb.checked = true; cb.disabled = false; return; }
       }
-      loadRounds();
+      cb.disabled = false;
+      // Update the meta line count in-place without re-rendering
+      const card = cb.closest('.round-card');
+      const checkedCount = card.querySelectorAll('.round-judge-cb:checked').length;
+      const metaEl = card.querySelector('.rmeta');
+      if (metaEl) {
+        metaEl.textContent = metaEl.textContent.replace(/^\d+\//, checkedCount + '/');
+      }
     });
   });
 
@@ -918,21 +1443,303 @@ async function loadRounds() {
 }
 
 /* =========================================================
-   JUDGES (admin)
+   QUICK SETUP
    ========================================================= */
-async function loadJudgesPanel(){
-  populateEventSelects();
-  if (myEvents.length && !$('invite-event').value) $('invite-event').value = myEvents[0].id;
+const QS_ROUND_ORDER = ['Prelims','Round 1','Round 2','Round 3','Quarterfinals','Semifinals','Finals'];
+const QS_DIVISIONS = ['Male','Female','Diamond'];
+// { div: Set<roundName> }
+const qsSelected = { Male: new Set(), Female: new Set(), Diamond: new Set() };
 
-  await loadMyJudgeProfiles();
-  await loadRoundOptionsForInvite();
-  await loadInvites();
+function initQuickSetup(){
+  QS_DIVISIONS.forEach(div => {
+    const container = $('qs-chips-' + div);
+    if (!container) return;
+    container.innerHTML = QS_ROUND_ORDER.map(r => `
+      <div class="qs-round-chip" data-qs-div="${div}" data-qs-round="${r}">${r}</div>
+    `).join('');
+    container.querySelectorAll('.qs-round-chip').forEach(chip => {
+      chip.addEventListener('click', () => {
+        const round = chip.dataset.qsRound;
+        if (qsSelected[div].has(round)) {
+          qsSelected[div].delete(round);
+          chip.classList.remove('sel');
+        } else {
+          qsSelected[div].add(round);
+          chip.classList.add('sel');
+        }
+        updateQsOrderPreview(div);
+      });
+    });
+  });
+
+  // Replace buttons to avoid duplicate listeners on re-init
+  const clearBtn = $('btn-qs-clear');
+  const newClear = clearBtn.cloneNode(true);
+  clearBtn.parentNode.replaceChild(newClear, clearBtn);
+  newClear.addEventListener('click', () => {
+    QS_DIVISIONS.forEach(div => {
+      qsSelected[div].clear();
+      document.querySelectorAll('.qs-round-chip[data-qs-div="' + div + '"]').forEach(c => c.classList.remove('sel'));
+      updateQsOrderPreview(div);
+    });
+    showQsMsg('', false, false);
+  });
+
+  const createBtn = $('btn-qs-create');
+  const newCreate = createBtn.cloneNode(true);
+  createBtn.parentNode.replaceChild(newCreate, createBtn);
+  newCreate.addEventListener('click', quickSetupCreate);
 }
 
-$('invite-event').addEventListener('change', loadRoundOptionsForInvite);
+function updateQsOrderPreview(div){
+  const ordered = QS_ROUND_ORDER.filter(r => qsSelected[div].has(r));
+  const el = $('qs-order-' + div);
+  if (!el) return;
+  if (!ordered.length) { el.innerHTML = ''; return; }
+  el.innerHTML = 'Order: ' + ordered.map(r => `<span>${r}</span>`).join(' → ');
+}
 
+function showQsMsg(text, ok, visible){
+  const el = $('qs-msg');
+  el.textContent = text;
+  el.className = 'qs-msg' + (visible ? ' show ' + (ok ? 'ok' : 'err') : '');
+}
+
+async function quickSetupCreate(){
+  if (!currentEventId) { showQsMsg('Open an event first.', false, true); return; }
+
+  const numJudges = myJudges.length || 1;
+
+  const toCreate = [];
+  QS_DIVISIONS.forEach(div => {
+    const ordered = QS_ROUND_ORDER.filter(r => qsSelected[div].has(r));
+    ordered.forEach(round_name => {
+      toCreate.push({ event_id: currentEventId, division: div, round_name, num_judges: numJudges, status: 'draft', created_by: currentUser.id });
+    });
+  });
+
+  if (!toCreate.length) { showQsMsg('Select at least one round to create.', false, true); return; }
+
+  const btn = $('btn-qs-create');
+  btn.disabled = true; btn.textContent = 'Creating…';
+  showQsMsg('', false, false);
+
+  const { data: created, error } = await supabaseClient.from('competition_rounds').insert(toCreate).select();
+  btn.disabled = false; btn.textContent = 'Create selected rounds';
+
+  if (error) { showQsMsg('Could not create rounds: ' + error.message, false, true); return; }
+
+  // assign all event judges to every created round
+  if (myJudges.length && created && created.length) {
+    const judgeRows = [];
+    created.forEach(r => myJudges.forEach(j => judgeRows.push({ round_id: r.id, judge_id: j.id })));
+    await supabaseClient.from('round_judges').insert(judgeRows);
+  }
+
+  const total = toCreate.length;
+  showQsMsg(total + ' round' + (total !== 1 ? 's' : '') + ' created!', true, true);
+
+  // clear selection
+  QS_DIVISIONS.forEach(div => {
+    qsSelected[div].clear();
+    document.querySelectorAll('.qs-round-chip[data-qs-div="' + div + '"]').forEach(c => c.classList.remove('sel'));
+    updateQsOrderPreview(div);
+  });
+
+  await loadRounds();
+}
+
+/* =========================================================
+   AUTO-PROGRESSION: when a round is marked "completed",
+   find the next round in the same division and populate
+   it with the dancers from this round who "advanced"
+   (advance_count top dancers — or all if not set).
+   ========================================================= */
+async function tryAutoProgress(completedRoundId, allRounds){
+  const completed = allRounds.find(r => r.id === completedRoundId);
+  if (!completed) return;
+
+  // find the next round in the same division (by creation order in QS_ROUND_ORDER, then created_at)
+  const divRounds = allRounds
+    .filter(r => r.division === completed.division && r.id !== completedRoundId)
+    .sort((a, b) => {
+      const ai = QS_ROUND_ORDER.indexOf(a.round_name);
+      const bi = QS_ROUND_ORDER.indexOf(b.round_name);
+      if (ai !== bi) return ai - bi;
+      return new Date(a.created_at) - new Date(b.created_at);
+    });
+
+  const completedIdx = QS_ROUND_ORDER.indexOf(completed.round_name);
+  const nextRound = divRounds.find(r => QS_ROUND_ORDER.indexOf(r.round_name) > completedIdx);
+  if (!nextRound) return; // no subsequent round
+
+  // get advance_count for the completed round
+  const advCount = completed.advance_count;
+
+  // fetch competitors already in the next round
+  const { data: existing } = await supabaseClient
+    .from('round_progressions')
+    .select('competitor_id')
+    .eq('round_id', nextRound.id);
+  const alreadyIn = new Set((existing || []).map(r => r.competitor_id));
+
+  // get all dancers in the completed division (used as the pool)
+  const divDancers = myCompetitors.filter(c => c.division === completed.division);
+  let toProgress = divDancers;
+  if (advCount && advCount < divDancers.length) {
+    // take the first `advCount` (by list order) as a simple heuristic; 
+    // admins can edit later
+    toProgress = divDancers.slice(0, advCount);
+  }
+
+  const newRows = toProgress
+    .filter(c => !alreadyIn.has(c.id))
+    .map(c => ({ round_id: nextRound.id, competitor_id: c.id, from_round_id: completedRoundId }));
+
+  if (!newRows.length) return;
+
+  // try inserting into round_progressions — if the table doesn't exist, fail silently
+  const { error } = await supabaseClient.from('round_progressions').insert(newRows);
+
+  const banner = $('prog-banner');
+  if (!banner) return;
+  const divDancerCount = toProgress.length;
+  banner.innerHTML = `<strong>${divDancerCount} ${esc(completed.division)} dancer${divDancerCount !== 1 ? 's' : ''}</strong> automatically progressed from <strong>${esc(completed.round_name)}</strong> to <strong>${esc(nextRound.round_name)}</strong>.`;
+  banner.classList.add('show');
+  setTimeout(() => banner.classList.remove('show'), 6000);
+}
+
+/* =========================================================
+   BRACKET
+   ========================================================= */
+// { roundId: Set<competitorId> } — in-memory winner state
+let bracketWinners = {};
+
+async function loadBracket(){
+  const el = $('bracket-content');
+  if (!currentEventId) { el.innerHTML = '<div class="empty">Open an event first.</div>'; return; }
+  el.innerHTML = '<div class="empty">Loading…</div>';
+
+  // fetch rounds
+  const { data: rounds, error: rErr } = await supabaseClient
+    .from('competition_rounds')
+    .select('*')
+    .eq('event_id', currentEventId)
+    .order('created_at', { ascending: true });
+  if (rErr) { el.innerHTML = '<div class="empty">Could not load rounds: ' + esc(rErr.message) + '</div>'; return; }
+  if (!rounds || !rounds.length) { el.innerHTML = '<div class="empty">No rounds yet — create some first.</div>'; return; }
+
+  // fetch winners from DB
+  const { data: winRows } = await supabaseClient
+    .from('round_winners')
+    .select('round_id, competitor_id')
+    .in('round_id', rounds.map(r => r.id));
+  bracketWinners = {};
+  (winRows || []).forEach(w => {
+    (bracketWinners[w.round_id] = bracketWinners[w.round_id] || new Set()).add(w.competitor_id);
+  });
+
+  renderBracket(rounds);
+}
+
+function renderBracket(rounds){
+  const el = $('bracket-content');
+
+  const html = ['Male','Female','Diamond'].map(div => {
+    const divRounds = rounds
+      .filter(r => r.division === div)
+      .sort((a, b) => {
+        const ai = QS_ROUND_ORDER.indexOf(a.round_name); const bi = QS_ROUND_ORDER.indexOf(b.round_name);
+        return ai !== bi ? ai - bi : new Date(a.created_at) - new Date(b.created_at);
+      });
+    if (!divRounds.length) return '';
+
+    // build a competitor lookup by id
+    const compById = {};
+    myCompetitors.forEach(c => compById[c.id] = c);
+
+    const cols = divRounds.map((r, ri) => {
+      const winners = bracketWinners[r.id] || new Set();
+
+      // first round: all division dancers; subsequent rounds: winners of previous round
+      let dancers;
+      if (ri === 0) {
+        dancers = competitorsForDivision(div);
+      } else {
+        const prevRound = divRounds[ri - 1];
+        const prevWinners = bracketWinners[prevRound.id] || new Set();
+        dancers = [...prevWinners].map(id => compById[id]).filter(Boolean);
+      }
+
+      const entries = dancers.length
+        ? dancers.map(c => {
+            const isWinner = winners.has(c.id);
+            return `<div class="bracket-entry${isWinner ? ' winner' : ''}">
+              ${c.number ? `<span class="be-num">#${esc(c.number)}</span>` : ''}
+              <span class="be-name">${esc(c.name)}</span>
+              <button class="be-win-btn" data-win-round="${r.id}" data-win-comp="${c.id}">${isWinner ? '★ Won' : 'Mark won'}</button>
+            </div>`;
+          }).join('')
+        : `<div class="bracket-empty">${ri === 0 ? 'No dancers in this division yet.' : 'No winners from previous round yet.'}</div>`;
+
+      const connector = ri < divRounds.length - 1
+        ? `<div class="bracket-connector">→</div>` : '';
+
+      return `
+        <div class="bracket-round-col">
+          <div class="bracket-round-col-head">
+            <span>${esc(r.round_name)}</span>
+            <span class="brc-status ${r.status}">${r.status}</span>
+          </div>
+          ${entries}
+        </div>
+        ${connector}`;
+    }).join('');
+
+    return `
+      <div class="bracket-div-block">
+        <div class="bracket-div-heading">
+          <span class="round-div-tag ${div}">${div}</span>
+          <h3>${div}</h3>
+        </div>
+        <div class="bracket-rounds-row">${cols}</div>
+      </div>`;
+  }).join('');
+
+  el.innerHTML = html || '<div class="empty">No rounds to display.</div>';
+
+  // wire up win buttons — re-render the full bracket after each toggle so next columns update
+  el.querySelectorAll('[data-win-round]').forEach(btn => {
+    btn.addEventListener('click', async () => {
+      const roundId = btn.dataset.winRound;
+      const compId = btn.dataset.winComp;
+      const winners = bracketWinners[roundId] = bracketWinners[roundId] || new Set();
+      const isWinner = winners.has(compId);
+
+      btn.disabled = true;
+      if (isWinner) {
+        const { error } = await supabaseClient.from('round_winners')
+          .delete().eq('round_id', roundId).eq('competitor_id', compId);
+        if (error) { alert('Could not update: ' + error.message); btn.disabled = false; return; }
+        winners.delete(compId);
+      } else {
+        const { error } = await supabaseClient.from('round_winners')
+          .upsert({ round_id: roundId, competitor_id: compId }, { onConflict: 'round_id,competitor_id' });
+        if (error) { alert('Could not update: ' + error.message); btn.disabled = false; return; }
+        winners.add(compId);
+      }
+
+      // re-render so downstream round columns reflect the change
+      renderBracket(rounds);
+    });
+  });
+}
+
+/* =========================================================
+   JUDGES (admin)
+   ========================================================= */
 async function loadRoundOptionsForInvite(){
-  const eventId = $('invite-event').value;
+  const eventId = currentEventId;
   const sel = $('invite-round');
   sel.innerHTML = '<option value="">Any round in this event</option>';
   if (!eventId) return;
@@ -962,7 +1769,7 @@ async function loadMyJudgeProfiles(){
 
 $('btn-invite').addEventListener('click', async () => {
   const email = $('invite-email').value.trim().toLowerCase();
-  const event_id = $('invite-event').value;
+  const event_id = currentEventId;
   const round_id = $('invite-round').value || null;
 
   if (!email || !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)) { showMsg('invite-msg', 'Enter a valid email.', false); return; }
@@ -1003,10 +1810,11 @@ async function loadInvites(){
     .from('judge_invites')
     .select('*, events(name), competition_rounds(round_name, division)')
     .eq('admin_id', currentUser.id)
+    .eq('event_id', currentEventId)
     .order('created_at', { ascending: false });
 
   if (error) { list.innerHTML = '<div class="empty">Could not load invites: ' + esc(error.message) + '</div>'; return; }
-  if (!data || !data.length) { list.innerHTML = '<div class="empty">No invites sent yet.</div>'; return; }
+  if (!data || !data.length) { list.innerHTML = '<div class="empty">No invites sent for this event yet.</div>'; return; }
 
   list.innerHTML = data.map(inv => {
     const link = window.location.origin + window.location.pathname + '?invite=' + inv.token;
@@ -1041,22 +1849,66 @@ function copyInviteLink(token){
 /* =========================================================
    JUDGE: MY ROUNDS
    ========================================================= */
+$('btn-join-event').addEventListener('click', async () => {
+  const code = $('join-code-input').value.trim();
+  if (!code) { showMsg('join-msg', 'Enter a join code.', false); return; }
+
+  const btn = $('btn-join-event');
+  btn.disabled = true; btn.textContent = 'Joining…';
+  const { data, error } = await supabaseClient.rpc('join_event_by_code', { p_code: code });
+  btn.disabled = false; btn.textContent = 'Join event';
+
+  if (error) { showMsg('join-msg', error.message || 'Could not join that event.', false); return; }
+  const eventName = (data && data[0] && data[0].joined_event_name) || 'the event';
+  showMsg('join-msg', 'Joined ' + eventName + '! The admin will assign you to a round.', true);
+  $('join-code-input').value = '';
+  loadMyRounds();
+});
+
 async function loadMyRounds(){
   const list = $('mine-list');
   list.innerHTML = '<div class="empty">Loading…</div>';
 
-  const { data, error } = await supabaseClient
-    .from('round_judges')
-    .select('competition_rounds(id, round_name, division, status, num_judges, advance_count, events(name))')
-    .eq('judge_id', currentUser.id);
+  const [{ data: assignedRows, error: err1 }, { data: joinedRows, error: err2 }, { data: dancerRows }] = await Promise.all([
+    supabaseClient.from('round_judges')
+      .select('competition_rounds(id, round_name, division, status, num_judges, advance_count, event_id, events(id, name))')
+      .eq('judge_id', currentUser.id),
+    supabaseClient.from('judge_invites')
+      .select('event_id, events(id, name)')
+      .eq('judge_id', currentUser.id)
+      .eq('status', 'accepted'),
+    supabaseClient.from('competitor_judges')
+      .select('round_id, competitors(id, name, number)')
+      .eq('judge_id', currentUser.id)
+  ]);
 
-  if (error) { list.innerHTML = '<div class="empty">Could not load your rounds: ' + esc(error.message) + '</div>'; return; }
-  if (!data || !data.length) { list.innerHTML = '<div class="empty">You have not been assigned to any rounds yet.</div>'; return; }
+  // dancers this judge is personally responsible for, keyed by round
+  const myDancers = {};
+  (dancerRows || []).forEach(row => {
+    if (!row.competitors) return;
+    (myDancers[row.round_id] = myDancers[row.round_id] || []).push(row.competitors);
+  });
 
-  list.innerHTML = data.map(row => {
-    const r = row.competition_rounds;
-    if (!r) return '';
-    return `
+  if (err1) { list.innerHTML = '<div class="empty">Could not load your rounds: ' + esc(err1.message) + '</div>'; return; }
+  if (err2) { list.innerHTML = '<div class="empty">Could not load your events: ' + esc(err2.message) + '</div>'; return; }
+
+  const rounds = (assignedRows || []).map(row => row.competition_rounds).filter(Boolean);
+  const assignedEventIds = new Set(rounds.map(r => r.event_id));
+
+  const joinedEvents = [];
+  const seenEventIds = new Set();
+  (joinedRows || []).forEach(row => {
+    if (!row.events || seenEventIds.has(row.event_id) || assignedEventIds.has(row.event_id)) return;
+    seenEventIds.add(row.event_id);
+    joinedEvents.push(row.events);
+  });
+
+  if (!rounds.length && !joinedEvents.length) {
+    list.innerHTML = '<div class="empty">You have not joined any events yet. Ask an admin for an invite link or join code.</div>';
+    return;
+  }
+
+  const roundCards = rounds.map(r => `
     <div class="round-card">
       <div class="round-card-top">
         <span class="round-div-tag ${esc(r.division)}">${esc(r.division)}</span>
@@ -1066,10 +1918,62 @@ async function loadMyRounds(){
         </div>
         <span class="round-status ${r.status}">${r.status}</span>
       </div>
-    </div>`;
-  }).join('');
+      ${(myDancers[r.id] || []).length ? `
+        <div class="division-head" style="margin-top:12px;">Your dancers</div>
+        <div class="judge-chip-row" style="margin-top:0;">
+          ${myDancers[r.id].map(c => `<span class="judge-chip">${esc((c.number ? '#' + c.number + ' ' : '') + c.name)}</span>`).join('')}
+        </div>` : ''}
+    </div>`).join('');
+
+  const eventCards = joinedEvents.map(e => `
+    <div class="round-card">
+      <div class="round-card-top">
+        <div class="round-info">
+          <div class="rname">${esc(e.name)}</div>
+          <div class="rmeta">Joined — waiting to be assigned to a round</div>
+        </div>
+      </div>
+    </div>`).join('');
+
+  list.innerHTML = roundCards + eventCards;
 }
 
 </script>
+<!-- CONNECTION ERROR MODAL -->
+<div id="conn-modal-overlay" class="conn-modal-overlay" style="display:none;">
+  <div class="conn-modal">
+    <h3>Connection lost</h3>
+    <p>It looks like the connection to the server was lost. Your last change may not have saved. Please refresh the page to reconnect.</p>
+    <div class="conn-modal-actions">
+      <button class="btn" onclick="location.reload()">Refresh page</button>
+    </div>
+  </div>
+</div>
+
+<script>
+// Global interceptor: show connection error modal on any interaction when offline
+(function() {
+  function isConnected() {
+    return !!supabaseClient && navigator.onLine;
+  }
+  function handleInteraction(e) {
+    const tag = e.target.tagName;
+    const isInteractive = tag === 'BUTTON' || tag === 'SELECT' || tag === 'INPUT' || tag === 'A';
+    // Exclude the refresh button inside the modal itself
+    if (!isInteractive) return;
+    if (e.target.closest('#conn-modal-overlay')) return;
+    // Exclude auth screen interactions
+    if (e.target.closest('#auth-wrap')) return;
+    if (!isConnected()) {
+      e.stopImmediatePropagation();
+      e.preventDefault();
+      document.getElementById('conn-modal-overlay').style.display = 'flex';
+    }
+  }
+  document.addEventListener('click', handleInteraction, true);
+  document.addEventListener('change', handleInteraction, true);
+})();
+</script>
+
 </body>
 </html>
