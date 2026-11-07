@@ -150,6 +150,7 @@ h1{font-family:'Playfair Display',serif;font-size:30px;font-weight:700;letter-sp
 .round-div-tag{font-size:11px;font-weight:700;text-transform:uppercase;letter-spacing:0.4px;border-radius:20px;padding:4px 11px;flex-shrink:0;}
 .round-div-tag.Male{background:var(--blue-bg);color:var(--blue-text);border:0.5px solid var(--blue-border);}
 .round-div-tag.Female{background:var(--pink-bg);color:var(--pink-text);border:0.5px solid var(--pink-border);}
+.round-div-tag.Mixed{background:var(--purple-bg);color:var(--purple-text);border:0.5px solid var(--purple-border);}
 .round-div-tag.Diamond{background:var(--amber-bg);color:var(--amber-text);border:0.5px solid var(--amber-border);}
 .round-info{flex:1;min-width:180px;}
 .round-info .rname{font-family:'Playfair Display',serif;font-weight:600;font-size:16px;}
@@ -251,7 +252,7 @@ h1{font-family:'Playfair Display',serif;font-size:30px;font-weight:700;letter-sp
 .bracket-entry.winner .be-name{color:var(--green-text);font-weight:600;}
 .bracket-entry.winner .be-num{background:var(--green-border);color:var(--green-text);}
 .be-num{font-size:10px;font-weight:700;background:var(--bg3);color:var(--t3);border-radius:20px;padding:2px 7px;flex-shrink:0;}
-.be-name{flex:1;font-size:13px;font-weight:500;}
+.be-name{flex:1;min-width:0;font-size:13px;font-weight:500;overflow-wrap:anywhere;}
 .be-win-btn{font-size:10px;padding:3px 8px;border-radius:20px;border:0.5px solid var(--b3);background:var(--bg2);color:var(--t2);cursor:pointer;font-family:'DM Sans',sans-serif;white-space:nowrap;transition:all 0.12s;flex-shrink:0;}
 .be-win-btn:hover{border-color:var(--green-border);color:var(--green-text);}
 .bracket-entry.winner .be-win-btn{border-color:var(--green-border);background:var(--green-bg);color:var(--green-text);}
@@ -264,6 +265,167 @@ h1{font-family:'Playfair Display',serif;font-size:30px;font-weight:700;letter-sp
 .conn-modal h3{font-family:'Playfair Display',serif;font-size:20px;font-weight:600;margin-bottom:8px;}
 .conn-modal p{font-size:13px;color:var(--t2);line-height:1.6;margin-bottom:1.5rem;}
 .conn-modal-actions{display:flex;gap:8px;justify-content:center;}
+
+/* ---------- ADVANCEMENT BUILDER ---------- */
+.chain-wrap h3{font-family:'Playfair Display',serif;font-size:16px;font-weight:600;margin-bottom:2px;}
+.chain-div-picker{display:grid;grid-template-columns:repeat(4,1fr);gap:8px;margin-bottom:16px;}
+.chain-div-opt{border:1.5px solid var(--b3);border-radius:var(--radius-md);padding:12px 8px;text-align:center;cursor:pointer;font-size:13px;font-weight:600;background:var(--bg2);color:var(--t2);transition:all 0.12s;user-select:none;}
+.chain-div-opt:hover{background:var(--bg3);}
+.chain-div-opt.sel[data-div="Male"]{background:var(--blue-bg);border-color:var(--blue-border);color:var(--blue-text);}
+.chain-div-opt.sel[data-div="Female"]{background:var(--pink-bg);border-color:var(--pink-border);color:var(--pink-text);}
+.chain-div-opt.sel[data-div="Mixed"]{background:var(--purple-bg);border-color:var(--purple-border);color:var(--purple-text);}
+.chain-div-opt.sel[data-div="Diamond"]{background:var(--amber-bg);border-color:var(--amber-border);color:var(--amber-text);}
+.chain-hint-btn{background:none;border:none;padding:0;margin-left:6px;font-family:inherit;font-size:11px;color:var(--t1);text-decoration:underline;cursor:pointer;}
+.chain-stage{display:flex;align-items:center;gap:14px;background:var(--bg);border:0.5px solid var(--b3);border-radius:var(--radius-md);padding:11px 14px;margin-bottom:8px;flex-wrap:wrap;}
+.chain-stage-num{width:26px;height:26px;border-radius:50%;background:var(--bg3);color:var(--t2);font-size:12px;font-weight:700;display:flex;align-items:center;justify-content:center;flex-shrink:0;}
+.chain-stage-info{flex:1;min-width:150px;}
+.chain-stage-name{font-family:'Playfair Display',serif;font-weight:600;font-size:15px;}
+.chain-stage-in{font-size:12px;color:var(--t2);margin-top:1px;}
+.chain-stage-adv{display:flex;flex-direction:column;gap:3px;}
+.chain-stage-adv label{font-size:11px;font-weight:500;color:var(--t2);}
+.chain-stage-adv input{width:110px;padding:7px 11px;border:0.5px solid var(--b2);border-radius:var(--radius-md);background:var(--bg2);color:var(--t1);font-size:14px;font-family:'DM Sans',sans-serif;}
+.chain-stage-adv input:focus{outline:none;border-color:var(--b1);background:var(--bg);}
+.chain-stage-adv input.bad{border-color:var(--red-border);background:var(--red-bg);}
+.chain-err{font-size:11px;color:var(--red-text);min-height:0;}
+.chain-stage-end{font-size:11px;font-weight:600;text-transform:uppercase;letter-spacing:0.4px;color:var(--green-text);background:var(--green-bg);border:0.5px solid var(--green-border);border-radius:20px;padding:4px 11px;}
+.chain-actions{display:flex;gap:8px;flex-wrap:wrap;margin:4px 0 14px;}
+.chain-preview{font-size:12.5px;color:var(--t2);background:var(--bg);border:0.5px dashed var(--b2);border-radius:var(--radius-md);padding:10px 12px;margin-bottom:12px;line-height:1.7;}
+.chain-preview strong{color:var(--t1);font-weight:600;}
+.chain-status{font-size:12px;color:var(--amber-text);margin-top:4px;}
+.chain-check{display:flex;align-items:center;gap:8px;font-size:13px;color:var(--t2);margin-bottom:12px;cursor:pointer;}
+.chain-check input{width:15px;height:15px;accent-color:var(--t1);cursor:pointer;}
+.manual-details{margin-top:0;}
+.manual-details summary{cursor:pointer;font-size:13px;font-weight:500;color:var(--t2);padding:4px 0;}
+.manual-details summary:hover{color:var(--t1);}
+.manual-details[open] summary{margin-bottom:1rem;}
+.bracket-adv-note{font-size:11px;color:var(--t2);margin:-2px 0 8px;}
+.bracket-adv-note.full{color:var(--green-text);font-weight:500;}
+@media(max-width:640px){.chain-stage-adv input{width:100%;}.chain-stage-adv{width:100%;}}
+
+/* ---------- EVENT GROUPS ---------- */
+.group-card{background:var(--bg);border:0.5px solid var(--b2);border-left:3px solid var(--t1);border-radius:var(--radius-lg);padding:16px 18px;margin-bottom:12px;}
+.group-head{display:flex;align-items:flex-start;justify-content:space-between;gap:12px;flex-wrap:wrap;}
+.group-head .gname{font-family:'Playfair Display',serif;font-weight:700;font-size:18px;}
+.group-tag{font-size:10px;font-weight:700;text-transform:uppercase;letter-spacing:0.5px;color:var(--t2);background:var(--bg2);border:0.5px solid var(--b3);border-radius:20px;padding:2px 8px;margin-right:8px;vertical-align:middle;}
+.group-actions{display:flex;gap:6px;flex-wrap:wrap;}
+.group-kids{margin-top:14px;padding-left:14px;border-left:0.5px solid var(--b3);}
+.group-kids .event-card{background:var(--bg2);margin-bottom:8px;}
+.group-kids .empty{padding:1rem 0;text-align:left;}
+
+/* ---------- JUDGE ROSTER ---------- */
+.jo-judge{background:var(--bg2);border:0.5px solid var(--b3);border-radius:var(--radius-md);padding:12px 14px;margin-bottom:10px;}
+.jo-top{display:flex;align-items:center;gap:10px;flex-wrap:wrap;}
+.jo-name{font-size:14px;font-weight:600;}
+.jo-email{font-size:12px;color:var(--t2);flex:1;min-width:120px;}
+.jo-section{display:flex;align-items:center;gap:8px;flex-wrap:wrap;margin-top:10px;padding-top:10px;border-top:0.5px solid var(--b3);}
+.jo-label{font-size:11px;font-weight:700;text-transform:uppercase;letter-spacing:0.4px;color:var(--t3);min-width:90px;}
+.jo-chips{display:flex;flex-wrap:wrap;gap:6px;flex:1;}
+.judge-chip .chip-x{background:none;border:none;color:inherit;cursor:pointer;margin-left:6px;font-size:14px;line-height:1;padding:0;font-family:inherit;opacity:0.7;}
+.judge-chip .chip-x:hover{opacity:1;color:var(--red-text);}
+.judge-chip.muted{background:var(--bg3);color:var(--t2);border-color:var(--b3);}
+
+/* ---------- CSV IMPORT ---------- */
+.csv-import h3{font-family:'Playfair Display',serif;font-size:16px;font-weight:600;margin-bottom:2px;}
+.csv-actions{display:flex;align-items:center;gap:10px;flex-wrap:wrap;margin-bottom:12px;}
+.csv-actions input[type=file]{font-size:13px;font-family:'DM Sans',sans-serif;color:var(--t2);max-width:100%;}
+.csv-summary{font-size:13px;margin-bottom:8px;}
+.csv-summary .ok{color:var(--green-text);font-weight:600;}
+.csv-summary .skip{color:var(--red-text);font-weight:600;}
+.csv-list{max-height:240px;overflow:auto;border:0.5px solid var(--b3);border-radius:var(--radius-md);background:var(--bg);margin-bottom:12px;}
+.csv-row{display:flex;align-items:center;gap:10px;padding:7px 12px;font-size:13px;border-top:0.5px solid var(--b3);flex-wrap:wrap;}
+.csv-row:first-child{border-top:none;}
+.csv-row.skip{background:var(--red-bg);}
+.csv-row .csv-line{font-size:11px;color:var(--t3);min-width:44px;}
+.csv-row .csv-name{flex:1;min-width:120px;font-weight:500;}
+.csv-row .csv-bib{font-size:11px;font-weight:700;background:var(--bg3);color:var(--t2);border-radius:20px;padding:2px 9px;}
+.csv-row .csv-reason{font-size:11px;color:var(--red-text);width:100%;padding-left:54px;}
+
+.rounds-head{display:flex;align-items:center;justify-content:space-between;gap:12px;margin-bottom:0.9rem;}
+.add-rounds-section{background:var(--bg);border:0.5px solid var(--b3);border-radius:var(--radius-lg);padding:1.15rem 1.2rem;margin-bottom:1.25rem;}
+.event-panel .add-rounds-section{background:var(--bg2);}
+.add-rounds-head{display:flex;align-items:center;justify-content:space-between;gap:12px;margin-bottom:2px;}
+.add-rounds-title{font-family:'Playfair Display',serif;font-size:17px;font-weight:600;}
+
+.rounds-head-actions{display:flex;gap:8px;flex-wrap:wrap;}
+.rounds-editor{background:var(--bg);border:0.5px solid var(--b3);border-radius:var(--radius-lg);padding:1.15rem 1.2rem;margin-bottom:1.25rem;}
+.event-panel .rounds-editor{background:var(--bg2);}
+.rounds-editor h3{font-family:'Playfair Display',serif;font-size:17px;font-weight:600;margin-bottom:2px;}
+.redit-div{margin-top:16px;}
+.redit-div-head{display:flex;align-items:center;justify-content:space-between;gap:10px;margin-bottom:8px;}
+.redit-row{display:grid;grid-template-columns:1.4fr 1fr 1fr auto;gap:8px;align-items:end;margin-bottom:8px;}
+.redit-row .field{margin-bottom:0;}
+.redit-row.is-new .field label::after{content:' · new';color:var(--green-dark);}
+.redit-empty{font-size:12px;color:var(--t3);padding:6px 0;}
+.redit-actions{display:flex;gap:8px;align-items:center;flex-wrap:wrap;margin-top:18px;padding-top:14px;border-top:0.5px solid var(--b3);}
+@media(max-width:640px){.redit-row{grid-template-columns:1fr 1fr;}.redit-row .btn{grid-column:1/-1;}}
+@media(max-width:640px){.chain-div-picker{grid-template-columns:repeat(2,1fr);}}
+.test-judges-box{background:var(--amber-bg);border:0.5px dashed var(--amber-border);border-radius:var(--radius-md);padding:12px 14px;margin-bottom:14px;}
+.test-judges-box .tj-title{font-size:12px;font-weight:600;color:var(--amber-text);margin-bottom:2px;}
+.test-judges-box .tj-sub{font-size:12px;color:var(--amber-text);opacity:0.85;margin-bottom:10px;line-height:1.45;}
+.test-judges-box .tj-row{display:flex;gap:8px;align-items:center;flex-wrap:wrap;}
+.test-judges-box input{width:70px;padding:7px 10px;border:0.5px solid var(--b2);border-radius:var(--radius-md);background:var(--bg);color:var(--t1);font-size:14px;font-family:'DM Sans',sans-serif;}
+.jc-rounds{margin-top:12px;padding-top:4px;border-top:0.5px solid var(--b3);}
+.jc-round{padding:12px 0;border-bottom:0.5px solid var(--b3);}
+.jc-round:last-child{border-bottom:none;padding-bottom:0;}
+.jc-round-top{display:flex;align-items:center;gap:10px;flex-wrap:wrap;}
+.jc-round-top .round-info{flex:1;min-width:0;}
+.jm-picker{display:grid;grid-template-columns:1fr 1fr;gap:8px;margin-bottom:12px;}
+.jm-opt{border:1.5px solid var(--b3);border-radius:var(--radius-md);padding:12px 14px;cursor:pointer;background:var(--bg2);transition:all 0.12s;user-select:none;}
+.jm-opt:hover{background:var(--bg3);}
+.jm-opt.sel{border-color:var(--t1);background:var(--bg);}
+.jm-opt .jm-t{font-size:13px;font-weight:600;color:var(--t1);}
+.jm-opt .jm-d{font-size:11.5px;color:var(--t2);margin-top:3px;line-height:1.4;}
+.jm-crit-row{display:grid;grid-template-columns:1fr 110px auto;gap:8px;align-items:end;margin-bottom:8px;}
+.jm-crit-row .field{margin-bottom:0;}
+.jm-preset-row{display:flex;gap:8px;align-items:flex-end;flex-wrap:wrap;margin-bottom:14px;}
+.jm-preset-row .field{margin-bottom:0;flex:1;min-width:200px;}
+.jm-note{font-size:12px;color:var(--t2);margin:2px 0 10px;line-height:1.45;}
+@media(max-width:640px){.jm-picker{grid-template-columns:1fr;}.jm-crit-row{grid-template-columns:1fr 90px auto;}}
+/* judge scoring */
+.score-toggle{margin-top:10px;}
+.score-panel{margin-top:12px;padding-top:12px;border-top:0.5px dashed var(--b3);}
+.score-note{font-size:12px;color:var(--t2);margin-bottom:10px;line-height:1.45;}
+.score-row{padding:10px 0;border-bottom:0.5px solid var(--b3);}
+.score-row:last-child{border-bottom:none;}
+.score-head{display:flex;align-items:center;justify-content:space-between;gap:10px;flex-wrap:wrap;}
+.score-name{font-size:14px;font-weight:500;}
+.score-state{font-size:11px;color:var(--t3);min-width:48px;text-align:right;}
+.score-state.ok{color:var(--green-dark);}
+.score-state.err{color:var(--red-text);}
+.pf-btns{display:flex;gap:6px;}
+.pf-btn{padding:7px 16px;border-radius:999px;border:1.5px solid var(--b3);background:var(--bg2);color:var(--t2);font-size:13px;font-weight:600;font-family:'DM Sans',sans-serif;cursor:pointer;transition:all 0.12s;}
+.pf-btn:hover:not(:disabled){background:var(--bg3);color:var(--t1);}
+.pf-btn:disabled{opacity:0.55;cursor:not-allowed;}
+.pf-btn.pass.sel{background:var(--green-bg);border-color:var(--green-border);color:var(--green-text);}
+.pf-btn.fail.sel{background:var(--red-bg);border-color:var(--red-border);color:var(--red-text);}
+.crit-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(120px,1fr));gap:8px;margin-top:8px;}
+.crit-grid label{display:block;font-size:11px;font-weight:500;color:var(--t2);margin-bottom:3px;}
+.crit-grid input{width:100%;padding:8px 10px;border:0.5px solid var(--b2);border-radius:var(--radius-md);background:var(--bg2);color:var(--t1);font-size:14px;font-family:'DM Sans',sans-serif;}
+.crit-grid input:focus{outline:none;border-color:var(--b1);background:var(--bg);}
+.crit-grid input:disabled{opacity:0.6;}
+.crit-total{font-size:12px;color:var(--t2);margin-top:6px;}
+.crit-total strong{color:var(--t1);}
+.score-save-row{display:flex;align-items:center;gap:10px;margin-top:12px;padding-top:12px;border-top:0.5px solid var(--b3);}
+.score-save-msg{font-size:12px;color:var(--t3);}
+.score-save-msg.ok{color:var(--green-dark);}
+.score-save-msg.err{color:var(--red-text);}
+/* current assignments banner */
+.now-card{border:1.5px solid var(--green-border);background:var(--green-bg);}
+.now-card h2{color:var(--green-text);}
+.now-card .card-sub{color:var(--green-text);opacity:0.85;}
+.now-head{display:flex;align-items:center;gap:10px;}
+.now-dot{width:10px;height:10px;border-radius:50%;background:var(--green-dark);animation:pulse 1.4s infinite;flex-shrink:0;}
+.now-item{background:var(--bg);border:0.5px solid var(--green-border);border-radius:var(--radius-md);padding:12px 14px;margin-top:8px;}
+.now-top{display:flex;align-items:center;gap:12px;flex-wrap:wrap;}
+.now-top .round-info{flex:1;min-width:150px;}
+.now-item .judge-chip-row{margin-top:10px;}
+/* bracket scores */
+.be-score{font-size:12px;font-weight:600;color:var(--t2);white-space:nowrap;}
+.bracket-entry.has-score{flex-wrap:wrap;row-gap:6px;}
+.bracket-entry.has-score .be-name{flex:1 1 0;}
+.be-row2{flex:0 0 100%;display:flex;align-items:center;justify-content:space-between;gap:8px;}
+.bracket-entry.winner .be-score{color:var(--green-text);}
+.bracket-auto{margin:0 0 8px;}
 </style>
 </head>
 <body>
@@ -328,6 +490,32 @@ h1{font-family:'Playfair Display',serif;font-size:30px;font-weight:700;letter-sp
     <!-- STEP 1: EVENTS -->
     <div style="margin-bottom:1rem;">
       <button class="btn" id="btn-show-create-event" onclick="toggleCreateEventForm()">+ Create an event</button>
+      <button class="btn secondary" id="btn-show-create-group" onclick="toggleCreateGroupForm()">+ Create a group</button>
+      <button class="btn secondary" id="btn-show-judges" onclick="toggleJudgeOverview()">Judges</button>
+    </div>
+    <div class="card" id="sec-judge-overview" style="display:none;">
+      <h2>Judges</h2>
+      <div class="card-sub">Every judge on your account and the competitions they are on. Remove someone from a single competition, a whole group, or everything.</div>
+      <div id="judge-overview-list"></div>
+    </div>
+    <div class="card" id="sec-new-group" style="display:none;">
+      <h2>Create a group</h2>
+      <div class="card-sub">A group holds several competitions. The group has one join code. Judges who join with it are on every competition in the group.</div>
+      <div id="group-msg" class="form-msg"></div>
+      <div class="form-grid">
+        <div class="field">
+          <label>Group name</label>
+          <input type="text" id="group-name" placeholder="e.g. Tennessee Championships 2026">
+        </div>
+        <div class="field">
+          <label>Description (optional)</label>
+          <input type="text" id="group-desc" placeholder="Venue, notes, etc.">
+        </div>
+      </div>
+      <div style="display:flex;gap:8px;">
+        <button class="btn" id="btn-create-group">Create group</button>
+        <button class="btn secondary" onclick="toggleCreateGroupForm()">Cancel</button>
+      </div>
     </div>
     <div class="card" id="sec-new-event" style="display:none;">
       <h2>Create an event</h2>
@@ -346,6 +534,10 @@ h1{font-family:'Playfair Display',serif;font-size:30px;font-weight:700;letter-sp
           <label>Description (optional)</label>
           <input type="text" id="event-desc" placeholder="Venue, notes, etc.">
         </div>
+        <div class="field full">
+          <label>Group (optional)</label>
+          <select id="event-group"><option value="">No group</option></select>
+        </div>
       </div>
       <div style="display:flex;gap:8px;">
         <button class="btn" id="btn-create-event">Create event</button>
@@ -359,9 +551,9 @@ h1{font-family:'Playfair Display',serif;font-size:30px;font-weight:700;letter-sp
 
       <div class="tab-bar" id="manage-tab-bar">
         <button class="tab-btn active" data-tab="details" id="tab-btn-details">Details</button>
-        <button class="tab-btn" data-tab="add-round" id="tab-btn-add-round">Add a round</button>
-        <button class="tab-btn" data-tab="rounds" id="tab-btn-rounds">Rounds</button>
         <button class="tab-btn" data-tab="dancers" id="tab-btn-dancers">Dancers</button>
+        <button class="tab-btn" data-tab="judges" id="tab-btn-judges">Judges</button>
+        <button class="tab-btn" data-tab="rounds" id="tab-btn-rounds">Rounds</button>
         <button class="tab-btn" data-tab="bracket" id="tab-btn-bracket">Bracket</button>
 
       </div>
@@ -386,97 +578,52 @@ h1{font-family:'Playfair Display',serif;font-size:30px;font-weight:700;letter-sp
             <label>Description (optional)</label>
             <input type="text" id="edit-event-desc" placeholder="Venue, notes, etc.">
           </div>
+          <div class="field full">
+            <label>Group</label>
+            <select id="edit-event-group"><option value="">No group</option></select>
+          </div>
           <div class="detail-actions">
             <button class="btn small" id="btn-save-event">Save changes</button>
             <button class="btn secondary small" id="btn-regen-code">New join code</button>
             <button class="btn danger small" id="btn-delete-event">Delete event</button>
           </div>
         </div>
-      </div>
-
-
-      <!-- ADD A ROUND -->
-      <div class="card tab-panel active" id="sec-add-round">
-        <h2>Add a round</h2>
-        <div class="card-sub">Fill in the details for this round.</div>
-
-        <div id="create-msg" class="form-msg"></div>
-
-        <div class="field full" style="margin-bottom:16px;">
-          <label>Division</label>
-          <div class="div-picker" id="div-picker">
-            <div class="div-opt" data-div="Male">Male</div>
-            <div class="div-opt" data-div="Female">Female</div>
-            <div class="div-opt" data-div="Diamond">Diamond</div>
-          </div>
-        </div>
-
-        <div class="form-grid">
-          <div class="field">
-            <label>Round</label>
-            <select id="round-name">
-              <option value="Prelims">Prelims</option>
-              <option value="Round 1">Round 1</option>
-              <option value="Round 2">Round 2</option>
-              <option value="Round 3">Round 3</option>
-              <option value="Quarterfinals">Quarterfinals</option>
-              <option value="Semifinals">Semifinals</option>
-              <option value="Finals">Finals</option>
-            </select>
-          </div>
-          <div class="field">
-            <label>Number of judges</label>
-            <input type="number" id="num-judges" min="1" max="15" value="5">
-          </div>
-          <div class="field full">
-            <label>Competitors advancing</label>
-            <input type="number" id="advance-count" min="1" placeholder="e.g. 12">
-          </div>
-        </div>
-
-
-        <button class="btn" id="btn-create">Create round</button>
 
         <div class="divider"></div>
 
-        <!-- QUICK SETUP -->
-        <div class="qs-wrap" id="qs-wrap">
-          <h3>Quick setup</h3>
-          <p class="qs-sub">Pick which rounds to create for each division..</p>
-
-          <div id="qs-divisions">
-            <!-- Male -->
-            <div class="qs-div-block">
-              <div class="qs-div-label" style="color:var(--blue-text);">Male</div>
-              <div class="qs-round-grid" id="qs-chips-Male"></div>
-              <div class="qs-order-preview" id="qs-order-Male"></div>
-            </div>
-            <!-- Female -->
-            <div class="qs-div-block">
-              <div class="qs-div-label" style="color:var(--pink-text);">Female</div>
-              <div class="qs-round-grid" id="qs-chips-Female"></div>
-              <div class="qs-order-preview" id="qs-order-Female"></div>
-            </div>
-            <!-- Diamond -->
-            <div class="qs-div-block">
-              <div class="qs-div-label" style="color:var(--amber-text);">Diamond</div>
-              <div class="qs-round-grid" id="qs-chips-Diamond"></div>
-              <div class="qs-order-preview" id="qs-order-Diamond"></div>
-            </div>
+        <!-- JUDGING METHOD -->
+        <h2 style="font-size:17px;">Judging method</h2><br>
+        <div id="judging-msg" class="form-msg"></div>
+        <div class="jm-picker" id="jm-picker">
+          <div class="jm-opt" data-jm="criteria">
+            <div class="jm-t">Scored by criteria <span style="font-weight:500;color:var(--t3);">· default</span></div>
+            <div class="jm-d">Judges score each dancer on a set of criteria. The highest total scores move on.</div>
           </div>
-
-          <div class="qs-actions">
-            <button class="btn small" id="btn-qs-create">Create selected rounds</button>
-            <button class="btn secondary small" id="btn-qs-clear">Clear all</button>
-            <span class="qs-msg" id="qs-msg"></span>
+          <div class="jm-opt" data-jm="pass_fail">
+            <div class="jm-t">Pass / Fail</div>
+            <div class="jm-d">Each judge marks their dancers pass or fail. Dancers with more passes than fails move on.</div>
           </div>
         </div>
+        <div id="jm-criteria-box" style="display:none;">
+          <div class="jm-preset-row">
+            <div class="field"><label>Criterion presets</label>
+              <select id="jm-preset-select"><option value="">Choose a saved preset…</option></select>
+            </div>
+            <button class="btn secondary small" id="jm-preset-apply" type="button">Use preset</button>
+            <button class="btn secondary small" id="jm-preset-save" type="button">Save as preset</button>
+            <button class="btn danger small" id="jm-preset-delete" type="button">Delete</button>
+          </div>
+          <div id="jm-preset-note" class="jm-note" style="display:none;"></div>
+          <div id="jm-criteria-list"></div>
+          <button class="btn secondary small" id="jm-add-crit" type="button">+ Add criterion</button>
+        </div>
+        <div style="margin-top:14px;"><button class="btn small" id="btn-save-judging" type="button">Save judging method</button></div>
       </div>
+
 
       <!-- DANCERS -->
       <div class="card tab-panel" id="sec-dancers">
         <h2>Dancers</h2>
-        <div class="card-sub">Add dancers to your event. Dancers appear in the rounds that match their division.</div>
         <div id="dancer-msg" class="form-msg"></div>
         <div class="form-grid">
           <div class="field">
@@ -493,6 +640,7 @@ h1{font-family:'Playfair Display',serif;font-size:30px;font-weight:700;letter-sp
               <option value="Male">Male</option>
               <option value="Female">Female</option>
               <option value="Diamond">Diamond</option>
+              <option value="Mixed">Mixed</option>
             </select>
           </div>
           <div class="field">
@@ -500,27 +648,109 @@ h1{font-family:'Playfair Display',serif;font-size:30px;font-weight:700;letter-sp
             <button class="btn" id="btn-add-dancer" style="width:100%;">Add dancer</button>
           </div>
         </div>
+        <div class="divider"></div>
+        <div class="csv-import">
+          <h3>Import from CSV</h3>
+          <p class="qs-sub">Upload a CSV with the columns <strong>Dancer Name, Bib Number, Division</strong>. Division must be Male, Female, Diamond or Mixed.</p>
+          <div id="csv-msg" class="form-msg"></div>
+          <div class="csv-actions">
+            <input type="file" id="csv-file" accept=".csv,.txt,text/csv">
+            <button class="btn secondary small" id="btn-csv-template" type="button">Download template</button>
+          </div>
+          <div id="csv-preview"></div>
+        </div>
+        <div class="divider"></div>
         <div id="dancers-list"></div>
       </div>
 
       <!-- ALL ROUNDS FOR THIS EVENT -->
       <div class="tab-panel" id="sec-rounds">
-        <h2 style="font-family:'Playfair Display',serif;font-size:19px;font-weight:600;margin-bottom:0.9rem;">Rounds</h2>
+        <div class="rounds-head">
+          <h2 style="font-family:'Playfair Display',serif;font-size:19px;font-weight:600;">Rounds</h2>
+          <div class="rounds-head-actions" id="rounds-head-actions" style="display:none;">
+            <button class="btn secondary small" id="btn-edit-rounds" type="button">Edit rounds</button>
+            <button class="btn danger small" id="btn-reset-rounds" type="button">Reset rounds</button>
+          </div>
+        </div>
+
+      <!-- ADD A ROUND -->
+      <div class="add-rounds-section" id="sec-add-round" style="display:none;">
+        <div class="add-rounds-head"><h3 class="add-rounds-title" id="add-rounds-title">Set up rounds</h3></div>
+
+        <div class="chain-wrap" id="chain-wrap">
+          <div id="chain-msg" class="form-msg"></div>
+
+          <div class="field full" style="margin-bottom:16px;">
+            <label>Division</label>
+            <div class="chain-div-picker" id="chain-div-picker">
+              <div class="chain-div-opt" data-div="Male">Male</div>
+              <div class="chain-div-opt" data-div="Female">Female</div>
+              <div class="chain-div-opt" data-div="Diamond">Diamond</div>
+              <div class="chain-div-opt" data-div="Mixed">Mixed</div>
+            </div>
+          </div>
+
+          <div class="form-grid">
+            <div class="field">
+              <label>Competitors in the first round</label>
+              <input type="number" id="chain-start" min="2" placeholder="e.g. 40">
+              <div class="hint" id="chain-start-hint"></div>
+            </div>
+            <div class="field">
+              <label>Judges per round</label>
+              <input type="number" id="chain-judges" min="1" max="15" value="5">
+            </div>
+          </div>
+
+          <div id="chain-stages"></div>
+
+          <div class="chain-actions">
+            <button class="btn secondary small" id="chain-add" type="button">+ Add another round</button>
+            <button class="btn secondary small" id="chain-remove" type="button">Remove last round</button>
+          </div>
+
+          <div class="chain-preview" id="chain-preview"></div>
+
+          <label class="chain-check"><input type="checkbox" id="chain-assign-judges" checked> Assign my judges to every round</label>
+          <button class="btn" id="btn-chain-create" type="button">Create rounds</button>
+        </div>
+
+      </div>
+
+
+        <div id="rounds-manage">
+
+        <!-- ROUNDS EDITOR (edit / add / remove) -->
+        <div class="rounds-editor" id="rounds-editor" style="display:none;"></div>
+
+        <!-- REASSIGN JUDGES -->
+        <div class="assign-toolbar" id="reassign-bar" style="margin-bottom:6px;">
+          <button class="btn small" id="btn-reassign-all" type="button">Reassign judges to dancers</button>
+          <label for="reassign-per">Judges per dancer</label>
+          <input type="number" id="reassign-per" min="1" value="1">
+        </div>
+        <div id="reassign-msg" class="form-msg"></div>
 
         <!-- PROGRESSION BANNER -->
         <div class="prog-banner" id="prog-banner"></div>
 
         <div id="rounds-list"></div>
+        </div>
       </div>
 
       <!-- BRACKET -->
       <div class="tab-panel" id="sec-bracket">
         <h2 style="font-family:'Playfair Display',serif;font-size:19px;font-weight:600;margin-bottom:0.25rem;">Bracket</h2>
-        <p style="font-size:12px;color:var(--t2);margin-bottom:1.25rem;">Competitors per round, by division. You can select individual round winners if you would like to by selecting "Mark won".</p>
         <div id="bracket-content"></div>
       </div>
 
-      <!-- JUDGES -->
+      <!-- JUDGES ON THIS COMPETITION -->
+      <div class="card tab-panel" id="sec-judges">
+        <h2>Judges</h2>
+        <div class="card-sub" id="event-judges-sub">Judges who joined this competition.</div>
+        <div id="test-judges-box"></div>
+        <div id="event-judges-list"></div>
+      </div>
 
 
     </div>
@@ -530,7 +760,11 @@ h1{font-family:'Playfair Display',serif;font-size:30px;font-weight:700;letter-sp
 
   <!-- JUDGE: MY ROUNDS -->
   <div id="judge-view" style="display:none;">
-    <div class="card">
+    <div id="current-assignments"></div>
+    <div style="margin-bottom:1rem;">
+      <button class="btn secondary" id="btn-toggle-join" type="button">+ Join an event</button>
+    </div>
+    <div class="card" id="join-card" style="display:none;">
       <h2>Join an event</h2>
       <div class="card-sub">Enter the join code an admin shared with you.</div>
       <div id="join-msg" class="form-msg"></div>
@@ -552,7 +786,6 @@ const SUPABASE_URL = 'https://bzsvadesyjwsbspsohwj.supabase.co';
 const SUPABASE_ANON_KEY = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImJ6c3ZhZGVzeWp3c2JzcHNvaHdqIiwicm9sZSI6ImFub24iLCJpYXQiOjE3ODkxMjg2ODAsImV4cCI6MjEwNDcwNDY4MH0.julgysNsuRgtSV2Nz4yXHWVnfw993fBEGFFlaKdAgfo';
 
 let supabaseClient = null;
-let currentDivision = null;
 let currentUser = null;      // supabase auth user
 let currentProfile = null;   // { id, email, full_name, role }
 let isSignUp = false;
@@ -572,9 +805,45 @@ function toggleCreateEventForm(){
   const visible = form.style.display !== 'none';
   form.style.display = visible ? 'none' : 'block';
   btn.textContent = visible ? '+ Create an event' : '− Cancel';
+  if (!visible) populateGroupSelects();
+}
+function toggleCreateGroupForm(){
+  const form = $('sec-new-group');
+  const btn = $('btn-show-create-group');
+  const visible = form.style.display !== 'none';
+  form.style.display = visible ? 'none' : 'block';
+  btn.textContent = visible ? '+ Create a group' : '− Cancel';
+}
+function groupsList(){ return myEvents.filter(e => e.is_group); }
+function populateGroupSelects(){
+  const opts = '<option value="">No group</option>' + groupsList().map(g => `<option value="${g.id}">${esc(g.name)}</option>`).join('');
+  ['event-group','edit-event-group'].forEach(id => {
+    const el = $(id); if (!el) return;
+    const v = el.value; el.innerHTML = opts; el.value = v;
+  });
+}
+function openCreateEventInGroup(gid){
+  if ($('sec-new-event').style.display === 'none') toggleCreateEventForm();
+  populateGroupSelects();
+  $('event-group').value = gid;
+  $('sec-new-event').scrollIntoView({ behavior: 'smooth', block: 'start' });
+  $('event-name').focus();
 }
 function esc(s){ return String(s==null?'':s).replace(/[&<>"']/g, c => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c])); }
 function shuffle(arr){ for (let i = arr.length - 1; i > 0; i--) { const j = Math.floor(Math.random() * (i + 1)); [arr[i], arr[j]] = [arr[j], arr[i]]; } return arr; }
+/* Round ordering: Prelims, Round 1..N, Quarterfinals, Semifinals, Finals (then creation time) */
+function roundRank(name){
+  if (name === 'Prelims') return 0;
+  const m = /^Round (\d+)$/.exec(name || '');
+  if (m) return parseInt(m[1], 10);
+  const i = ['Quarterfinals','Semifinals','Finals'].indexOf(name);
+  return i >= 0 ? 1000 + i : 500;
+}
+function compareRounds(a, b){
+  return roundRank(a.round_name) - roundRank(b.round_name) || new Date(a.created_at) - new Date(b.created_at);
+}
+function sortRounds(list){ return list.slice().sort(compareRounds); }
+function plural(n, word){ return n + ' ' + word + (n === 1 ? '' : 's'); }
 function fmtDate(d){ if(!d) return ''; try { return new Date(d + 'T00:00:00').toLocaleDateString(undefined,{month:'short',day:'numeric',year:'numeric'}); } catch(e){ return d; } }
 
 /* =========================================================
@@ -819,23 +1088,27 @@ function scrollToSection(id){
   if (el) el.scrollIntoView({ behavior: 'smooth', block: 'start' });
 }
 
-/* ---- tabs inside an event card (Details / Add a round / Rounds / Invite judges) ---- */
+/* ---- tabs inside an event card (Details / Rounds / Dancers / Judges / Bracket) ---- */
 const MANAGE_PANELS = {
   'details': 'sec-event-details',
-  'add-round': 'sec-add-round',
   'rounds': 'sec-rounds',
   'dancers': 'sec-dancers',
+  'judges': 'sec-judges',
   'invite-judge': 'sec-invite-judge',
   'bracket': 'sec-bracket'
 };
 let currentManageTab = 'details';
 function switchManageTab(tab){
+  if (tab === 'add-round') tab = 'rounds';   // merged into the Rounds tab
   if (!MANAGE_PANELS[tab]) tab = 'details';
+  const prevTab = currentManageTab;
   currentManageTab = tab;
   document.querySelectorAll('#manage-tab-bar .tab-btn').forEach(b => b.classList.toggle('active', b.dataset.tab === tab));
   document.querySelectorAll('#event-managed-sections .tab-panel').forEach(p => p.classList.remove('active'));
   $(MANAGE_PANELS[tab]).classList.add('active');
   if (tab === 'bracket') loadBracket();
+  if (tab === 'judges') loadEventJudges();
+  if (tab === 'rounds' && prevTab !== 'rounds' && currentEventId) loadRounds();
 }
 document.querySelectorAll('#manage-tab-bar .tab-btn').forEach(btn => {
   btn.addEventListener('click', () => { switchManageTab(btn.dataset.tab); syncCardActionStates(); });
@@ -845,9 +1118,7 @@ function syncCardActionStates(){
   document.querySelectorAll('#events-list [data-open-event]').forEach(b => {
     const open = b.dataset.openEvent === expandedEventId;
     const t = b.dataset.tab;
-    const match = t === 'rounds'
-      ? (currentManageTab === 'rounds' || currentManageTab === 'add-round')
-      : currentManageTab === t;
+    const match = currentManageTab === t;
     b.classList.toggle('active', open && match);
     if (t === 'details') b.textContent = (open && match) ? 'Close' : 'Edit';
   });
@@ -885,15 +1156,6 @@ function closeEventPanel(){
   renderEvents();
 }
 
-/* ---- division picker ---- */
-document.querySelectorAll('.div-opt').forEach(opt => {
-  opt.addEventListener('click', () => {
-    document.querySelectorAll('.div-opt').forEach(o => o.classList.remove('sel'));
-    opt.classList.add('sel');
-    currentDivision = opt.dataset.div;
-  });
-});
-
 function showMsg(elId, text, ok) {
   const el = $(elId);
   el.textContent = text;
@@ -916,11 +1178,13 @@ async function loadEvents(){
 async function refreshManagedSections(){
   if (!expandedEventId) return;
   currentEventId = expandedEventId;
+  roundsEditing = false; redit = [];
 
   await loadMyJudgeProfiles();
   await loadCompetitors();
   await loadRounds();
-  initQuickSetup();
+  initChainBuilder();
+  csvRows = []; renderCsvPreview();
   if (currentManageTab === 'bracket') loadBracket();
 }
 
@@ -931,12 +1195,13 @@ function renderEvents(){
   parkManagePanel();
 
   if (!myEvents.length) {
-    list.innerHTML = '<div class="empty">No events yet — create one above to get started.</div>';
+    list.innerHTML = '<div class="empty">No events yet — create an event or a group above to get started.</div>';
     return;
   }
 
-  list.innerHTML = myEvents.map(e => {
+  const eventCardHtml = (e) => {
     const open = e.id === expandedEventId;
+    const inGroup = !!(e.parent_id && groupsList().some(g => g.id === e.parent_id));
     return `
     <div class="event-card${open ? ' expanded' : ''}" data-id="${e.id}">
       <div style="display:flex;align-items:flex-start;justify-content:space-between;gap:12px;">
@@ -947,13 +1212,87 @@ function renderEvents(){
         </div>
         <button class="btn secondary small${open && currentManageTab === 'details' ? ' active' : ''}" style="flex-shrink:0;" data-open-event="${e.id}" data-tab="details">${open && currentManageTab === 'details' ? 'Close' : 'Edit'}</button>
       </div>
-      <div class="invite-link-box" style="margin-top:12px;">
+      ${inGroup ? '' : `<div class="invite-link-box" style="margin-top:12px;">
         <span>Join code: <code id="join-code-${e.id}">${esc(e.join_code || '—')}</code></span>
         <button class="btn secondary small" onclick="copyText('join-code-${e.id}')">Copy</button>
-      </div>
+      </div>`}
       ${open ? `<div class="event-panel" id="event-panel-${e.id}"></div>` : ''}
     </div>`;
+  };
+
+  // groups own their competitions; anything else is a standalone event
+  const groupIds = new Set(groupsList().map(g => g.id));
+  list.innerHTML = myEvents.map(e => {
+    if (e.is_group) {
+      const kids = myEvents.filter(k => k.parent_id === e.id);
+      return `
+      <div class="group-card" data-group-id="${e.id}">
+        <div class="group-head">
+          <div>
+            <div class="gname"><span class="group-tag">Group</span>${esc(e.name)}</div>
+            <div class="emeta">${plural(kids.length, 'competition')}</div>
+            ${e.description ? '<div class="edesc">' + esc(e.description) + '</div>' : ''}
+          </div>
+          <div class="group-actions">
+            <button class="btn small" data-add-comp="${e.id}">+ Add competition</button>
+            ${isTestAdmin() ? `<button class="btn secondary small" data-test-judges="${e.id}" title="Testing only">+ Test judges</button>` : ''}
+            <button class="btn secondary small" data-rename-group="${e.id}">Rename</button>
+            <button class="btn danger small" data-del-group="${e.id}">Delete</button>
+          </div>
+        </div>
+        <div class="invite-link-box" style="margin-top:12px;">
+          <span>Group join code: ${e.join_code ? `<code id="join-code-${e.id}">${esc(e.join_code)}</code>` : '<code>—</code>'}</span>
+          ${e.join_code
+            ? `<button class="btn secondary small" onclick="copyText('join-code-${e.id}')">Copy</button>`
+            : `<button class="btn secondary small" data-gen-code="${e.id}">Generate code</button>`}
+        </div>
+        <div class="group-kids">
+          ${kids.length ? kids.map(eventCardHtml).join('') : '<div class="empty">No competitions yet — add one to invite its own judges.</div>'}
+        </div>
+      </div>`;
+    }
+    if (e.parent_id && groupIds.has(e.parent_id)) return ''; // rendered inside its group
+    return eventCardHtml(e);
   }).join('');
+
+  list.querySelectorAll('[data-test-judges]').forEach(btn => btn.addEventListener('click', async () => {
+    if (!isTestAdmin()) return;
+    const raw = prompt('How many fake test judges should be added to this group?', '3');
+    if (raw === null) return;
+    const n = parseInt(raw, 10);
+    if (!n || n < 1 || n > 20) { alert('Enter a number from 1 to 20.'); return; }
+    btn.disabled = true;
+    await addTestJudges(btn.dataset.testJudges, n);
+    btn.disabled = false;
+  }));
+  list.querySelectorAll('[data-add-comp]').forEach(btn => btn.addEventListener('click', () => openCreateEventInGroup(btn.dataset.addComp)));
+  list.querySelectorAll('[data-gen-code]').forEach(btn => btn.addEventListener('click', async () => {
+    const { error } = await supabaseClient.rpc('regenerate_join_code', { p_event_id: btn.dataset.genCode });
+    if (error) { alert('Could not generate a code: ' + error.message); return; }
+    loadEvents();
+  }));
+  list.querySelectorAll('[data-rename-group]').forEach(btn => btn.addEventListener('click', async () => {
+    const g = myEvents.find(x => x.id === btn.dataset.renameGroup);
+    if (!g) return;
+    const name = prompt('Group name', g.name);
+    if (name === null) return;
+    if (!name.trim()) { alert('Name cannot be empty.'); return; }
+    const { error } = await supabaseClient.from('events').update({ name: name.trim() }).eq('id', g.id);
+    if (error) { alert('Could not rename: ' + error.message); return; }
+    loadEvents();
+  }));
+  list.querySelectorAll('[data-del-group]').forEach(btn => btn.addEventListener('click', async () => {
+    const g = myEvents.find(x => x.id === btn.dataset.delGroup);
+    if (!g) return;
+    const n = myEvents.filter(k => k.parent_id === g.id).length;
+    if (!confirm('Delete "' + g.name + '"' + (n ? ' and its ' + plural(n, 'competition') + ' (with all their rounds)' : '') + '? This cannot be undone.')) return;
+    const { error: kidErr } = await supabaseClient.from('events').delete().eq('parent_id', g.id);
+    if (kidErr) { alert('Could not delete competitions: ' + kidErr.message); return; }
+    const { error } = await supabaseClient.from('events').delete().eq('id', g.id);
+    if (error) { alert('Could not delete group: ' + error.message); return; }
+    expandedEventId = null;
+    loadEvents();
+  }));
 
   if (expandedEventId) {
     mountManagePanel(expandedEventId);
@@ -967,11 +1306,178 @@ function renderEvents(){
 }
 
 /* ---- the Details tab reads/writes whichever event card is open ---- */
+/* =========================================================
+   JUDGING METHOD (per competition): pass/fail or scored by criteria
+   ========================================================= */
+const DEFAULT_CRITERIA = [{ name: 'Technique', max: 10 }, { name: 'Musicality', max: 10 }, { name: 'Performance', max: 10 }];
+function normCriteria(v){
+  let a = v;
+  if (typeof a === 'string') { try { a = JSON.parse(a); } catch (e) { a = null; } }
+  if (!Array.isArray(a) || !a.length) return DEFAULT_CRITERIA.map(c => ({ ...c }));
+  const out = a.map(c => ({ name: String((c && c.name) || '').trim(), max: Math.max(1, Number(c && c.max) || 10) })).filter(c => c.name);
+  return out.length ? out : DEFAULT_CRITERIA.map(c => ({ ...c }));
+}
+function eventJudging(ev){
+  return {
+    mode: ev && ev.judging_mode === 'pass_fail' ? 'pass_fail' : 'criteria',
+    criteria: normCriteria(ev && ev.scoring_criteria)
+  };
+}
+// scores: { "Technique": 8, ... } -> how many criteria are filled in and their sum
+function criteriaTotal(scores, criteria){
+  let total = 0, filled = 0;
+  criteria.forEach(c => {
+    const v = scores ? scores[c.name] : undefined;
+    if (v !== undefined && v !== null && v !== '' && !isNaN(v)) { total += Number(v); filled++; }
+  });
+  return { total, filled, max: criteria.reduce((n, c) => n + c.max, 0) };
+}
+const fmtNum = (n) => String(Math.round(n * 100) / 100);
+
+let judgingDraft = { mode: 'criteria', criteria: DEFAULT_CRITERIA.map(c => ({ ...c })) };
+function loadJudgingEditor(ev){
+  judgingDraft = eventJudging(ev);
+  renderJudgingEditor();
+  loadCriteriaPresets();
+}
+function renderJudgingEditor(){
+  document.querySelectorAll('#jm-picker .jm-opt').forEach(o => o.classList.toggle('sel', o.dataset.jm === judgingDraft.mode));
+  $('jm-criteria-box').style.display = judgingDraft.mode === 'criteria' ? '' : 'none';
+  $('jm-criteria-list').innerHTML = judgingDraft.criteria.map((c, i) => `
+    <div class="jm-crit-row">
+      <div class="field"><label>Criterion</label><input type="text" data-jm-name="${i}" value="${esc(c.name)}" placeholder="e.g. Technique"></div>
+      <div class="field"><label>Max points</label><input type="number" min="1" max="100" data-jm-max="${i}" value="${c.max}"></div>
+      <button class="btn danger small" type="button" data-jm-del="${i}" ${judgingDraft.criteria.length <= 1 ? 'disabled' : ''}>Remove</button>
+    </div>`).join('');
+  $('jm-criteria-list').querySelectorAll('[data-jm-name]').forEach(el => el.addEventListener('input', () => { judgingDraft.criteria[+el.dataset.jmName].name = el.value; }));
+  $('jm-criteria-list').querySelectorAll('[data-jm-max]').forEach(el => el.addEventListener('input', () => { judgingDraft.criteria[+el.dataset.jmMax].max = el.value; }));
+  $('jm-criteria-list').querySelectorAll('[data-jm-del]').forEach(el => el.addEventListener('click', () => { judgingDraft.criteria.splice(+el.dataset.jmDel, 1); renderJudgingEditor(); }));
+}
+document.querySelectorAll('#jm-picker .jm-opt').forEach(o => o.addEventListener('click', () => { judgingDraft.mode = o.dataset.jm; renderJudgingEditor(); }));
+$('jm-add-crit').addEventListener('click', () => {
+  if (judgingDraft.criteria.length >= 10) { showMsg('judging-msg', 'Ten criteria is the maximum.', false); return; }
+  judgingDraft.criteria.push({ name: '', max: 10 });
+  renderJudgingEditor();
+});
+// validate the criteria being edited; returns { criteria } or { error }
+function readDraftCriteria(){
+  const criteria = judgingDraft.criteria.map(c => ({ name: String(c.name || '').trim(), max: parseInt(c.max, 10) }));
+  if (!criteria.length) return { error: 'Add at least one criterion.' };
+  if (criteria.some(c => !c.name)) return { error: 'Give every criterion a name.' };
+  if (criteria.some(c => !c.max || c.max < 1 || c.max > 100)) return { error: 'Max points must be between 1 and 100.' };
+  if (new Set(criteria.map(c => c.name.toLowerCase())).size !== criteria.length) return { error: 'Criterion names must be different from each other.' };
+  return { criteria };
+}
+
+/* ---- criterion presets (saved per admin) ---- */
+let criteriaPresets = [], criteriaPresetsLoaded = false, criteriaPresetsError = null;
+async function loadCriteriaPresets(force){
+  if (!currentUser) return;
+  if (!criteriaPresetsLoaded || force) {
+    const { data, error } = await supabaseClient.from('criteria_presets')
+      .select('id, name, criteria').eq('admin_id', currentUser.id).order('name', { ascending: true });
+    criteriaPresetsError = error ? error.message : null;
+    criteriaPresets = error ? [] : (data || []);
+    criteriaPresetsLoaded = !error;
+  }
+  renderPresetSelect();
+}
+function renderPresetSelect(selectedId){
+  const sel = $('jm-preset-select'), note = $('jm-preset-note');
+  if (!sel) return;
+  sel.innerHTML = '<option value="">' + (criteriaPresets.length ? 'Choose a saved preset…' : 'No presets saved yet') + '</option>' +
+    criteriaPresets.map(p => {
+      const n = normCriteria(p.criteria).length;
+      return `<option value="${p.id}" ${p.id === selectedId ? 'selected' : ''}>${esc(p.name)} (${n} ${n === 1 ? 'criterion' : 'criteria'})</option>`;
+    }).join('');
+  $('jm-preset-apply').disabled = !criteriaPresets.length;
+  $('jm-preset-delete').disabled = !criteriaPresets.length;
+  if (criteriaPresetsError) {
+    note.style.display = '';
+    note.textContent = 'Presets aren’t available yet (' + criteriaPresetsError + '). Run criteria_presets.sql in Supabase.';
+  } else note.style.display = 'none';
+}
+$('jm-preset-apply').addEventListener('click', () => {
+  const p = criteriaPresets.find(x => x.id === $('jm-preset-select').value);
+  if (!p) { showMsg('judging-msg', 'Choose a preset first.', false); return; }
+  judgingDraft.mode = 'criteria';
+  judgingDraft.criteria = normCriteria(p.criteria);
+  renderJudgingEditor();
+  showMsg('judging-msg', '“' + p.name + '” loaded — press Save judging method to use it for this competition.', true);
+});
+$('jm-preset-save').addEventListener('click', async () => {
+  const v = readDraftCriteria();
+  if (v.error) { showMsg('judging-msg', v.error, false); return; }
+  const selected = criteriaPresets.find(x => x.id === $('jm-preset-select').value);
+  const name = (prompt('Name this preset', selected ? selected.name : '') || '').trim();
+  if (!name) return;
+  const clash = criteriaPresets.find(x => x.name.toLowerCase() === name.toLowerCase());
+  if (clash && !confirm('A preset called “' + clash.name + '” already exists. Replace it?')) return;
+  const btn = $('jm-preset-save');
+  btn.disabled = true;
+  const { data, error } = clash
+    ? await supabaseClient.from('criteria_presets').update({ name, criteria: v.criteria }).eq('id', clash.id).select().single()
+    : await supabaseClient.from('criteria_presets').insert({ admin_id: currentUser.id, name, criteria: v.criteria }).select().single();
+  btn.disabled = false;
+  if (error) { showMsg('judging-msg', 'Could not save preset: ' + error.message + (/relation|schema|does not exist/i.test(error.message) ? ' (Run criteria_presets.sql in Supabase first.)' : ''), false); return; }
+  await loadCriteriaPresets(true);
+  renderPresetSelect(data && data.id);
+  showMsg('judging-msg', 'Preset “' + name + '” saved.', true);
+});
+$('jm-preset-delete').addEventListener('click', async () => {
+  const p = criteriaPresets.find(x => x.id === $('jm-preset-select').value);
+  if (!p) { showMsg('judging-msg', 'Choose a preset to delete.', false); return; }
+  if (!confirm('Delete the preset “' + p.name + '”? Competitions already using these criteria keep them.')) return;
+  const { error } = await supabaseClient.from('criteria_presets').delete().eq('id', p.id);
+  if (error) { showMsg('judging-msg', 'Could not delete preset: ' + error.message, false); return; }
+  await loadCriteriaPresets(true);
+  showMsg('judging-msg', 'Preset deleted.', true);
+});
+
+$('btn-save-judging').addEventListener('click', async () => {
+  if (!expandedEventId) return;
+  const mode = judgingDraft.mode;
+  let criteria = null;
+  if (mode === 'criteria') {
+    const v = readDraftCriteria();
+    if (v.error) { showMsg('judging-msg', v.error, false); return; }
+    criteria = v.criteria;
+  }
+  const cur = myEvents.find(x => x.id === expandedEventId);
+  const before = eventJudging(cur);
+  const changed = before.mode !== mode || (mode === 'criteria' && JSON.stringify(before.criteria) !== JSON.stringify(criteria));
+
+  // warn if judges have already entered scores
+  if (changed && lastRounds.length) {
+    const { count } = await supabaseClient.from('round_scores').select('id', { count: 'exact', head: true }).in('round_id', lastRounds.map(r => r.id));
+    if (count && !confirm(plural(count, 'score') + ' ha' + (count === 1 ? 's' : 've') + ' already been entered. Changing the judging method means scores entered under the old method won’t be counted. Continue?')) return;
+  }
+
+  const btn = $('btn-save-judging');
+  btn.disabled = true; btn.textContent = 'Saving…';
+  const patch = { judging_mode: mode, scoring_criteria: mode === 'criteria' ? criteria : (cur && cur.scoring_criteria) || DEFAULT_CRITERIA };
+  const { error } = await supabaseClient.from('events').update(patch).eq('id', expandedEventId);
+  btn.disabled = false; btn.textContent = 'Save judging method';
+  if (error) { showMsg('judging-msg', 'Could not save: ' + error.message + (/column|schema/i.test(error.message) ? ' (Run judging_scores.sql in Supabase first.)' : ''), false); return; }
+  if (cur) Object.assign(cur, patch);
+  if (mode === 'criteria') judgingDraft.criteria = criteria;
+  showMsg('judging-msg', 'Judging method saved.', true);
+});
+
 function fillEventDetails(e){
   $('edit-event-name').value = e.name || '';
   $('edit-event-date').value = e.event_date || '';
   $('edit-event-desc').value = e.description || '';
+  populateGroupSelects();
+  $('edit-event-group').value = e.parent_id || '';
+  const inGroup = !!(e.parent_id && groupsList().some(g => g.id === e.parent_id));
+  $('btn-regen-code').style.display = inGroup ? 'none' : '';
+  loadJudgingEditor(e);
 }
+
+$('edit-event-group').addEventListener('change', () => {
+  $('btn-regen-code').style.display = $('edit-event-group').value ? 'none' : '';
+});
 
 $('btn-save-event').addEventListener('click', async () => {
   if (!expandedEventId) return;
@@ -982,7 +1488,11 @@ $('btn-save-event').addEventListener('click', async () => {
 
   const btn = $('btn-save-event');
   btn.disabled = true; btn.textContent = 'Saving…';
-  const { error } = await supabaseClient.from('events').update({ name, event_date, description }).eq('id', expandedEventId);
+  const cur = myEvents.find(x => x.id === expandedEventId);
+  const patch = { name, event_date, description };
+  const newGroup = $('edit-event-group').value || null;
+  if (((cur && cur.parent_id) || null) !== newGroup) patch.parent_id = newGroup;
+  const { error } = await supabaseClient.from('events').update(patch).eq('id', expandedEventId);
   btn.disabled = false; btn.textContent = 'Save changes';
 
   if (error) { showMsg('detail-msg', 'Could not save changes: ' + error.message, false); return; }
@@ -1008,6 +1518,26 @@ $('btn-delete-event').addEventListener('click', async () => {
   loadEvents();
 });
 
+$('btn-create-group').addEventListener('click', async () => {
+  const name = $('group-name').value.trim();
+  const description = $('group-desc').value.trim() || null;
+  if (!name) { showMsg('group-msg', 'Enter a group name.', false); return; }
+
+  const btn = $('btn-create-group');
+  btn.disabled = true; btn.textContent = 'Creating…';
+  const { error } = await supabaseClient.from('events').insert({ admin_id: currentUser.id, name, description, is_group: true });
+  btn.disabled = false; btn.textContent = 'Create group';
+
+  if (error) {
+    const needsDb = /is_group|parent_id|column/i.test(error.message || '');
+    showMsg('group-msg', 'Could not create group: ' + error.message + (needsDb ? ' — the events table needs the is_group and parent_id columns first.' : ''), false);
+    return;
+  }
+  $('group-name').value = ''; $('group-desc').value = '';
+  toggleCreateGroupForm();
+  await loadEvents();
+});
+
 $('btn-create-event').addEventListener('click', async () => {
   const name = $('event-name').value.trim();
   const event_date = $('event-date').value || null;
@@ -1016,77 +1546,24 @@ $('btn-create-event').addEventListener('click', async () => {
 
   const btn = $('btn-create-event');
   btn.disabled = true; btn.textContent = 'Creating…';
-  const { error } = await supabaseClient.from('events').insert({ admin_id: currentUser.id, name, event_date, description });
+  const row = { admin_id: currentUser.id, name, event_date, description, judging_mode: 'criteria', scoring_criteria: DEFAULT_CRITERIA };
+  const gid = $('event-group').value;
+  if (gid) row.parent_id = gid;
+  const { error } = await supabaseClient.from('events').insert(row);
   btn.disabled = false; btn.textContent = 'Create event';
 
   if (error) { showMsg('event-msg', 'Could not create event: ' + error.message, false); return; }
   showMsg('event-msg', 'Event created.', true);
-  $('event-name').value = ''; $('event-date').value = ''; $('event-desc').value = '';
+  $('event-name').value = ''; $('event-date').value = ''; $('event-desc').value = ''; $('event-group').value = '';
   toggleCreateEventForm();
   await loadEvents();
-  if (myEvents.length) await openEventPanel(myEvents[0].id, 'add-round');
-});
-
-/* =========================================================
-   CREATE ROUND
-   ========================================================= */
-function renderCreateJudgesPicker(){
-  const box = $('create-judges-list');
-  if (!myJudges.length) { box.innerHTML = '<div style="font-size:12px;color:var(--t3);">No judges yet — invite some from the Invite judges tab.</div>'; return; }
-  box.innerHTML = myJudges.map(j => `
-    <div class="judge-check-row">
-      <input type="checkbox" class="create-judge-cb" value="${j.id}">
-      <span>${esc(j.full_name || j.email)}</span>
-    </div>
-  `).join('');
-}
-
-$('btn-create').addEventListener('click', async () => {
-  if (!currentEventId) { showMsg('create-msg', 'Select an event first.', false); return; }
-  if (!currentDivision) { showMsg('create-msg', 'Select a division.', false); return; }
-
-  const round_name = $('round-name').value;
-  const num_judges = parseInt($('num-judges').value, 10);
-  const advanceRaw = $('advance-count').value;
-  const advance_count = advanceRaw ? parseInt(advanceRaw, 10) : null;
-
-  if (!num_judges || num_judges < 1) { showMsg('create-msg', 'Enter a valid number of judges.', false); return; }
-
-  const btn = $('btn-create');
-  btn.disabled = true; btn.textContent = 'Creating…';
-
-  const { data, error } = await supabaseClient.from('competition_rounds').insert({
-    event_id: currentEventId,
-    division: currentDivision,
-    round_name,
-    num_judges,
-    advance_count,
-    status: 'draft',
-    created_by: currentUser.id
-  }).select().single();
-
-  if (error) {
-    btn.disabled = false; btn.textContent = 'Create round';
-    showMsg('create-msg', 'Could not create round: ' + error.message, false);
-    return;
-  }
-
-  const checked = Array.from(document.querySelectorAll('.create-judge-cb:checked')).map(cb => cb.value);
-  if (checked.length) {
-    await supabaseClient.from('round_judges').insert(checked.map(judge_id => ({ round_id: data.id, judge_id })));
-  }
-
-  btn.disabled = false; btn.textContent = 'Create round';
-  showMsg('create-msg', 'Round created.', true);
-  $('advance-count').value = '';
-  document.querySelectorAll('.create-judge-cb').forEach(cb => cb.checked = false);
-  loadRounds();
+  if (myEvents.length) await openEventPanel(myEvents[0].id, 'details');
 });
 
 /* =========================================================
    DANCERS (competitors)
    ========================================================= */
-const DIVISIONS = ['Male','Female','Diamond'];
+const DIVISIONS = ['Male','Female','Diamond','Mixed'];
 
 async function loadCompetitors(){
   if (!currentEventId) { myCompetitors = []; return; }
@@ -1098,6 +1575,7 @@ async function loadCompetitors(){
   if (error) { console.warn(error); myCompetitors = []; }
   else myCompetitors = data || [];
   renderCompetitors();
+  updateChainDerived();
 }
 
 function competitorsForDivision(div){
@@ -1177,12 +1655,346 @@ $('btn-add-dancer').addEventListener('click', async () => {
 });
 
 /* =========================================================
+   DANCERS — CSV IMPORT  (Dancer Name, Bib Number, Division)
+   ========================================================= */
+let csvRows = [];
+
+function parseCSV(text){
+  text = String(text).replace(/^\uFEFF/, '');
+  const first = text.split(/\r?\n/)[0] || '';
+  const delim = [',', '\t', ';'].map(d => [d, first.split(d).length]).sort((a, b) => b[1] - a[1])[0][0];
+  const rows = [];
+  let row = [], cur = '', inQ = false;
+  for (let i = 0; i < text.length; i++) {
+    const ch = text[i];
+    if (inQ) {
+      if (ch === '"') { if (text[i + 1] === '"') { cur += '"'; i++; } else inQ = false; }
+      else cur += ch;
+    } else if (ch === '"' && cur === '') inQ = true;   // a quote only opens a quoted field at the start of the field
+    else if (ch === delim) { row.push(cur); cur = ''; }
+    else if (ch === '\n' || ch === '\r') {
+      if (ch === '\r' && text[i + 1] === '\n') i++;
+      row.push(cur); cur = ''; rows.push(row); row = [];
+    } else cur += ch;
+  }
+  if (cur !== '' || row.length) { row.push(cur); rows.push(row); }
+  return rows.filter(r => r.some(c => c.trim() !== ''));
+}
+
+function csvDivision(v){
+  const k = String(v || '').trim().toLowerCase();
+  if (['male', 'm', 'men', 'man'].includes(k)) return 'Male';
+  if (['female', 'f', 'women', 'woman'].includes(k)) return 'Female';
+  if (['diamond', 'd'].includes(k)) return 'Diamond';
+  if (['mixed', 'mix', 'mx'].includes(k)) return 'Mixed';
+  return null;
+}
+
+// turn parsed rows into importable dancers, flagging anything we'd skip
+function buildCsvRows(table){
+  const norm = c => String(c || '').toLowerCase().replace(/[^a-z0-9]/g, '');
+  const NAME = ['dancername', 'name', 'dancer', 'competitor', 'competitorname'];
+  const BIB = ['bibnumber', 'bib', 'bibno', 'number', 'no'];
+  const DIV = ['division', 'div'];
+  let iName = 0, iBib = 1, iDiv = 2, start = 0;
+  const head = table[0].map(norm);
+  const hName = head.findIndex(h => NAME.includes(h));
+  if (hName >= 0) {
+    start = 1; iName = hName;
+    const b = head.findIndex(h => BIB.includes(h)), d = head.findIndex(h => DIV.includes(h));
+    iBib = b >= 0 ? b : -1; iDiv = d >= 0 ? d : -1;
+  }
+  const keyName = (div, n) => div + '|n|' + n.trim().toLowerCase();
+  const keyBib = (div, b) => div + '|b|' + b.trim().toLowerCase();
+  const seen = new Set();
+  myCompetitors.forEach(c => {
+    seen.add(keyName(c.division, c.name || ''));
+    if (c.number) seen.add(keyBib(c.division, String(c.number)));
+  });
+
+  return table.slice(start).map((cells, i) => {
+    const line = start + i + 1;
+    const name = (cells[iName] || '').trim();
+    const number = iBib >= 0 ? (cells[iBib] || '').trim() : '';
+    const rawDiv = iDiv >= 0 ? (cells[iDiv] || '').trim() : '';
+    const division = csvDivision(rawDiv);
+    const out = { line, name, number, division, rawDiv, reason: '' };
+    if (!name) out.reason = 'Missing dancer name.';
+    else if (!division) out.reason = rawDiv ? 'Unknown division “' + rawDiv + '” (use Male, Female, Diamond or Mixed).' : 'Missing division.';
+    else if (seen.has(keyName(division, name))) out.reason = 'A ' + division + ' dancer named ' + name + ' already exists.';
+    else if (number && seen.has(keyBib(division, number))) out.reason = 'Bib ' + number + ' is already used in ' + division + '.';
+    if (!out.reason) {
+      seen.add(keyName(division, name));
+      if (number) seen.add(keyBib(division, number));
+    }
+    return out;
+  });
+}
+
+function renderCsvPreview(){
+  const box = $('csv-preview');
+  if (!csvRows.length) { box.innerHTML = ''; return; }
+  const ok = csvRows.filter(r => !r.reason), bad = csvRows.filter(r => r.reason);
+  box.innerHTML = `
+    <div class="csv-summary"><span class="ok">${plural(ok.length, 'dancer')} ready to import</span>${bad.length ? ' · <span class="skip">' + plural(bad.length, 'row') + ' skipped</span>' : ''}</div>
+    <div class="csv-list">
+      ${csvRows.map(r => `
+        <div class="csv-row${r.reason ? ' skip' : ''}">
+          <span class="csv-line">Row ${r.line}</span>
+          <span class="csv-name">${esc(r.name || '—')}</span>
+          ${r.number ? `<span class="csv-bib">#${esc(r.number)}</span>` : ''}
+          ${r.division ? `<span class="round-div-tag ${r.division}">${r.division}</span>` : ''}
+          ${r.reason ? `<span class="csv-reason">${esc(r.reason)}</span>` : ''}
+        </div>`).join('')}
+    </div>
+    <div style="display:flex;gap:8px;flex-wrap:wrap;">
+      <button class="btn small" id="btn-csv-import" ${ok.length ? '' : 'disabled'}>Import ${plural(ok.length, 'dancer')}</button>
+      <button class="btn secondary small" id="btn-csv-cancel">Cancel</button>
+    </div>`;
+  $('btn-csv-cancel').addEventListener('click', () => { csvRows = []; renderCsvPreview(); });
+  $('btn-csv-import').addEventListener('click', importCsvDancers);
+}
+
+async function importCsvDancers(){
+  if (!currentEventId) { showMsg('csv-msg', 'Open an event first.', false); return; }
+  const ok = csvRows.filter(r => !r.reason);
+  if (!ok.length) return;
+  const btn = $('btn-csv-import');
+  btn.disabled = true;
+  let done = 0;
+  for (let i = 0; i < ok.length; i += 100) {
+    const chunk = ok.slice(i, i + 100).map(r => ({ event_id: currentEventId, name: r.name, number: r.number || null, division: r.division }));
+    btn.textContent = 'Importing… ' + done + '/' + ok.length;
+    const { error } = await supabaseClient.from('competitors').insert(chunk);
+    if (error) {
+      showMsg('csv-msg', 'Imported ' + done + ' of ' + ok.length + ', then hit an error: ' + error.message, false);
+      await loadCompetitors();
+      return;
+    }
+    done += chunk.length;
+  }
+  const skipped = csvRows.length - ok.length;
+  csvRows = []; renderCsvPreview();
+  showMsg('csv-msg', 'Imported ' + plural(done, 'dancer') + (skipped ? ' (' + plural(skipped, 'row') + ' skipped)' : '') + '.', true);
+  await loadCompetitors();
+  await loadRounds();
+}
+
+$('csv-file').addEventListener('change', async (e) => {
+  const file = e.target.files && e.target.files[0];
+  if (!file) return;
+  if (!currentEventId) { showMsg('csv-msg', 'Open an event first.', false); e.target.value = ''; return; }
+  try {
+    const table = parseCSV(await file.text());
+    if (!table.length) { showMsg('csv-msg', 'That file is empty.', false); csvRows = []; }
+    else { csvRows = buildCsvRows(table); if (!csvRows.length) showMsg('csv-msg', 'No dancer rows found — only a header row was detected.', false); }
+  } catch (err) {
+    showMsg('csv-msg', 'Could not read that file: ' + err.message, false); csvRows = [];
+  }
+  e.target.value = '';   // lets the same file be picked again
+  renderCsvPreview();
+});
+
+$('btn-csv-template').addEventListener('click', () => {
+  const csv = 'Dancer Name,Bib Number,Division\r\nJane Doe,101,Female\r\nJohn Smith,102,Male\r\nAlex Rivera,103,Diamond\r\nSam Lee,104,Mixed\r\n';
+  const url = URL.createObjectURL(new Blob([csv], { type: 'text/csv' }));
+  const a = document.createElement('a');
+  a.href = url; a.download = 'dancers-template.csv';
+  document.body.appendChild(a); a.click(); a.remove();
+  setTimeout(() => URL.revokeObjectURL(url), 1000);
+});
+
+/* =========================================================
    ALL ROUNDS
    ========================================================= */
+// The Rounds tab doubles as the setup screen: no rounds yet -> the setup form is
+// the page; rounds exist -> the list is, with Edit rounds / Reset rounds up top.
+let roundsEditing = false;
+let redit = [];            // draft rows while editing: { id|null, division, round_name, num_judges, advance_count, orig }
+function setRoundsView(hasRounds){
+  const add = $('sec-add-round'), manage = $('rounds-manage'), actions = $('rounds-head-actions');
+  if (!add) return;
+  if (!hasRounds) {
+    roundsEditing = false;
+    add.style.display = 'block';
+    manage.style.display = 'none';
+    actions.style.display = 'none';
+  } else {
+    add.style.display = 'none';
+    manage.style.display = '';
+    actions.style.display = '';
+  }
+  applyEditingView();
+}
+function applyEditingView(){
+  const editor = $('rounds-editor');
+  const hasRounds = lastRounds.length > 0;
+  editor.style.display = (roundsEditing && hasRounds) ? '' : 'none';
+  $('rounds-list').style.display = (roundsEditing && hasRounds) ? 'none' : '';
+  $('reassign-bar').style.display = (roundsEditing && hasRounds) ? 'none' : '';
+  $('prog-banner').style.display = (roundsEditing && hasRounds) ? 'none' : '';
+  const eb = $('btn-edit-rounds');
+  if (eb) { eb.textContent = roundsEditing ? 'Close editor' : 'Edit rounds'; eb.classList.toggle('active', roundsEditing); }
+}
+
+/* ---- Edit rounds: change, add and remove rounds in one place ---- */
+function nextUnusedRoundName(div){
+  const used = new Set(redit.filter(r => r.division === div && !r.removed).map(r => r.round_name));
+  return QS_ROUND_ORDER.find(n => !used.has(n)) || 'Finals';
+}
+function startEditingRounds(){
+  redit = lastRounds.map(r => ({
+    id: r.id, division: r.division, round_name: r.round_name,
+    num_judges: r.num_judges, advance_count: r.advance_count || '',
+    orig: { round_name: r.round_name, num_judges: r.num_judges, advance_count: r.advance_count || '' },
+    removed: false
+  }));
+  roundsEditing = true;
+  renderRoundsEditor();
+  applyEditingView();
+}
+function stopEditingRounds(){
+  roundsEditing = false; redit = [];
+  applyEditingView();
+}
+function renderRoundsEditor(){
+  const box = $('rounds-editor');
+  const colors = { Male: 'var(--blue-text)', Female: 'var(--pink-text)', Diamond: 'var(--amber-text)', Mixed: 'var(--purple-text)' };
+  box.innerHTML = `
+    <h3>Edit rounds</h3>
+    <div class="card-sub">Change any round, add a round to a division, or remove one. Nothing is saved until you press Save changes.</div>
+    <div id="redit-msg" class="form-msg"></div>
+    ${DIVISIONS.map(div => {
+      const rows = redit.map((r, i) => ({ r, i })).filter(x => x.r.division === div && !x.r.removed);
+      // keep a sensible order for display: existing/new in round order
+      rows.sort((x, y) => QS_ROUND_ORDER.indexOf(x.r.round_name) - QS_ROUND_ORDER.indexOf(y.r.round_name));
+      return `
+      <div class="redit-div">
+        <div class="redit-div-head">
+          <div class="qs-div-label" style="color:${colors[div]};margin:0;">${div}</div>
+          <button class="btn secondary small" type="button" data-redit-add="${div}">+ Add a round</button>
+        </div>
+        ${rows.length ? rows.map(({ r, i }) => `
+        <div class="redit-row${r.id ? '' : ' is-new'}">
+          <div class="field">
+            <label>Round</label>
+            <select data-redit-name="${i}">
+              ${(QS_ROUND_ORDER.includes(r.round_name) ? QS_ROUND_ORDER : QS_ROUND_ORDER.concat([r.round_name])).map(n => `<option value="${esc(n)}" ${n === r.round_name ? 'selected' : ''}>${esc(n)}</option>`).join('')}
+            </select>
+          </div>
+          <div class="field">
+            <label>Judges needed</label>
+            <input type="number" min="1" max="15" data-redit-judges="${i}" value="${r.num_judges}">
+          </div>
+          <div class="field">
+            <label>Advancing</label>
+            <input type="number" min="1" data-redit-adv="${i}" value="${r.advance_count}">
+          </div>
+          <button class="btn danger small" type="button" data-redit-remove="${i}">Remove</button>
+        </div>`).join('') : `<div class="redit-empty">No ${div} rounds.</div>`}
+      </div>`;
+    }).join('')}
+    <div class="redit-actions">
+      <button class="btn" type="button" id="btn-redit-save">Save changes</button>
+      <button class="btn secondary" type="button" id="btn-redit-cancel">Cancel</button>
+    </div>`;
+
+  box.querySelectorAll('[data-redit-name]').forEach(el => el.addEventListener('change', () => { redit[+el.dataset.reditName].round_name = el.value; }));
+  box.querySelectorAll('[data-redit-judges]').forEach(el => el.addEventListener('input', () => { redit[+el.dataset.reditJudges].num_judges = el.value; }));
+  box.querySelectorAll('[data-redit-adv]').forEach(el => el.addEventListener('input', () => { redit[+el.dataset.reditAdv].advance_count = el.value; }));
+  box.querySelectorAll('[data-redit-remove]').forEach(btn => btn.addEventListener('click', () => {
+    const r = redit[+btn.dataset.reditRemove];
+    if (r.id) r.removed = true; else redit.splice(+btn.dataset.reditRemove, 1);
+    renderRoundsEditor();
+  }));
+  box.querySelectorAll('[data-redit-add]').forEach(btn => btn.addEventListener('click', () => {
+    const div = btn.dataset.reditAdd;
+    redit.push({ id: null, division: div, round_name: nextUnusedRoundName(div), num_judges: 5, advance_count: '', orig: null, removed: false });
+    renderRoundsEditor();
+  }));
+  $('btn-redit-cancel').addEventListener('click', stopEditingRounds);
+  $('btn-redit-save').addEventListener('click', saveRoundsEdit);
+}
+
+async function saveRoundsEdit(){
+  const live = redit.filter(r => !r.removed);
+  for (const r of live) {
+    const n = parseInt(r.num_judges, 10);
+    if (!n || n < 1) { showMsg('redit-msg', 'Every round needs a valid number of judges.', false); return; }
+  }
+  const toDelete = redit.filter(r => r.removed && r.id);
+  const toAdd = live.filter(r => !r.id);
+  const toUpdate = live.filter(r => r.id && r.orig && (
+    r.round_name !== r.orig.round_name ||
+    parseInt(r.num_judges, 10) !== parseInt(r.orig.num_judges, 10) ||
+    String(r.advance_count || '') !== String(r.orig.advance_count || '')));
+
+  if (!toDelete.length && !toAdd.length && !toUpdate.length) { stopEditingRounds(); return; }
+
+  if (toDelete.length) {
+    const msg = 'Remove ' + plural(toDelete.length, 'round') + '? Their judge assignments and advancement picks will be removed too.' +
+      (live.length ? '' : ' This will remove every round, and you will be taken back to round setup.');
+    if (!confirm(msg)) return;
+  }
+
+  const btn = $('btn-redit-save');
+  btn.disabled = true; btn.textContent = 'Saving…';
+  const fail = async (text) => {
+    btn.disabled = false; btn.textContent = 'Save changes';
+    showMsg('redit-msg', text, false);
+    await loadRounds();       // show what actually got saved
+  };
+
+  for (const r of toDelete) {
+    const { error } = await supabaseClient.from('competition_rounds').delete().eq('id', r.id);
+    if (error) { await fail('Could not remove ' + r.round_name + ': ' + error.message); return; }
+  }
+  for (const r of toUpdate) {
+    const { error } = await supabaseClient.from('competition_rounds').update({
+      round_name: r.round_name,
+      num_judges: parseInt(r.num_judges, 10),
+      advance_count: r.advance_count ? parseInt(r.advance_count, 10) : null
+    }).eq('id', r.id);
+    if (error) { await fail('Could not save ' + r.round_name + ': ' + error.message); return; }
+  }
+  // one at a time so new rounds get increasing creation times
+  for (const r of toAdd) {
+    const { data, error } = await supabaseClient.from('competition_rounds').insert({
+      event_id: currentEventId, division: r.division, round_name: r.round_name,
+      num_judges: parseInt(r.num_judges, 10),
+      advance_count: r.advance_count ? parseInt(r.advance_count, 10) : null,
+      status: 'draft', created_by: currentUser.id
+    }).select().single();
+    if (error) { await fail('Could not add ' + r.division + ' ' + r.round_name + ': ' + error.message); return; }
+    if (myJudges.length) await supabaseClient.from('round_judges').insert(myJudges.map(j => ({ round_id: data.id, judge_id: j.id })));
+  }
+
+  roundsEditing = false; redit = [];
+  await loadRounds();
+}
+
+/* ---- Reset rounds: wipe every round for this competition and start over ---- */
+async function resetRounds(){
+  if (!currentEventId || !lastRounds.length) return;
+  if (!confirm('Reset all rounds for this competition?\n\nThis deletes all ' + plural(lastRounds.length, 'round') + ', including their judge assignments and who advanced. Your dancers and judges are kept. This cannot be undone.')) return;
+  const btn = $('btn-reset-rounds');
+  btn.disabled = true; btn.textContent = 'Resetting…';
+  const { error } = await supabaseClient.from('competition_rounds').delete().eq('event_id', currentEventId);
+  btn.disabled = false; btn.textContent = 'Reset rounds';
+  if (error) { alert('Could not reset rounds: ' + error.message); return; }
+  roundsEditing = false; redit = [];
+  await loadRounds();
+}
+
+document.addEventListener('click', (e) => {
+  if (e.target.closest('#btn-edit-rounds')) { roundsEditing ? stopEditingRounds() : startEditingRounds(); }
+  else if (e.target.closest('#btn-reset-rounds')) resetRounds();
+});
+let lastRounds = [], lastRoundDancers = {};
 async function loadRounds() {
   const list = $('rounds-list');
   if (!currentEventId) { list.innerHTML = '<div class="empty">Create an event first.</div>'; return; }
-  list.innerHTML = '<div class="empty">Loading…</div>';
+  if (!list.children.length) list.innerHTML = '<div class="empty">Loading…</div>';
 
   const { data, error } = await supabaseClient
     .from('competition_rounds')
@@ -1191,7 +2003,36 @@ async function loadRounds() {
     .order('created_at', { ascending: false });
 
   if (error) { list.innerHTML = '<div class="empty">Could not load rounds: ' + esc(error.message) + '</div>'; return; }
-  if (!data || !data.length) { list.innerHTML = '<div class="empty">No rounds yet — create one to get started.</div>'; return; }
+  if (!data || !data.length) {
+    list.innerHTML = '';
+    lastRounds = []; lastRoundDancers = {};
+    setRoundsView(false);
+    return;
+  }
+  setRoundsView(true);
+
+  // order: division, then round order (Prelims → … → Finals)
+  data.sort((a, b) => (DIVISIONS.indexOf(a.division) - DIVISIONS.indexOf(b.division)) || compareRounds(a, b));
+
+  // who advanced out of each round (set on the Bracket tab)
+  const winnersByRound = {};
+  const { data: winRows } = await supabaseClient
+    .from('round_winners').select('round_id, competitor_id').in('round_id', data.map(r => r.id));
+  (winRows || []).forEach(w => { (winnersByRound[w.round_id] = winnersByRound[w.round_id] || new Set()).add(w.competitor_id); });
+
+  // each round's field: first round of a division = every dancer; later rounds = whoever advanced from the round before
+  const prevOf = {}, roundDancers = {};
+  DIVISIONS.forEach(div => {
+    const list = data.filter(r => r.division === div);
+    list.forEach((r, i) => {
+      const prev = i ? list[i - 1] : null;
+      prevOf[r.id] = prev;
+      const all = competitorsForDivision(div);
+      roundDancers[r.id] = prev ? all.filter(c => (winnersByRound[prev.id] || new Set()).has(c.id)) : all;
+    });
+  });
+
+  lastRounds = data; lastRoundDancers = roundDancers;
 
   const judgeMap = {}; myJudges.forEach(j => judgeMap[j.id] = j);
 
@@ -1212,7 +2053,8 @@ async function loadRounds() {
   list.innerHTML = data.map(r => {
     const assignedIds = (r.round_judges || []).map(x => x.judge_id);
     const chips = assignedIds.map(id => judgeMap[id] ? `<span class="judge-chip">${esc(judgeMap[id].full_name || judgeMap[id].email)}</span>` : '').join('');
-    const dancers = competitorsForDivision(r.division);
+    const dancers = roundDancers[r.id] || [];
+    const prev = prevOf[r.id];
     const rAssign = assignMap[r.id] || {};
     const defaultPer = 1;
     return `
@@ -1221,7 +2063,7 @@ async function loadRounds() {
         <span class="round-div-tag ${esc(r.division)}">${esc(r.division)}</span>
         <div class="round-info">
           <div class="rname">${esc(r.round_name)}</div>
-          <div class="rmeta">${assignedIds.length}/${r.num_judges} judge${r.num_judges !== 1 ? 's' : ''} assigned · ${dancers.length} dancer${dancers.length !== 1 ? 's' : ''}${r.advance_count ? ' · ' + r.advance_count + ' advance' : ''}</div>
+          <div class="rmeta">${assignedIds.length}/${r.num_judges} judge${r.num_judges !== 1 ? 's' : ''} assigned · ${dancers.length}${prev && prev.advance_count ? '/' + prev.advance_count : ''} dancer${dancers.length !== 1 ? 's' : ''}${r.advance_count ? ' · ' + r.advance_count + ' advance' : ''}</div>
         </div>
         <select class="status-select" data-id="${r.id}">
           <option value="draft" ${r.status === 'draft' ? 'selected' : ''}>Draft</option>
@@ -1241,11 +2083,11 @@ async function loadRounds() {
             <input type="checkbox" class="round-judge-cb" data-round="${r.id}" data-judge="${j.id}" ${assignedIds.includes(j.id) ? 'checked' : ''}>
             <span>${esc(j.full_name || j.email)}</span>
           </div>
-        `).join('') : '<div style="font-size:12px;color:var(--t3);">No judges invited yet.</div>'}
+        `).join('') : '<div style="font-size:12px;color:var(--t3);">No judges are on this competition yet — share its join code (or its group’s code).</div>'}
       </div>
 
       <div class="round-assign-section" id="assign-sec-${r.id}">
-        ${!dancers.length ? `<div class="assign-note">No ${esc(r.division)} dancers yet — add them on the Dancers tab.</div>`
+        ${!dancers.length ? `<div class="assign-note">${prev ? 'Waiting for competitors to advance from ' + esc(prev.round_name) + ' — select them on the Bracket tab.' : 'No ' + esc(r.division) + ' dancers yet — add them on the Dancers tab.'}</div>`
         : !assignedIds.length ? '<div class="assign-note">Assign judges to this round first (Judges button above), then you can give each dancer their own panel.</div>'
         : `
         <div class="assign-toolbar">
@@ -1274,7 +2116,7 @@ async function loadRounds() {
         <div class="field">
           <label>Round</label>
           <select data-edit-name="${r.id}">
-            ${['Prelims','Round 1','Round 2','Round 3','Quarterfinals','Semifinals','Finals'].map(n => `<option value="${n}" ${n===r.round_name?'selected':''}>${n}</option>`).join('')}
+            ${(QS_ROUND_ORDER.includes(r.round_name) ? QS_ROUND_ORDER : QS_ROUND_ORDER.concat([r.round_name])).map(n => `<option value="${esc(n)}" ${n===r.round_name?'selected':''}>${esc(n)}</option>`).join('')}
           </select>
         </div>
         <div class="field">
@@ -1298,7 +2140,10 @@ async function loadRounds() {
       const { error } = await supabaseClient.from('competition_rounds').update({ status: newStatus }).eq('id', sel.dataset.id);
       if (error) { alert('Could not update status: ' + error.message); return; }
       if (newStatus === 'completed') {
-        await tryAutoProgress(sel.dataset.id, data);
+        const round = data.find(r => r.id === sel.dataset.id);
+        const note = round ? await autoAdvanceFromScores(round, data) : '';
+        await tryAutoProgress(sel.dataset.id, data, note);
+        if (note) loadRounds();     // the next round's field has changed
       }
     });
   });
@@ -1350,7 +2195,7 @@ async function loadRounds() {
       const roundId = btn.dataset.randomAssign;
       const round = data.find(r => r.id === roundId);
       const pool = (round.round_judges || []).map(x => x.judge_id);
-      const dancers = competitorsForDivision(round.division);
+      const dancers = roundDancers[round.id] || [];
       const per = Math.max(1, Math.min(parseInt($('per-dancer-' + roundId).value, 10) || 1, pool.length));
       if (!pool.length || !dancers.length) return;
       if (!confirm('Randomly assign ' + per + ' judge' + (per !== 1 ? 's' : '') + ' to each of the ' + dancers.length + ' dancer' + (dancers.length !== 1 ? 's' : '') + '? This replaces the current assignments for this round.')) return;
@@ -1443,111 +2288,241 @@ async function loadRounds() {
 }
 
 /* =========================================================
-   QUICK SETUP
+   ADVANCEMENT BUILDER
+   Start with x competitors → y advance → z advance → … The rounds
+   (and how many move on from each) are created from that chain.
    ========================================================= */
-const QS_ROUND_ORDER = ['Prelims','Round 1','Round 2','Round 3','Quarterfinals','Semifinals','Finals'];
-const QS_DIVISIONS = ['Male','Female','Diamond'];
-// { div: Set<roundName> }
-const qsSelected = { Male: new Set(), Female: new Set(), Diamond: new Set() };
+const CHAIN_MAX_ROUNDS = 20;
+const chain = { eventId: null, division: null, start: '', startAuto: false, advances: ['', ''] };
 
-function initQuickSetup(){
-  QS_DIVISIONS.forEach(div => {
-    const container = $('qs-chips-' + div);
-    if (!container) return;
-    container.innerHTML = QS_ROUND_ORDER.map(r => `
-      <div class="qs-round-chip" data-qs-div="${div}" data-qs-round="${r}">${r}</div>
-    `).join('');
-    container.querySelectorAll('.qs-round-chip').forEach(chip => {
-      chip.addEventListener('click', () => {
-        const round = chip.dataset.qsRound;
-        if (qsSelected[div].has(round)) {
-          qsSelected[div].delete(round);
-          chip.classList.remove('sel');
-        } else {
-          qsSelected[div].add(round);
-          chip.classList.add('sel');
-        }
-        updateQsOrderPreview(div);
-      });
-    });
-  });
+// n rounds → names counted back from the Finals: …, Quarterfinals, Semifinals, Finals
+function chainRoundNames(n){
+  const tail = ['Quarterfinals','Semifinals','Finals'];
+  const t = Math.min(n, tail.length);
+  const early = n - t;
+  const names = [];
+  if (early > 0) { names.push('Prelims'); for (let k = 1; k < early; k++) names.push('Round ' + k); }
+  return names.concat(tail.slice(tail.length - t));
+}
+// competitors entering each round: [start, adv1, adv2, …]
+function chainIns(){ return [chain.start].concat(chain.advances); }
 
-  // Replace buttons to avoid duplicate listeners on re-init
-  const clearBtn = $('btn-qs-clear');
-  const newClear = clearBtn.cloneNode(true);
-  clearBtn.parentNode.replaceChild(newClear, clearBtn);
-  newClear.addEventListener('click', () => {
-    QS_DIVISIONS.forEach(div => {
-      qsSelected[div].clear();
-      document.querySelectorAll('.qs-round-chip[data-qs-div="' + div + '"]').forEach(c => c.classList.remove('sel'));
-      updateQsOrderPreview(div);
-    });
-    showQsMsg('', false, false);
-  });
-
-  const createBtn = $('btn-qs-create');
-  const newCreate = createBtn.cloneNode(true);
-  createBtn.parentNode.replaceChild(newCreate, createBtn);
-  newCreate.addEventListener('click', quickSetupCreate);
+function chainRowError(i, ins){
+  const a = chain.advances[i], inn = ins[i];
+  if (a === '') return '';
+  if (a < 1) return 'Must be at least 1.';
+  if (inn !== '' && a >= inn) return 'Must be fewer than ' + inn + '.';
+  return '';
+}
+function chainValidate(){
+  const names = chainRoundNames(chain.advances.length + 1);
+  const ins = chainIns();
+  if (!chain.division) return { ok: false, message: 'Pick a division to get started.' };
+  if (chain.start === '') return { ok: false, message: 'Enter how many competitors are in the first round.' };
+  if (chain.start < 2) return { ok: false, message: 'The first round needs at least 2 competitors.' };
+  for (let i = 0; i < chain.advances.length; i++) {
+    if (chain.advances[i] === '') return { ok: false, message: 'Enter how many advance from ' + names[i] + '.' };
+    const err = chainRowError(i, ins);
+    if (err) return { ok: false, message: names[i] + ': ' + err };
+  }
+  return { ok: true };
 }
 
-function updateQsOrderPreview(div){
-  const ordered = QS_ROUND_ORDER.filter(r => qsSelected[div].has(r));
-  const el = $('qs-order-' + div);
-  if (!el) return;
-  if (!ordered.length) { el.innerHTML = ''; return; }
-  el.innerHTML = 'Order: ' + ordered.map(r => `<span>${r}</span>`).join(' → ');
-}
+function renderChain(){
+  const box = $('chain-stages');
+  if (!box) return;
+  const n = chain.advances.length + 1;
+  const names = chainRoundNames(n);
+  box.innerHTML = names.map((nm, i) => {
+    const last = i === n - 1;
+    return `
+    <div class="chain-stage">
+      <div class="chain-stage-num">${i + 1}</div>
+      <div class="chain-stage-info">
+        <div class="chain-stage-name">${esc(nm)}</div>
+        <div class="chain-stage-in" data-chain-in="${i}"></div>
+      </div>
+      ${last
+        ? '<div class="chain-stage-end">Final round</div>'
+        : `<div class="chain-stage-adv">
+             <label>Advancing to ${esc(names[i + 1])}</label>
+             <input type="number" min="1" data-chain-adv="${i}" value="${chain.advances[i]}" placeholder="e.g. 12">
+             <div class="chain-err" data-chain-err="${i}"></div>
+           </div>`}
+    </div>`;
+  }).join('');
 
-function showQsMsg(text, ok, visible){
-  const el = $('qs-msg');
-  el.textContent = text;
-  el.className = 'qs-msg' + (visible ? ' show ' + (ok ? 'ok' : 'err') : '');
-}
-
-async function quickSetupCreate(){
-  if (!currentEventId) { showQsMsg('Open an event first.', false, true); return; }
-
-  const numJudges = myJudges.length || 1;
-
-  const toCreate = [];
-  QS_DIVISIONS.forEach(div => {
-    const ordered = QS_ROUND_ORDER.filter(r => qsSelected[div].has(r));
-    ordered.forEach(round_name => {
-      toCreate.push({ event_id: currentEventId, division: div, round_name, num_judges: numJudges, status: 'draft', created_by: currentUser.id });
+  box.querySelectorAll('[data-chain-adv]').forEach(inp => {
+    inp.addEventListener('input', () => {
+      const v = parseInt(inp.value, 10);
+      chain.advances[parseInt(inp.dataset.chainAdv, 10)] = isNaN(v) ? '' : v;
+      updateChainDerived();
     });
   });
+  updateChainDerived();
+}
 
-  if (!toCreate.length) { showQsMsg('Select at least one round to create.', false, true); return; }
+// refresh the computed bits (counts, errors, preview, buttons) without re-rendering the inputs
+function updateChainDerived(){
+  if (!$('chain-stages') || !$('chain-preview')) return;
+  const n = chain.advances.length + 1;
+  const names = chainRoundNames(n);
+  const ins = chainIns();
 
-  const btn = $('btn-qs-create');
-  btn.disabled = true; btn.textContent = 'Creating…';
-  showQsMsg('', false, false);
+  ins.forEach((v, i) => {
+    const el = document.querySelector('[data-chain-in="' + i + '"]');
+    if (el) el.textContent = v === '' ? 'Waiting on the round before' : plural(v, 'competitor');
+  });
+  chain.advances.forEach((a, i) => {
+    const err = chainRowError(i, ins);
+    const errEl = document.querySelector('[data-chain-err="' + i + '"]');
+    const inp = document.querySelector('[data-chain-adv="' + i + '"]');
+    if (errEl) errEl.textContent = err;
+    if (inp) inp.classList.toggle('bad', !!err);
+  });
 
-  const { data: created, error } = await supabaseClient.from('competition_rounds').insert(toCreate).select();
-  btn.disabled = false; btn.textContent = 'Create selected rounds';
-
-  if (error) { showQsMsg('Could not create rounds: ' + error.message, false, true); return; }
-
-  // assign all event judges to every created round
-  if (myJudges.length && created && created.length) {
-    const judgeRows = [];
-    created.forEach(r => myJudges.forEach(j => judgeRows.push({ round_id: r.id, judge_id: j.id })));
-    await supabaseClient.from('round_judges').insert(judgeRows);
+  // registered-dancer hint under the starting field
+  const hint = $('chain-start-hint');
+  if (!chain.division) {
+    hint.textContent = 'Pick a division to see how many dancers are registered.';
+  } else {
+    const reg = competitorsForDivision(chain.division).length;
+    hint.innerHTML = esc(plural(reg, 'dancer')) + ' registered in ' + esc(chain.division) + '.' +
+      (reg && chain.start !== reg ? ` <button type="button" class="chain-hint-btn" data-use-reg="${reg}">Use ${reg}</button>` : '');
   }
 
-  const total = toCreate.length;
-  showQsMsg(total + ' round' + (total !== 1 ? 's' : '') + ' created!', true, true);
-
-  // clear selection
-  QS_DIVISIONS.forEach(div => {
-    qsSelected[div].clear();
-    document.querySelectorAll('.qs-round-chip[data-qs-div="' + div + '"]').forEach(c => c.classList.remove('sel'));
-    updateQsOrderPreview(div);
-  });
-
-  await loadRounds();
+  const v = chainValidate();
+  $('chain-preview').innerHTML =
+    '<strong>Plan:</strong> ' + names.map((nm, i) => esc(nm) + ' (' + (ins[i] === '' ? '?' : ins[i]) + ')').join(' → ') +
+    (v.ok ? '' : '<div class="chain-status">' + esc(v.message) + '</div>');
+  $('btn-chain-create').disabled = !v.ok;
+  $('chain-remove').disabled = chain.advances.length <= 1;
+  $('chain-add').disabled = chain.advances.length + 1 >= CHAIN_MAX_ROUNDS;
 }
+
+function initChainBuilder(){
+  if (chain.eventId !== currentEventId) {
+    chain.eventId = currentEventId;
+    chain.division = null; chain.start = ''; chain.startAuto = false; chain.advances = ['', ''];
+    $('chain-start').value = '';
+    document.querySelectorAll('.chain-div-opt').forEach(o => o.classList.remove('sel'));
+  }
+  renderChain();
+}
+
+document.querySelectorAll('.chain-div-opt').forEach(opt => {
+  opt.addEventListener('click', () => {
+    document.querySelectorAll('.chain-div-opt').forEach(o => o.classList.remove('sel'));
+    opt.classList.add('sel');
+    chain.division = opt.dataset.div;
+    // pre-fill the starting field with the registered dancers (unless the admin typed their own number)
+    const reg = competitorsForDivision(chain.division).length;
+    if (reg && (chain.start === '' || chain.startAuto)) {
+      chain.start = reg; chain.startAuto = true;
+      $('chain-start').value = reg;
+    }
+    updateChainDerived();
+  });
+});
+$('chain-start').addEventListener('input', () => {
+  const v = parseInt($('chain-start').value, 10);
+  chain.start = isNaN(v) ? '' : v;
+  chain.startAuto = false;
+  updateChainDerived();
+});
+$('chain-start-hint').addEventListener('click', e => {
+  const b = e.target.closest('[data-use-reg]');
+  if (!b) return;
+  chain.start = parseInt(b.dataset.useReg, 10); chain.startAuto = true;
+  $('chain-start').value = chain.start;
+  updateChainDerived();
+});
+$('chain-add').addEventListener('click', () => {
+  if (chain.advances.length + 1 >= CHAIN_MAX_ROUNDS) return;
+  chain.advances.push('');
+  renderChain();
+});
+$('chain-remove').addEventListener('click', () => {
+  if (chain.advances.length <= 1) return;
+  chain.advances.pop();
+  renderChain();
+});
+
+$('btn-chain-create').addEventListener('click', async () => {
+  if (!currentEventId) { showMsg('chain-msg', 'Open an event first.', false); return; }
+  const v = chainValidate();
+  if (!v.ok) { showMsg('chain-msg', v.message, false); return; }
+  const num_judges = parseInt($('chain-judges').value, 10);
+  if (!num_judges || num_judges < 1) { showMsg('chain-msg', 'Enter a valid number of judges.', false); return; }
+
+  const div = chain.division;
+  const n = chain.advances.length + 1;
+  const names = chainRoundNames(n);
+
+  const { data: existing, error: exErr } = await supabaseClient
+    .from('competition_rounds').select('id').eq('event_id', currentEventId).eq('division', div);
+  if (!exErr && existing && existing.length) {
+    if (!confirm(div + ' already has ' + plural(existing.length, 'round') + ' in this event. Add these ' + n + ' rounds anyway?')) return;
+  }
+
+  const btn = $('btn-chain-create');
+  btn.disabled = true;
+  const created = [];
+  // one at a time so they get increasing creation times (keeps them in order)
+  for (let i = 0; i < n; i++) {
+    btn.textContent = 'Creating ' + (i + 1) + ' of ' + n + '…';
+    const { data, error } = await supabaseClient.from('competition_rounds').insert({
+      event_id: currentEventId,
+      division: div,
+      round_name: names[i],
+      num_judges,
+      advance_count: i < n - 1 ? chain.advances[i] : null,
+      status: 'draft',
+      created_by: currentUser.id
+    }).select().single();
+    if (error) {
+      btn.textContent = 'Create rounds';
+      updateChainDerived();
+      showMsg('chain-msg', 'Created ' + created.length + ' of ' + n + ' rounds, then hit an error: ' + error.message, false);
+      await loadRounds();
+      return;
+    }
+    created.push(data);
+  }
+
+  if ($('chain-assign-judges').checked && myJudges.length) {
+    const rows = [];
+    created.forEach(r => myJudges.forEach(j => rows.push({ round_id: r.id, judge_id: j.id })));
+    await supabaseClient.from('round_judges').insert(rows);
+
+    // the first round starts with every registered dancer in the division, so split them across the judges right away
+    const firstRound = created[0];
+    const firstDancers = competitorsForDivision(div);
+    if (firstRound && firstDancers.length) {
+      const pool = myJudges.map(j => j.id);
+      const load = {}; pool.forEach(id => load[id] = 0);
+      const dancerRows = [];
+      shuffle(firstDancers.slice()).forEach(c => {
+        const judge_id = shuffle(pool.slice()).sort((a, b) => load[a] - load[b])[0];
+        load[judge_id]++;
+        dancerRows.push({ round_id: firstRound.id, competitor_id: c.id, judge_id });
+      });
+      const { error: caErr } = await supabaseClient.from('competitor_judges').insert(dancerRows);
+      if (caErr) console.warn('Could not assign judges to dancers:', caErr.message);
+    }
+  }
+
+  btn.textContent = 'Create rounds';
+  const ins = chainIns();
+  showMsg('chain-msg', 'Created ' + n + ' ' + div + ' rounds (' + ins.join(' → ') + '). Pick another division to reuse this structure.', true);
+  chain.division = null;
+  document.querySelectorAll('.chain-div-opt').forEach(o => o.classList.remove('sel'));
+  updateChainDerived();
+  await loadRounds();
+});
+
+/* round names, in order */
+const QS_ROUND_ORDER = ['Prelims','Round 1','Round 2','Round 3','Quarterfinals','Semifinals','Finals'];
 
 /* =========================================================
    AUTO-PROGRESSION: when a round is marked "completed",
@@ -1555,58 +2530,49 @@ async function quickSetupCreate(){
    it with the dancers from this round who "advanced"
    (advance_count top dancers — or all if not set).
    ========================================================= */
-async function tryAutoProgress(completedRoundId, allRounds){
+async function tryAutoProgress(completedRoundId, allRounds, extraNote){
   const completed = allRounds.find(r => r.id === completedRoundId);
   if (!completed) return;
 
-  // find the next round in the same division (by creation order in QS_ROUND_ORDER, then created_at)
-  const divRounds = allRounds
-    .filter(r => r.division === completed.division && r.id !== completedRoundId)
-    .sort((a, b) => {
-      const ai = QS_ROUND_ORDER.indexOf(a.round_name);
-      const bi = QS_ROUND_ORDER.indexOf(b.round_name);
-      if (ai !== bi) return ai - bi;
-      return new Date(a.created_at) - new Date(b.created_at);
-    });
-
-  const completedIdx = QS_ROUND_ORDER.indexOf(completed.round_name);
-  const nextRound = divRounds.find(r => QS_ROUND_ORDER.indexOf(r.round_name) > completedIdx);
-  if (!nextRound) return; // no subsequent round
-
-  // get advance_count for the completed round
-  const advCount = completed.advance_count;
-
-  // fetch competitors already in the next round
-  const { data: existing } = await supabaseClient
-    .from('round_progressions')
-    .select('competitor_id')
-    .eq('round_id', nextRound.id);
-  const alreadyIn = new Set((existing || []).map(r => r.competitor_id));
-
-  // get all dancers in the completed division (used as the pool)
-  const divDancers = myCompetitors.filter(c => c.division === completed.division);
-  let toProgress = divDancers;
-  if (advCount && advCount < divDancers.length) {
-    // take the first `advCount` (by list order) as a simple heuristic; 
-    // admins can edit later
-    toProgress = divDancers.slice(0, advCount);
-  }
-
-  const newRows = toProgress
-    .filter(c => !alreadyIn.has(c.id))
-    .map(c => ({ round_id: nextRound.id, competitor_id: c.id, from_round_id: completedRoundId }));
-
-  if (!newRows.length) return;
-
-  // try inserting into round_progressions — if the table doesn't exist, fail silently
-  const { error } = await supabaseClient.from('round_progressions').insert(newRows);
+  // the next round in the same division, in round order
+  const divRounds = sortRounds(allRounds.filter(r => r.division === completed.division));
+  const nextRound = divRounds[divRounds.findIndex(r => r.id === completedRoundId) + 1];
 
   const banner = $('prog-banner');
-  if (!banner) return;
-  const divDancerCount = toProgress.length;
-  banner.innerHTML = `<strong>${divDancerCount} ${esc(completed.division)} dancer${divDancerCount !== 1 ? 's' : ''}</strong> automatically progressed from <strong>${esc(completed.round_name)}</strong> to <strong>${esc(nextRound.round_name)}</strong>.`;
-  banner.classList.add('show');
-  setTimeout(() => banner.classList.remove('show'), 6000);
+  const say = (html) => {
+    if (!banner) return;
+    banner.innerHTML = (extraNote ? extraNote + '<br>' : '') + html;
+    banner.classList.add('show');
+    setTimeout(() => banner.classList.remove('show'), extraNote ? 14000 : 7000);
+  };
+  if (!nextRound) {   // this was the last round
+    if (extraNote && banner) { banner.innerHTML = extraNote; banner.classList.add('show'); setTimeout(() => banner.classList.remove('show'), 14000); }
+    return;
+  }
+
+  // the competitors the admin marked as advancing out of this round
+  const { data: winRows } = await supabaseClient
+    .from('round_winners').select('competitor_id').eq('round_id', completedRoundId);
+  const advancingIds = (winRows || []).map(w => w.competitor_id);
+
+  if (!advancingIds.length) {
+    say(`No one is marked as advancing from <strong>${esc(completed.round_name)}</strong> yet. Select who advances on the <strong>Bracket</strong> tab to set up <strong>${esc(nextRound.round_name)}</strong>.`);
+    return;
+  }
+
+  const { data: existing } = await supabaseClient
+    .from('round_progressions').select('competitor_id').eq('round_id', nextRound.id);
+  const alreadyIn = new Set((existing || []).map(r => r.competitor_id));
+
+  const newRows = advancingIds
+    .filter(id => !alreadyIn.has(id))
+    .map(id => ({ round_id: nextRound.id, competitor_id: id, from_round_id: completedRoundId }));
+  if (newRows.length) await supabaseClient.from('round_progressions').insert(newRows); // fails quietly if the table is missing
+
+  const n = advancingIds.length;
+  const expected = completed.advance_count;
+  say(`<strong>${plural(n, completed.division + ' dancer')}</strong> advancing from <strong>${esc(completed.round_name)}</strong> to <strong>${esc(nextRound.round_name)}</strong>.` +
+      (expected && expected !== n ? ` (Planned: ${expected}.)` : ''));
 }
 
 /* =========================================================
@@ -1614,6 +2580,7 @@ async function tryAutoProgress(completedRoundId, allRounds){
    ========================================================= */
 // { roundId: Set<competitorId> } — in-memory winner state
 let bracketWinners = {};
+let bracketScores = {};   // { roundId: [score rows] }
 
 async function loadBracket(){
   const el = $('bracket-content');
@@ -1639,19 +2606,141 @@ async function loadBracket(){
     (bracketWinners[w.round_id] = bracketWinners[w.round_id] || new Set()).add(w.competitor_id);
   });
 
+  // judges' scores (empty if the table isn't set up yet)
+  bracketScores = {};
+  const { data: scoreRows, error: scErr } = await supabaseClient
+    .from('round_scores')
+    .select('round_id, competitor_id, judge_id, passed, criteria_scores, total')
+    .in('round_id', rounds.map(r => r.id));
+  if (scErr) console.warn('round_scores:', scErr.message);
+  (scoreRows || []).forEach(x => { (bracketScores[x.round_id] = bracketScores[x.round_id] || []).push(x); });
+
   renderBracket(rounds);
+}
+
+// each dancer's result in a round, from the judges' scores: { competitorId: {score,label,...} | null }
+function roundResults(round, dancers){
+  const j = eventJudging(myEvents.find(e => e.id === round.event_id) || myEvents.find(e => e.id === currentEventId));
+  const rows = bracketScores[round.id] || [];
+  const out = {};
+  dancers.forEach(c => {
+    const mine = rows.filter(x => x.competitor_id === c.id);
+    if (j.mode === 'criteria') {
+      const totals = mine.map(x => criteriaTotal(x.criteria_scores || {}, j.criteria)).filter(t => t.filled === j.criteria.length).map(t => t.total);
+      if (!totals.length) { out[c.id] = null; return; }
+      const avg = totals.reduce((a, b) => a + b, 0) / totals.length;
+      const max = j.criteria.reduce((n, k) => n + k.max, 0);
+      out[c.id] = { score: avg, label: fmtNum(avg) + ' / ' + max + (totals.length > 1 ? ' (avg of ' + totals.length + ')' : '') };
+    } else {
+      const votes = mine.filter(x => x.passed === true || x.passed === false);
+      if (!votes.length) { out[c.id] = null; return; }
+      const passes = votes.filter(x => x.passed).length, fails = votes.length - passes;
+      out[c.id] = { score: passes / votes.length, passes, fails, label: passes + ' pass · ' + fails + ' fail' };
+    }
+  });
+  return out;
+}
+
+// work out who the judges' scores say should advance from a round
+function pickByScore(round, dancers){
+  const j = eventJudging(myEvents.find(e => e.id === round.event_id) || myEvents.find(e => e.id === currentEventId));
+  const res = roundResults(round, dancers);
+  const scored = dancers.filter(c => res[c.id]);
+  const unscored = dancers.length - scored.length;
+  if (!scored.length) return { error: 'no-scores', message: 'No scores have been entered for ' + round.round_name + ' yet.' };
+  const limit = round.advance_count || null;
+  if (j.mode === 'criteria' && !limit) return { error: 'no-limit', message: 'Set how many dancers advance from ' + round.round_name + ' (Rounds → Edit rounds) so the top scorers can be picked.' };
+
+  const key = (c) => Math.round(res[c.id].score * 10000);
+  let pool = scored.slice().sort((a, b) => key(b) - key(a) || (j.mode === 'pass_fail' ? res[b.id].passes - res[a.id].passes : 0));
+  if (j.mode === 'pass_fail') pool = pool.filter(c => res[c.id].passes > res[c.id].fails);
+
+  let picked = pool, tied = [];
+  if (limit && pool.length > limit) {
+    const cut = key(pool[limit - 1]);
+    const above = pool.filter(c => key(c) > cut);
+    const atCut = pool.filter(c => key(c) === cut);
+    if (above.length + atCut.length > limit) { picked = above; tied = atCut; }
+    else picked = pool.slice(0, limit);
+  }
+  if (!picked.length && !tied.length) {
+    return { error: 'nobody', message: j.mode === 'pass_fail' ? 'No one has more passes than fails in ' + round.round_name + '.' : 'No one qualified to advance from ' + round.round_name + '.' };
+  }
+  return { picked, tied, unscored, mode: j.mode, limit };
+}
+
+// make `pickedIds` the advancing set for a round (dropping anyone no longer advancing from this and later rounds)
+async function applyAdvance(round, rounds, pickedIds){
+  const existing = new Set(bracketWinners[round.id] || []);
+  const newIds = new Set(pickedIds);
+  const removed = [...existing].filter(id => !newIds.has(id));
+  if (removed.length) {
+    const divRounds = sortRounds(rounds.filter(r => r.division === round.division));
+    const ids = divRounds.slice(divRounds.findIndex(r => r.id === round.id)).map(r => r.id);   // this round and every later one
+    const { error } = await supabaseClient.from('round_winners').delete().in('round_id', ids).in('competitor_id', removed);
+    if (error) return error;
+  }
+  if (newIds.size) {
+    const { error } = await supabaseClient.from('round_winners')
+      .upsert([...newIds].map(competitor_id => ({ round_id: round.id, competitor_id })), { onConflict: 'round_id,competitor_id' });
+    if (error) return error;
+  }
+  return null;
+}
+
+// Bracket tab button: same pick, but asks first (it can replace a hand-picked set)
+async function advanceByScore(round, rounds, dancers){
+  const r = pickByScore(round, dancers);
+  if (r.error) { alert(r.message); return; }
+  const { picked, tied, unscored, mode, limit } = r;
+  const existing = new Set(bracketWinners[round.id] || []);
+  const lines = [
+    'Advance ' + plural(picked.length, 'dancer') + ' from ' + round.round_name + ' based on the judges’ ' + (mode === 'pass_fail' ? 'pass/fail votes' : 'scores') + '?',
+    existing.size ? 'This replaces the ' + plural(existing.size, 'dancer') + ' currently selected.' : '',
+    unscored ? plural(unscored, 'dancer') + ' ha' + (unscored === 1 ? 's' : 've') + ' not been fully scored and won’t advance.' : '',
+    tied.length ? plural(tied.length, 'dancer') + ' tied for the last ' + (limit - picked.length === 1 ? 'spot' : 'spots') + ' and will be left for you to decide.' : ''
+  ].filter(Boolean);
+  if (!confirm(lines.join('\n\n'))) return;
+
+  const err = await applyAdvance(round, rounds, picked.map(c => c.id));
+  if (err) { alert('Could not update: ' + err.message); return; }
+  await loadBracket();
+  if (tied.length) alert('Tied for the last spot: ' + tied.map(c => competitorLabel(c)).join(', ') + '.\n\nChoose between them with the Advance buttons.');
+}
+
+// Runs when a round is marked Completed: the top scorers advance with no button press.
+// Leaves things alone if there are no scores, or if the admin already picked who advances.
+// Returns a short note (HTML) for the banner, or '' when there's nothing to say.
+async function autoAdvanceFromScores(round, allRounds){
+  const dancers = lastRoundDancers[round.id] || [];
+  if (!dancers.length) return '';
+  const { data: rows, error } = await supabaseClient.from('round_scores')
+    .select('round_id, competitor_id, judge_id, passed, criteria_scores, total').eq('round_id', round.id);
+  if (error || !rows || !rows.length) return '';          // no scoring was used for this round
+  bracketScores[round.id] = rows;
+
+  const { data: winRows } = await supabaseClient.from('round_winners').select('competitor_id').eq('round_id', round.id);
+  bracketWinners[round.id] = new Set((winRows || []).map(w => w.competitor_id));
+  const name = esc(round.round_name);
+  if (bracketWinners[round.id].size) return `Scores are in for <strong>${name}</strong>, but you’d already chosen who advances, so I left your picks as they are.`;
+
+  const r = pickByScore(round, dancers);
+  if (r.error) return `<strong>${name}</strong>: ${esc(r.message)}`;
+  const err = await applyAdvance(round, allRounds, r.picked.map(c => c.id));
+  if (err) return `Could not advance dancers from <strong>${name}</strong>: ${esc(err.message)}`;
+
+  let note = `Auto-advanced <strong>${plural(r.picked.length, 'dancer')}</strong> from <strong>${name}</strong> by ${r.mode === 'pass_fail' ? 'pass/fail votes' : 'score'}.`;
+  if (r.tied.length) note += ` ${plural(r.tied.length, 'dancer')} tied for the last ${r.limit - r.picked.length === 1 ? 'spot' : 'spots'} (${r.tied.map(c => esc(competitorLabel(c))).join(', ')}) — choose on the Bracket tab.`;
+  if (r.unscored) note += ` ${plural(r.unscored, 'dancer')} ${r.unscored === 1 ? 'was' : 'were'} not fully scored and did not advance.`;
+  return note;
 }
 
 function renderBracket(rounds){
   const el = $('bracket-content');
 
-  const html = ['Male','Female','Diamond'].map(div => {
-    const divRounds = rounds
-      .filter(r => r.division === div)
-      .sort((a, b) => {
-        const ai = QS_ROUND_ORDER.indexOf(a.round_name); const bi = QS_ROUND_ORDER.indexOf(b.round_name);
-        return ai !== bi ? ai - bi : new Date(a.created_at) - new Date(b.created_at);
-      });
+  const colDancers = {};
+  const html = DIVISIONS.map(div => {
+    const divRounds = sortRounds(rounds.filter(r => r.division === div));
     if (!divRounds.length) return '';
 
     // build a competitor lookup by id
@@ -1660,6 +2749,7 @@ function renderBracket(rounds){
 
     const cols = divRounds.map((r, ri) => {
       const winners = bracketWinners[r.id] || new Set();
+      const jm = eventJudging(myEvents.find(e => e.id === r.event_id) || myEvents.find(e => e.id === currentEventId));
 
       // first round: all division dancers; subsequent rounds: winners of previous round
       let dancers;
@@ -1671,13 +2761,19 @@ function renderBracket(rounds){
         dancers = [...prevWinners].map(id => compById[id]).filter(Boolean);
       }
 
+      colDancers[r.id] = dancers;
+      const res = roundResults(r, dancers);
+      const scoredCount = dancers.filter(c => res[c.id]).length;
       const entries = dancers.length
         ? dancers.map(c => {
             const isWinner = winners.has(c.id);
-            return `<div class="bracket-entry${isWinner ? ' winner' : ''}">
+            const btnHtml = `<button class="be-win-btn" data-win-round="${r.id}" data-win-comp="${c.id}">${isWinner ? (r.advance_count ? '★ Advancing' : '★ Won') : (r.advance_count ? 'Advance' : 'Mark won')}</button>`;
+            const scoreHtml = res[c.id] ? `<span class="be-score">${esc(res[c.id].label)}</span>` : '';
+            // with a score: name on the first line, score + button on the second, so nothing spills out of the column
+            return `<div class="bracket-entry${isWinner ? ' winner' : ''}${scoreHtml ? ' has-score' : ''}">
               ${c.number ? `<span class="be-num">#${esc(c.number)}</span>` : ''}
               <span class="be-name">${esc(c.name)}</span>
-              <button class="be-win-btn" data-win-round="${r.id}" data-win-comp="${c.id}">${isWinner ? '★ Won' : 'Mark won'}</button>
+              ${scoreHtml ? `<div class="be-row2">${scoreHtml}${btnHtml}</div>` : btnHtml}
             </div>`;
           }).join('')
         : `<div class="bracket-empty">${ri === 0 ? 'No dancers in this division yet.' : 'No winners from previous round yet.'}</div>`;
@@ -1691,6 +2787,9 @@ function renderBracket(rounds){
             <span>${esc(r.round_name)}</span>
             <span class="brc-status ${r.status}">${r.status}</span>
           </div>
+          ${r.advance_count ? `<div class="bracket-adv-note${winners.size === r.advance_count ? ' full' : ''}">${winners.size} of ${r.advance_count} advancing</div>` : ''}
+          ${dancers.length ? `<div class="bracket-auto"><div class="hint" style="margin-bottom:4px;font-size:11px;color:var(--t2);">${scoredCount} of ${dancers.length} scored · ${jm.mode === 'pass_fail' ? 'pass/fail' : 'by criteria'}</div>
+            <button class="btn secondary small" type="button" data-auto-adv="${r.id}" title="Also happens automatically when the round is marked Completed" ${scoredCount ? '' : 'disabled'}>${jm.mode === 'pass_fail' ? 'Advance passing dancers' : 'Advance top scorers'}</button></div>` : ''}
           ${entries}
         </div>
         ${connector}`;
@@ -1708,6 +2807,14 @@ function renderBracket(rounds){
 
   el.innerHTML = html || '<div class="empty">No rounds to display.</div>';
 
+  el.querySelectorAll('[data-auto-adv]').forEach(btn => btn.addEventListener('click', async () => {
+    const round = rounds.find(r => r.id === btn.dataset.autoAdv);
+    if (!round) return;
+    btn.disabled = true;
+    await advanceByScore(round, rounds, colDancers[round.id] || []);
+    btn.disabled = false;
+  }));
+
   // wire up win buttons — re-render the full bracket after each toggle so next columns update
   el.querySelectorAll('[data-win-round]').forEach(btn => {
     btn.addEventListener('click', async () => {
@@ -1715,6 +2822,12 @@ function renderBracket(rounds){
       const compId = btn.dataset.winComp;
       const winners = bracketWinners[roundId] = bracketWinners[roundId] || new Set();
       const isWinner = winners.has(compId);
+      const round = rounds.find(r => r.id === roundId);
+
+      if (!isWinner && round && round.advance_count && winners.size >= round.advance_count) {
+        alert(round.round_name + ' only advances ' + round.advance_count + '. Un-select someone first to advance a different competitor.');
+        return;
+      }
 
       btn.disabled = true;
       if (isWinner) {
@@ -1722,6 +2835,15 @@ function renderBracket(rounds){
           .delete().eq('round_id', roundId).eq('competitor_id', compId);
         if (error) { alert('Could not update: ' + error.message); btn.disabled = false; return; }
         winners.delete(compId);
+        // they're no longer in the next round, so drop them from every later round too
+        if (round) {
+          const divRounds = sortRounds(rounds.filter(r => r.division === round.division));
+          const laterIds = divRounds.slice(divRounds.findIndex(r => r.id === roundId) + 1).map(r => r.id);
+          if (laterIds.length) {
+            await supabaseClient.from('round_winners').delete().in('round_id', laterIds).eq('competitor_id', compId);
+            laterIds.forEach(id => { if (bracketWinners[id]) bracketWinners[id].delete(compId); });
+          }
+        }
       } else {
         const { error } = await supabaseClient.from('round_winners')
           .upsert({ round_id: roundId, competitor_id: compId }, { onConflict: 'round_id,competitor_id' });
@@ -1731,6 +2853,242 @@ function renderBracket(rounds){
 
       // re-render so downstream round columns reflect the change
       renderBracket(rounds);
+    });
+  });
+}
+
+/* =========================================================
+   REASSIGN JUDGES TO DANCERS (whole competition)
+   ========================================================= */
+$('btn-reassign-all').addEventListener('click', async () => {
+  if (!currentEventId) { showMsg('reassign-msg', 'Open an event first.', false); return; }
+  const btn = $('btn-reassign-all');
+  btn.disabled = true; btn.textContent = 'Checking…';
+  const reset = () => { btn.disabled = false; btn.textContent = 'Reassign judges to dancers'; };
+
+  await loadMyJudgeProfiles();
+  if (!myJudges.length) { reset(); showMsg('reassign-msg', 'No judges are on this competition yet.', false); return; }
+
+  const rounds = lastRounds.filter(r => r.status !== 'completed' && (lastRoundDancers[r.id] || []).length);
+  if (!rounds.length) { reset(); showMsg('reassign-msg', 'No rounds with dancers to assign (completed rounds are skipped).', false); return; }
+
+  const perWanted = Math.max(1, parseInt($('reassign-per').value, 10) || 1);
+  const per = Math.min(perWanted, myJudges.length);
+  const dancerTotal = rounds.reduce((n, r) => n + lastRoundDancers[r.id].length, 0);
+  if (!confirm('Reassign judges for ' + plural(rounds.length, 'round') + ' (' + plural(dancerTotal, 'dancer') + ')?\n\n' +
+               'All ' + plural(myJudges.length, 'judge') + ' on this competition will be added to each round, and the dancers split between them (' + plural(per, 'judge') + ' per dancer). ' +
+               'This replaces the current judge assignments in those rounds. Completed rounds are not changed.')) { reset(); return; }
+
+  const pool = myJudges.map(j => j.id);
+  for (let i = 0; i < rounds.length; i++) {
+    const r = rounds[i];
+    btn.textContent = 'Reassigning ' + (i + 1) + ' of ' + rounds.length + '…';
+
+    // 1. make sure every judge is on the round
+    const have = new Set((r.round_judges || []).map(x => x.judge_id));
+    const missing = pool.filter(id => !have.has(id));
+    if (missing.length) {
+      const { error } = await supabaseClient.from('round_judges').insert(missing.map(judge_id => ({ round_id: r.id, judge_id })));
+      if (error) { reset(); showMsg('reassign-msg', 'Could not add judges to ' + r.round_name + ': ' + error.message, false); await loadRounds(); return; }
+    }
+
+    // 2. replace the dancer assignments with an even, random split
+    const { error: delErr } = await supabaseClient.from('competitor_judges').delete().eq('round_id', r.id);
+    if (delErr) { reset(); showMsg('reassign-msg', 'Could not clear old assignments for ' + r.round_name + ': ' + delErr.message, false); await loadRounds(); return; }
+    const load = {}; pool.forEach(id => load[id] = 0);
+    const rows = [];
+    shuffle(lastRoundDancers[r.id].slice()).forEach(c => {
+      shuffle(pool.slice()).sort((a, b) => load[a] - load[b]).slice(0, per).forEach(judge_id => {
+        load[judge_id]++;
+        rows.push({ round_id: r.id, competitor_id: c.id, judge_id });
+      });
+    });
+    const { error: insErr } = await supabaseClient.from('competitor_judges').insert(rows);
+    if (insErr) { reset(); showMsg('reassign-msg', 'Could not assign judges for ' + r.round_name + ': ' + insErr.message, false); await loadRounds(); return; }
+  }
+
+  reset();
+  showMsg('reassign-msg', 'Done — ' + plural(myJudges.length, 'judge') + ' reassigned across ' + plural(rounds.length, 'round') + '.', true);
+  await loadRounds();
+});
+
+/* =========================================================
+   JUDGE ROSTER — who is on which event, and removing them
+   ========================================================= */
+function toggleJudgeOverview(){
+  const card = $('sec-judge-overview');
+  const btn = $('btn-show-judges');
+  const visible = card.style.display !== 'none';
+  card.style.display = visible ? 'none' : 'block';
+  btn.textContent = visible ? 'Judges' : '− Hide judges';
+  if (!visible) loadJudgeOverview();
+}
+
+// Take a judge off one or more events: unassign them from those events' rounds, then end their access.
+async function removeJudgeFromEvents(judgeId, eventIds){
+  const { data: rounds, error: rErr } = await supabaseClient.from('competition_rounds').select('id').in('event_id', eventIds);
+  if (rErr) { alert('Could not look up rounds: ' + rErr.message); return false; }
+  const roundIds = (rounds || []).map(r => r.id);
+  if (roundIds.length) {
+    const e1 = await supabaseClient.from('competitor_judges').delete().eq('judge_id', judgeId).in('round_id', roundIds);
+    if (e1.error) { alert('Could not clear dancer assignments: ' + e1.error.message); return false; }
+    const e2 = await supabaseClient.from('round_judges').delete().eq('judge_id', judgeId).in('round_id', roundIds);
+    if (e2.error) { alert('Could not unassign from rounds: ' + e2.error.message); return false; }
+  }
+  const { error } = await supabaseClient.from('judge_invites').update({ status: 'revoked' })
+    .eq('admin_id', currentUser.id).eq('judge_id', judgeId).eq('status', 'accepted').in('event_id', eventIds);
+  if (error) { alert('Could not remove judge: ' + error.message); return false; }
+
+  // keep the open competition's panels in step
+  if (expandedEventId && eventIds.includes(expandedEventId)) {
+    await loadMyJudgeProfiles();
+    loadRounds();
+  }
+  return true;
+}
+
+async function loadJudgeOverview(){
+  const box = $('judge-overview-list');
+  box.innerHTML = '<div class="empty">Loading…</div>';
+  const { data, error } = await supabaseClient
+    .from('judge_invites')
+    .select('judge_id, event_id, profiles!judge_invites_judge_id_fkey(id, full_name, email)')
+    .eq('admin_id', currentUser.id)
+    .eq('status', 'accepted');
+  if (error) { box.innerHTML = '<div class="empty">Could not load judges: ' + esc(error.message) + '</div>'; return; }
+
+  const eventById = {}; myEvents.forEach(e => eventById[e.id] = e);
+  const byJudge = {};
+  (data || []).forEach(row => {
+    const p = row.profiles, ev = eventById[row.event_id];
+    if (!p || !ev) return;
+    const j = byJudge[p.id] = byJudge[p.id] || { profile: p, events: new Set(), groups: new Set() };
+    (ev.is_group ? j.groups : j.events).add(ev.id);
+  });
+  const judges = Object.values(byJudge).sort((a, b) => (a.profile.full_name || a.profile.email || '').localeCompare(b.profile.full_name || b.profile.email || ''));
+  if (!judges.length) { box.innerHTML = '<div class="empty">No judges have joined any of your events yet. Share an event\'s or group\'s join code to bring them in.</div>'; return; }
+
+  const groupIds = new Set(groupsList().map(g => g.id));
+  const chip = (jid, ev) => `<span class="judge-chip">${esc(ev.name)}<button class="chip-x" title="Remove from ${esc(ev.name)}" data-rm-judge="${jid}" data-rm-events="${ev.id}" data-rm-label="${esc(ev.name)}">&times;</button></span>`;
+
+  box.innerHTML = judges.map(({ profile: p, events, groups }) => {
+    const direct = [...events].map(id => eventById[id]);
+    const total = new Set(direct.map(e => e.id));
+
+    const groupSections = groupsList().map(g => {
+      const kids = myEvents.filter(k => k.parent_id === g.id);
+      const viaGroup = groups.has(g.id);
+      const directKids = direct.filter(e => e.parent_id === g.id);
+      if (!viaGroup && !directKids.length) return '';
+      if (viaGroup) kids.forEach(k => total.add(k.id));
+      const removeIds = viaGroup ? [g.id].concat(kids.map(k => k.id)) : directKids.map(e => e.id);
+      const chips = viaGroup
+        ? '<span class="judge-chip muted">Whole group</span>' + (kids.length ? kids.map(k => `<span class="judge-chip">${esc(k.name)}</span>`).join('') : '<span class="judge-chip muted">No competitions yet — added automatically</span>')
+        : directKids.map(e => chip(p.id, e)).join('');
+      return `<div class="jo-section">
+        <span class="jo-label">${esc(g.name)}</span>
+        <div class="jo-chips">${chips}</div>
+        <button class="btn danger small" data-rm-judge="${p.id}" data-rm-events="${removeIds.join(',')}" data-rm-label="the group “${esc(g.name)}”">Remove from group</button>
+      </div>`;
+    }).join('');
+
+    const solo = direct.filter(e => !e.parent_id || !groupIds.has(e.parent_id));
+    const soloSection = solo.length ? `<div class="jo-section">
+        <span class="jo-label">Events</span>
+        <div class="jo-chips">${solo.map(e => chip(p.id, e)).join('')}</div>
+      </div>` : '';
+
+    const allIds = [...new Set([...groups, ...total])];
+    return `<div class="jo-judge">
+      <div class="jo-top">
+        <span class="jo-name">${esc(p.full_name || p.email)}</span>
+        <span class="jo-email">${p.full_name ? esc(p.email) + ' · ' : ''}${plural(total.size, 'competition')}</span>
+        <button class="btn danger small" data-rm-judge="${p.id}" data-rm-events="${allIds.join(',')}" data-rm-label="all of your events">Remove from all</button>
+      </div>
+      ${groupSections}${soloSection}
+    </div>`;
+  }).join('');
+
+  box.querySelectorAll('[data-rm-judge]').forEach(btn => {
+    btn.addEventListener('click', async () => {
+      const ids = btn.dataset.rmEvents.split(',');
+      const who = (byJudge[btn.dataset.rmJudge].profile.full_name || byJudge[btn.dataset.rmJudge].profile.email);
+      if (!confirm('Remove ' + who + ' from ' + btn.dataset.rmLabel + '? They will be unassigned from those rounds and lose access.')) return;
+      btn.disabled = true;
+      const ok = await removeJudgeFromEvents(btn.dataset.rmJudge, ids);
+      loadJudgeOverview();
+      if (ok && currentManageTab === 'judges' && expandedEventId) loadEventJudges();
+    });
+  });
+}
+
+// the Judges tab inside an open competition
+async function loadEventJudges(){
+  const box = $('event-judges-list');
+  if (!box) return;
+  if (!currentEventId) { box.innerHTML = '<div class="empty">Open an event first.</div>'; return; }
+  box.innerHTML = '<div class="empty">Loading…</div>';
+  renderTestJudgesBox();
+  await loadMyJudgeProfiles();
+
+  const ev = myEvents.find(e => e.id === currentEventId);
+  const grp = ev && ev.parent_id ? myEvents.find(g => g.id === ev.parent_id) : null;
+  $('event-judges-sub').textContent = grp
+    ? 'Judges on “' + (ev ? ev.name : 'this competition') + '”. Everyone who joins the group “' + grp.name + '” is added here automatically.'
+    : 'Judges who joined ' + (ev ? '“' + ev.name + '”' : 'this competition') + '. They join with this event’s join code.';
+
+  const { data, error } = await supabaseClient
+    .from('round_judges')
+    .select('judge_id, competition_rounds!inner(round_name, division, event_id, created_at)')
+    .eq('competition_rounds.event_id', currentEventId);
+  if (error) console.warn(error);
+  const roundsByJudge = {};
+  (data || []).forEach(r => { if (r.competition_rounds) (roundsByJudge[r.judge_id] = roundsByJudge[r.judge_id] || []).push(r.competition_rounds); });
+
+  if (!myJudges.length) {
+    const code = grp ? grp.join_code : (ev && ev.join_code);
+    box.innerHTML = '<div class="empty">No judges have joined yet. Share the ' + (grp ? 'group join code' : 'join code') + (code ? ' <strong>' + esc(code) + '</strong>' : '') + ' with them.</div>';
+    return;
+  }
+
+  box.innerHTML = myJudges.map(j => {
+    const rs = (roundsByJudge[j.id] || []).slice().sort((a, b) => (DIVISIONS.indexOf(a.division) - DIVISIONS.indexOf(b.division)) || compareRounds(a, b));
+    return `<div class="jo-judge">
+      <div class="jo-top">
+        <span class="jo-name">${esc(j.full_name || j.email)}</span>
+        <span class="jo-email">${j.full_name ? esc(j.email) : ''}</span>
+        ${grp && judgeSource[j.id] && judgeSource[j.id].group
+          ? `<button class="btn danger small" data-remove-group-judge="${j.id}">Remove from group</button>`
+          : `<button class="btn danger small" data-remove-event-judge="${j.id}">Remove from this competition</button>`}
+      </div>
+      ${grp && judgeSource[j.id] && judgeSource[j.id].group ? `<div class="jo-section"><span class="jo-label">Access</span><div class="jo-chips"><span class="judge-chip muted">Joined the group “${esc(grp.name)}” — on every competition in it</span></div></div>` : ''}
+      <div class="jo-section">
+        <span class="jo-label">Rounds</span>
+        <div class="jo-chips">${rs.length ? rs.map(r => `<span class="judge-chip">${esc(r.division)} · ${esc(r.round_name)}</span>`).join('') : '<span class="judge-chip muted">Not assigned to a round yet</span>'}</div>
+      </div>
+    </div>`;
+  }).join('');
+
+  box.querySelectorAll('[data-remove-group-judge]').forEach(btn => {
+    btn.addEventListener('click', async () => {
+      const j = myJudges.find(x => x.id === btn.dataset.removeGroupJudge);
+      const kidIds = myEvents.filter(k => k.parent_id === grp.id).map(k => k.id);
+      if (!confirm('Remove ' + (j ? (j.full_name || j.email) : 'this judge') + ' from the group “' + grp.name + '”? They joined the whole group, so they will come off all ' + plural(kidIds.length, 'competition') + ' in it, be unassigned from those rounds, and lose access.')) return;
+      btn.disabled = true;
+      await removeJudgeFromEvents(btn.dataset.removeGroupJudge, [grp.id].concat(kidIds));
+      loadEventJudges();
+      if ($('sec-judge-overview').style.display !== 'none') loadJudgeOverview();
+    });
+  });
+  box.querySelectorAll('[data-remove-event-judge]').forEach(btn => {
+    btn.addEventListener('click', async () => {
+      const j = myJudges.find(x => x.id === btn.dataset.removeEventJudge);
+      const label = ev ? '“' + ev.name + '”' : 'this competition';
+      if (!confirm('Remove ' + (j ? (j.full_name || j.email) : 'this judge') + ' from ' + label + '? They will be unassigned from its rounds and lose access.')) return;
+      btn.disabled = true;
+      await removeJudgeFromEvents(btn.dataset.removeEventJudge, [currentEventId]);
+      loadEventJudges();
+      if ($('sec-judge-overview').style.display !== 'none') loadJudgeOverview();
     });
   });
 }
@@ -1752,22 +3110,87 @@ async function loadRoundOptionsForInvite(){
   });
 }
 
+/* =========================================================
+   TEST JUDGES — fake judges for testing, DrewR only.
+   The real gate is the add_test_judges() database function
+   (see add_test_judges.sql); this just hides the buttons.
+   ========================================================= */
+function isTestAdmin(){
+  return !!currentProfile && currentProfile.role === 'admin' &&
+    String(currentProfile.full_name || '').trim().toLowerCase() === 'drewr';
+}
+
+// the group the open competition belongs to, or the competition itself when it has none
+function testJudgeTarget(){
+  const ev = myEvents.find(e => e.id === currentEventId);
+  if (!ev) return null;
+  const grp = ev.parent_id ? myEvents.find(g => g.id === ev.parent_id && g.is_group) : null;
+  return { id: grp ? grp.id : ev.id, label: grp ? 'the group “' + grp.name + '”' : '“' + ev.name + '”', isGroup: !!grp };
+}
+
+async function addTestJudges(targetId, count, msgId){
+  if (!isTestAdmin()) return false;
+  const say = (t, ok) => { if (msgId) showMsg(msgId, t, ok); else if (!ok) alert(t); };
+  const { data, error } = await supabaseClient.rpc('add_test_judges', { p_event_id: targetId, p_count: count });
+  if (error) { say('Could not add test judges: ' + error.message, false); return false; }
+  say('Added ' + plural(typeof data === 'number' ? data : count, 'test judge') + '.', true);
+  await loadMyJudgeProfiles();
+  if (expandedEventId) { loadEventJudges(); loadRounds(); }
+  if ($('sec-judge-overview') && $('sec-judge-overview').style.display !== 'none') loadJudgeOverview();
+  return true;
+}
+
+function renderTestJudgesBox(){
+  const box = $('test-judges-box');
+  if (!box) return;
+  const t = isTestAdmin() ? testJudgeTarget() : null;
+  if (!t) { box.innerHTML = ''; box.className = ''; return; }
+  box.className = 'test-judges-box';
+  box.innerHTML = `
+    <div class="tj-title">Testing tools</div>
+    <div class="tj-sub">Adds fake judges to ${esc(t.label)}${t.isGroup ? ' — they appear on every competition in the group' : ''}. They can’t sign in; they’re only for trying things out. Remove them with the usual Remove buttons.</div>
+    <div id="test-judges-msg" class="form-msg"></div>
+    <div class="tj-row">
+      <input type="number" id="test-judges-count" min="1" max="20" value="3">
+      <button class="btn small" type="button" id="btn-add-test-judges">Add test judges</button>
+    </div>`;
+  $('btn-add-test-judges').addEventListener('click', async () => {
+    const n = parseInt($('test-judges-count').value, 10);
+    if (!n || n < 1 || n > 20) { showMsg('test-judges-msg', 'Enter a number from 1 to 20.', false); return; }
+    const btn = $('btn-add-test-judges');
+    btn.disabled = true; btn.textContent = 'Adding…';
+    await addTestJudges(t.id, n, 'test-judges-msg');
+    const b2 = $('btn-add-test-judges'); if (b2) { b2.disabled = false; b2.textContent = 'Add test judges'; }
+  });
+}
+
+let judgeSource = {};   // { judgeId: { direct: bool, group: bool } } for the open competition
 async function loadMyJudgeProfiles(){
+  // judges on THIS competition: those who joined it, plus anyone who joined its group
+  judgeSource = {};
+  if (!currentEventId) { myJudges = []; return; }
+  const ev = myEvents.find(e => e.id === currentEventId);
+  const ids = [currentEventId];
+  if (ev && ev.parent_id) ids.push(ev.parent_id);
   const { data, error } = await supabaseClient
     .from('judge_invites')
-    .select('judge_id, profiles!judge_invites_judge_id_fkey(id, full_name, email)')
+    .select('judge_id, event_id, profiles!judge_invites_judge_id_fkey(id, full_name, email)')
     .eq('admin_id', currentUser.id)
+    .in('event_id', ids)
     .eq('status', 'accepted');
   if (error) { console.warn(error); myJudges = []; return; }
   const seen = {};
   myJudges = [];
   (data || []).forEach(row => {
     const p = row.profiles;
-    if (p && !seen[p.id]) { seen[p.id] = true; myJudges.push(p); }
+    if (!p) return;
+    const src = judgeSource[p.id] = judgeSource[p.id] || { direct: false, group: false };
+    if (row.event_id === currentEventId) src.direct = true; else src.group = true;
+    if (!seen[p.id]) { seen[p.id] = true; myJudges.push(p); }
   });
 }
 
-$('btn-invite').addEventListener('click', async () => {
+$('btn-invite')?.addEventListener('click', async () => {
   const email = $('invite-email').value.trim().toLowerCase();
   const event_id = currentEventId;
   const round_id = $('invite-round').value || null;
@@ -1860,7 +3283,7 @@ $('btn-join-event').addEventListener('click', async () => {
 
   if (error) { showMsg('join-msg', error.message || 'Could not join that event.', false); return; }
   const eventName = (data && data[0] && data[0].joined_event_name) || 'the event';
-  showMsg('join-msg', 'Joined ' + eventName + '! The admin will assign you to a round.', true);
+  showMsg('join-msg', 'Joined ' + eventName + '! The admin will assign you to rounds.', true);
   $('join-code-input').value = '';
   loadMyRounds();
 });
@@ -1871,16 +3294,19 @@ async function loadMyRounds(){
 
   const [{ data: assignedRows, error: err1 }, { data: joinedRows, error: err2 }, { data: dancerRows }] = await Promise.all([
     supabaseClient.from('round_judges')
-      .select('competition_rounds(id, round_name, division, status, num_judges, advance_count, event_id, events(id, name))')
+      .select('competition_rounds(id, round_name, division, status, num_judges, advance_count, event_id, events(id, name, parent_id))')
       .eq('judge_id', currentUser.id),
     supabaseClient.from('judge_invites')
-      .select('event_id, events(id, name)')
+      .select('event_id, events(id, name, is_group, parent_id)')
       .eq('judge_id', currentUser.id)
       .eq('status', 'accepted'),
     supabaseClient.from('competitor_judges')
       .select('round_id, competitors(id, name, number)')
       .eq('judge_id', currentUser.id)
   ]);
+
+  if (err1) { list.innerHTML = '<div class="empty">Could not load your rounds: ' + esc(err1.message) + '</div>'; return; }
+  if (err2) { list.innerHTML = '<div class="empty">Could not load your events: ' + esc(err2.message) + '</div>'; return; }
 
   // dancers this judge is personally responsible for, keyed by round
   const myDancers = {};
@@ -1889,53 +3315,324 @@ async function loadMyRounds(){
     (myDancers[row.round_id] = myDancers[row.round_id] || []).push(row.competitors);
   });
 
-  if (err1) { list.innerHTML = '<div class="empty">Could not load your rounds: ' + esc(err1.message) + '</div>'; return; }
-  if (err2) { list.innerHTML = '<div class="empty">Could not load your events: ' + esc(err2.message) + '</div>'; return; }
+  // ---- build one entry per competition ----
+  const comps = {};   // eventId -> { id, name, parent_id, rounds: [] }
+  const ensure = (ev) => {
+    if (!ev) return null;
+    return comps[ev.id] = comps[ev.id] || { id: ev.id, name: ev.name, parent_id: ev.parent_id || null, rounds: [] };
+  };
 
-  const rounds = (assignedRows || []).map(row => row.competition_rounds).filter(Boolean);
-  const assignedEventIds = new Set(rounds.map(r => r.event_id));
-
-  const joinedEvents = [];
-  const seenEventIds = new Set();
-  (joinedRows || []).forEach(row => {
-    if (!row.events || seenEventIds.has(row.event_id) || assignedEventIds.has(row.event_id)) return;
-    seenEventIds.add(row.event_id);
-    joinedEvents.push(row.events);
+  // competitions the judge has rounds in
+  const seenRounds = new Set();
+  (assignedRows || []).forEach(row => {
+    const r = row.competition_rounds;
+    if (!r || seenRounds.has(r.id)) return;
+    seenRounds.add(r.id);
+    const c = ensure(r.events || { id: r.event_id, name: 'Competition' });
+    if (c) c.rounds.push(r);
   });
 
-  if (!rounds.length && !joinedEvents.length) {
+  // competitions (or whole groups) the judge has joined
+  const joinedGroups = {};
+  (joinedRows || []).forEach(row => {
+    const ev = row.events;
+    if (!ev) return;
+    if (ev.is_group) joinedGroups[ev.id] = ev; else ensure(ev);
+  });
+  const groupIds = Object.keys(joinedGroups);
+  if (groupIds.length) {
+    const { data: kids } = await supabaseClient.from('events').select('id, name, parent_id').in('parent_id', groupIds);
+    (kids || []).forEach(k => ensure(k));
+  }
+
+  // group names, so each competition can say which group it belongs to
+  const groupName = {};
+  groupIds.forEach(id => groupName[id] = joinedGroups[id].name);
+  const missing = [...new Set(Object.values(comps).map(c => c.parent_id).filter(id => id && !groupName[id]))];
+  if (missing.length) {
+    const { data: gs } = await supabaseClient.from('events').select('id, name').in('id', missing);
+    (gs || []).forEach(g => groupName[g.id] = g.name);
+  }
+
+  const compList = Object.values(comps).sort((a, b) =>
+    (groupName[a.parent_id] || '').localeCompare(groupName[b.parent_id] || '') || a.name.localeCompare(b.name));
+  // joined groups where we can't see any competitions yet
+  const emptyGroups = groupIds.filter(id => !compList.some(c => c.parent_id === id)).map(id => joinedGroups[id]);
+
+  // how each competition is judged, and what this judge has already scored
+  judgeCtx = { rounds: {}, mode: {}, scores: {}, dancers: myDancers, scoresError: null };
+  compList.forEach(c => c.rounds.forEach(r => { judgeCtx.rounds[r.id] = r; }));
+  judgeCtx.mode = {};
+  compList.forEach(c => { judgeCtx.mode[c.id] = eventJudging(null); });
+  if (compList.length) {
+    const { data: evs, error: evErr } = await supabaseClient.from('events').select('id, judging_mode, scoring_criteria').in('id', compList.map(c => c.id));
+    if (!evErr) (evs || []).forEach(e => { judgeCtx.mode[e.id] = eventJudging(e); });
+  }
+  const roundIds = Object.keys(judgeCtx.rounds);
+  if (roundIds.length) {
+    const { data: myScores, error: scErr } = await supabaseClient
+      .from('round_scores').select('round_id, competitor_id, passed, criteria_scores')
+      .eq('judge_id', currentUser.id).in('round_id', roundIds);
+    if (scErr) judgeCtx.scoresError = scErr.message;
+    (myScores || []).forEach(x => { (judgeCtx.scores[x.round_id] = judgeCtx.scores[x.round_id] || {})[x.competitor_id] = x; });
+  }
+
+  if (!compList.length && !emptyGroups.length) {
     list.innerHTML = '<div class="empty">You have not joined any events yet. Ask an admin for an invite link or join code.</div>';
     return;
   }
 
-  const roundCards = rounds.map(r => `
-    <div class="round-card">
-      <div class="round-card-top">
+  const roundRow = (r) => `
+    <div class="jc-round">
+      <div class="jc-round-top">
         <span class="round-div-tag ${esc(r.division)}">${esc(r.division)}</span>
-        <div class="round-info">
-          <div class="rname">${esc(r.round_name)}</div>
-          <div class="rmeta">${esc(r.events ? r.events.name : '')}${r.advance_count ? ' · ' + r.advance_count + ' advance' : ''}</div>
+        <div class="round-info" style="min-width:0;">
+          <div class="rname" style="font-size:15px;">${esc(r.round_name)}</div>
+          ${r.advance_count ? `<div class="rmeta">${r.advance_count} advance</div>` : ''}
         </div>
         <span class="round-status ${r.status}">${r.status}</span>
       </div>
-      ${(myDancers[r.id] || []).length ? `
-        <div class="division-head" style="margin-top:12px;">Your dancers</div>
-        <div class="judge-chip-row" style="margin-top:0;">
+      ${(myDancers[r.id] || []).length && r.status === 'active' ? `
+        <div class="rmeta" style="margin-top:10px;">This competition is active, score this round in the window at the top of the page.</div>` : (myDancers[r.id] || []).length ? `
+        <div class="judge-chip-row" style="margin-top:10px;">
           ${myDancers[r.id].map(c => `<span class="judge-chip">${esc((c.number ? '#' + c.number + ' ' : '') + c.name)}</span>`).join('')}
-        </div>` : ''}
-    </div>`).join('');
+        </div>
+        <button class="btn ${r.status === 'active' ? '' : 'secondary'} small score-toggle" type="button" data-score-toggle="${r.id}">${r.status === 'active' ? 'Score dancers' : r.status === 'completed' ? 'View my scores' : 'Scoring'}</button>
+        <div class="score-panel" id="score-${r.id}" style="display:none;"></div>` : ''}
+    </div>`;
 
-  const eventCards = joinedEvents.map(e => `
-    <div class="round-card">
+  const compCards = compList.map(c => {
+    const rs = c.rounds.slice().sort((a, b) => (DIVISIONS.indexOf(a.division) - DIVISIONS.indexOf(b.division)) || compareRounds(a, b));
+    const dancerCount = rs.reduce((n, r) => n + (myDancers[r.id] || []).length, 0);
+    const meta = rs.length
+      ? plural(rs.length, 'round') + ' assigned' + (dancerCount ? ' · ' + plural(dancerCount, 'dancer') + ' to judge' : '')
+      : 'Joined — waiting to be assigned to a round';
+    return `
+    <div class="round-card judge-comp-card">
       <div class="round-card-top">
         <div class="round-info">
-          <div class="rname">${esc(e.name)}</div>
-          <div class="rmeta">Joined — waiting to be assigned to a round</div>
+          <div class="rname">${esc(c.name)}</div>
+          <div class="rmeta">${c.parent_id && groupName[c.parent_id] ? '<span class="group-tag" style="margin-right:6px;">Group</span>' + esc(groupName[c.parent_id]) + ' · ' : ''}${meta}</div>
+        </div>
+      </div>
+      ${rs.length ? `<div class="jc-rounds">${rs.map(roundRow).join('')}</div>` : ''}
+    </div>`;
+  }).join('');
+
+  const groupCards = emptyGroups.map(g => `
+    <div class="round-card judge-comp-card">
+      <div class="round-card-top">
+        <div class="round-info">
+          <div class="rname">${esc(g.name)}</div>
+          <div class="rmeta"><span class="group-tag" style="margin-right:6px;">Group</span>Joined — no competitions to show yet</div>
         </div>
       </div>
     </div>`).join('');
 
-  list.innerHTML = roundCards + eventCards;
+  list.innerHTML = compCards + groupCards;
+
+  renderCurrentAssignments(compList, myDancers);
+
+  list.querySelectorAll('[data-score-toggle]').forEach(btn => btn.addEventListener('click', () => {
+    const id = btn.dataset.scoreToggle, panel = $('score-' + id);
+    const open = panel.style.display === 'none';
+    panel.style.display = open ? '' : 'none';
+    if (open) renderScorePanel(id);
+  }));
+}
+
+/* =========================================================
+   JUDGE: JOIN BUTTON + CURRENT ASSIGNMENTS BANNER
+   ========================================================= */
+$('btn-toggle-join').addEventListener('click', () => {
+  const card = $('join-card');
+  const show = card.style.display === 'none';
+  card.style.display = show ? '' : 'none';
+  $('btn-toggle-join').textContent = show ? '− Cancel' : '+ Join an event';
+  if (show) { card.scrollIntoView({ behavior: 'smooth', block: 'nearest' }); $('join-code-input').focus(); }
+});
+
+function renderCurrentAssignments(compList, myDancers){
+  const box = $('current-assignments');
+  if (!box) return;
+  const items = [];
+  compList.forEach(c => c.rounds.forEach(r => { if (r.status === 'active') items.push({ comp: c, round: r }); }));
+  if (!items.length) { box.innerHTML = ''; return; }
+  items.sort((a, b) => a.comp.name.localeCompare(b.comp.name) || (DIVISIONS.indexOf(a.round.division) - DIVISIONS.indexOf(b.round.division)) || compareRounds(a.round, b.round));
+
+  box.innerHTML = `
+    <div class="card now-card">
+      <div class="now-head"><span class="now-dot"></span><h2>Judge now</h2></div>
+      <div class="card-sub">${plural(items.length, 'active round')} waiting for your scores.</div>
+      ${items.map(({ comp, round: r }) => {
+        const ds = myDancers[r.id] || [];
+        const scored = Object.keys((judgeCtx.scores[r.id]) || {}).length;
+        return `
+        <div class="now-item">
+          <div class="now-top">
+            <span class="round-div-tag ${esc(r.division)}">${esc(r.division)}</span>
+            <div class="round-info">
+              <div class="rname">${esc(r.round_name)}</div>
+              <div class="rmeta">${esc(comp.name)}${ds.length ? ' · ' + scored + ' of ' + plural(ds.length, 'dancer') + ' scored' : ' · no dancers assigned to you yet'}</div>
+            </div>
+          </div>
+          ${ds.length ? `<div class="score-panel" id="score-now-${r.id}"></div>` : ''}
+        </div>`;
+      }).join('')}
+    </div>`;
+
+  items.forEach(({ round: r }) => { if ($('score-now-' + r.id)) renderScorePanel(r.id, 'score-now-' + r.id); });
+}
+
+/* =========================================================
+   JUDGE: SCORING (pass/fail or criteria, per the competition's setting)
+   ========================================================= */
+let judgeCtx = { rounds: {}, mode: {}, scores: {}, dancers: {}, scoresError: null };
+
+function renderScorePanel(roundId, boxId){
+  const r = judgeCtx.rounds[roundId], box = $(boxId || ('score-' + roundId));
+  if (!r || !box) return;
+  const j = judgeCtx.mode[r.event_id] || eventJudging(null);
+  const dancers = judgeCtx.dancers[roundId] || [];
+  const mine = judgeCtx.scores[roundId] || {};
+  const canEdit = r.status === 'active';
+
+  const note = judgeCtx.scoresError
+    ? 'Scoring isn’t available yet — ask the admin to finish setting it up.'
+    : r.status === 'draft' ? 'Scoring opens when the admin starts this round.'
+    : r.status === 'completed' ? 'This round is finished — your scores are read-only.'
+    : j.mode === 'pass_fail' ? 'Mark each dancer Pass or Fail. Tap again to clear.'
+    : 'Score each dancer on every criterion.';
+  const disabled = (!canEdit || judgeCtx.scoresError) ? 'disabled' : '';
+
+  box.innerHTML = `<div class="score-note">${esc(note)}</div>` + dancers.map(c => {
+    const sc = mine[c.id] || {};
+    const label = esc((c.number ? '#' + c.number + ' ' : '') + c.name);
+    if (j.mode === 'pass_fail') {
+      return `<div class="score-row" data-row="${c.id}">
+        <div class="score-head">
+          <span class="score-name">${label}</span>
+          <div class="pf-btns">
+            <button type="button" class="pf-btn pass${sc.passed === true ? ' sel' : ''}" data-pf="true" data-comp="${c.id}" ${disabled}>Pass</button>
+            <button type="button" class="pf-btn fail${sc.passed === false ? ' sel' : ''}" data-pf="false" data-comp="${c.id}" ${disabled}>Fail</button>
+          </div>
+          <span class="score-state" data-state="${c.id}"></span>
+        </div>
+      </div>`;
+    }
+    const t = criteriaTotal(sc.criteria_scores || {}, j.criteria);
+    return `<div class="score-row" data-row="${c.id}">
+      <div class="score-head"><span class="score-name">${label}</span><span class="score-state" data-state="${c.id}"></span></div>
+      <div class="crit-grid">
+        ${j.criteria.map(k => {
+          const v = sc.criteria_scores && sc.criteria_scores[k.name] !== undefined ? sc.criteria_scores[k.name] : '';
+          return `<div><label>${esc(k.name)} <span style="color:var(--t3);">/ ${k.max}</span></label>
+            <input type="number" min="0" max="${k.max}" step="0.5" inputmode="decimal" data-crit="${esc(k.name)}" data-comp="${c.id}" data-max="${k.max}" value="${v}" ${disabled}></div>`;
+        }).join('')}
+      </div>
+      <div class="crit-total" data-total="${c.id}">Total <strong>${fmtNum(t.total)}</strong> / ${t.max}${t.filled && t.filled < j.criteria.length ? ' · ' + (j.criteria.length - t.filled) + ' to go' : ''}</div>
+    </div>`;
+  }).join('');
+
+  const setState = (compId, text, cls) => {
+    const el = box.querySelector('[data-state="' + compId + '"]');
+    if (el) { el.textContent = text; el.className = 'score-state' + (cls ? ' ' + cls : ''); }
+  };
+
+  // Save scores button (scores also save automatically as you go)
+  if (dancers.length && canEdit && !judgeCtx.scoresError) {
+    box.insertAdjacentHTML('beforeend', '<div class="score-save-row"><button type="button" class="btn small" data-save-all>Save scores</button><span class="score-save-msg" data-save-msg></span></div>');
+    const saveBtn = box.querySelector('[data-save-all]'), saveMsg = box.querySelector('[data-save-msg]');
+    saveBtn.addEventListener('click', async () => {
+      saveBtn.disabled = true; saveBtn.textContent = 'Saving…'; saveMsg.textContent = ''; saveMsg.className = 'score-save-msg';
+      let failed = 0;
+      for (const c of dancers) {
+        const rowEl = box.querySelector('[data-row="' + c.id + '"]');
+        if (!rowEl) continue;
+        let error = null;
+        if (j.mode === 'pass_fail') {
+          const cur = (judgeCtx.scores[roundId] || {})[c.id];
+          if (cur && (cur.passed === true || cur.passed === false)) {
+            ({ error } = await supabaseClient.from('round_scores').upsert(
+              { round_id: roundId, competitor_id: c.id, judge_id: currentUser.id, passed: cur.passed, criteria_scores: null, total: null },
+              { onConflict: 'round_id,competitor_id,judge_id' }));
+          }
+        } else {
+          const scores = {};
+          rowEl.querySelectorAll('[data-crit]').forEach(i => { if (i.value !== '') scores[i.dataset.crit] = Number(i.value); });
+          const t = criteriaTotal(scores, j.criteria);
+          if (!t.filled) {
+            ({ error } = await supabaseClient.from('round_scores').delete()
+              .eq('round_id', roundId).eq('competitor_id', c.id).eq('judge_id', currentUser.id));
+            if (!error) delete (judgeCtx.scores[roundId] || {})[c.id];
+          } else {
+            const row = { round_id: roundId, competitor_id: c.id, judge_id: currentUser.id, passed: null, criteria_scores: scores, total: t.total };
+            ({ error } = await supabaseClient.from('round_scores').upsert(row, { onConflict: 'round_id,competitor_id,judge_id' }));
+            if (!error) (judgeCtx.scores[roundId] = judgeCtx.scores[roundId] || {})[c.id] = row;
+          }
+        }
+        if (error) { failed++; setState(c.id, 'Not saved', 'err'); } else setState(c.id, 'Saved', 'ok');
+      }
+      saveBtn.disabled = false; saveBtn.textContent = 'Save scores';
+      saveMsg.textContent = failed ? failed + ' not saved — try again' : 'All scores saved';
+      saveMsg.className = 'score-save-msg ' + (failed ? 'err' : 'ok');
+    });
+  }
+
+  // pass / fail
+  box.querySelectorAll('[data-pf]').forEach(btn => btn.addEventListener('click', async () => {
+    const compId = btn.dataset.comp, value = btn.dataset.pf === 'true';
+    const cur = (judgeCtx.scores[roundId] || {})[compId];
+    const clearing = cur && cur.passed === value;
+    setState(compId, 'Saving…');
+    let error;
+    if (clearing) {
+      ({ error } = await supabaseClient.from('round_scores').delete()
+        .eq('round_id', roundId).eq('competitor_id', compId).eq('judge_id', currentUser.id));
+      if (!error) delete (judgeCtx.scores[roundId] || {})[compId];
+    } else {
+      const row = { round_id: roundId, competitor_id: compId, judge_id: currentUser.id, passed: value, criteria_scores: null, total: null };
+      ({ error } = await supabaseClient.from('round_scores').upsert(row, { onConflict: 'round_id,competitor_id,judge_id' }));
+      if (!error) (judgeCtx.scores[roundId] = judgeCtx.scores[roundId] || {})[compId] = row;
+    }
+    if (error) { setState(compId, 'Not saved', 'err'); alert('Could not save: ' + error.message); return; }
+    const rowEl = box.querySelector('[data-row="' + compId + '"]');
+    const now = (judgeCtx.scores[roundId] || {})[compId];
+    rowEl.querySelectorAll('[data-pf]').forEach(b => b.classList.toggle('sel', !!now && now.passed === (b.dataset.pf === 'true')));
+    setState(compId, 'Saved', 'ok');
+  }));
+
+  // criteria
+  box.querySelectorAll('[data-crit]').forEach(inp => inp.addEventListener('change', async () => {
+    const compId = inp.dataset.comp;
+    const rowEl = box.querySelector('[data-row="' + compId + '"]');
+    // keep inputs inside 0..max
+    const max = Number(inp.dataset.max);
+    if (inp.value !== '') {
+      let n = Number(inp.value);
+      if (isNaN(n) || n < 0) n = 0;
+      if (n > max) n = max;
+      inp.value = n;
+    }
+    const scores = {};
+    rowEl.querySelectorAll('[data-crit]').forEach(i => { if (i.value !== '') scores[i.dataset.crit] = Number(i.value); });
+    const t = criteriaTotal(scores, j.criteria);
+    rowEl.querySelector('[data-total]').innerHTML = 'Total <strong>' + fmtNum(t.total) + '</strong> / ' + t.max +
+      (t.filled && t.filled < j.criteria.length ? ' · ' + (j.criteria.length - t.filled) + ' to go' : '');
+    setState(compId, 'Saving…');
+    let error;
+    if (!t.filled) {
+      ({ error } = await supabaseClient.from('round_scores').delete()
+        .eq('round_id', roundId).eq('competitor_id', compId).eq('judge_id', currentUser.id));
+      if (!error) delete (judgeCtx.scores[roundId] || {})[compId];
+    } else {
+      const row = { round_id: roundId, competitor_id: compId, judge_id: currentUser.id, passed: null, criteria_scores: scores, total: t.total };
+      ({ error } = await supabaseClient.from('round_scores').upsert(row, { onConflict: 'round_id,competitor_id,judge_id' }));
+      if (!error) (judgeCtx.scores[roundId] = judgeCtx.scores[roundId] || {})[compId] = row;
+    }
+    if (error) { setState(compId, 'Not saved', 'err'); alert('Could not save: ' + error.message); return; }
+    setState(compId, 'Saved', 'ok');
+  }));
 }
 
 </script>
